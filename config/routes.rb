@@ -1,6 +1,16 @@
 Riyosha::Application.routes.draw do
   get "home/index"
 
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
+
+  devise_for :users
+  devise_scope :user do
+     get "register", :to => "devise/registrations#new"
+     get "login", :to => "devise/sessions#new"
+     get "logout", :to => "devise/sessions#destroy"
+  end
+
   root :to => 'home#index'
 
   # The priority is based upon order of creation:
