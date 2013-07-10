@@ -5,3 +5,10 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+[
+  { code: 'student' },
+  { code: 'private' },
+  { code: 'dtuempl' },
+].each do |usertype|
+  UserType.find_or_create_by_code(usertype)
+end

@@ -1,0 +1,7 @@
+en:
+  riyosha:
+    code:
+      user_type:
+        'private': 'Private'
+        'student': 'Student'
+        'dtuempl': 'DTU Employee'

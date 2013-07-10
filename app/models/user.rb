@@ -5,9 +5,13 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :lockable
 
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  belongs_to :user_type
+
+  attr_accessible :email, :password, :password_confirmation, :remember_me,
+    :user_type_id
 
   validates :email, :presence => true, :uniqueness => true
   validates :password, :presence => true
   validates :password_confirmation, :presence => true
+  validates :user_type, :presence => true
 end
