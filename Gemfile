@@ -1,6 +1,13 @@
 source 'https://rubygems.org'
 
 gem 'rails'
+gem 'jquery-rails'
+gem 'activeadmin'
+gem 'devise'
+gem 'devise_cas_authenticatable'
+
+# To use ActiveModel has_secure_password
+gem 'bcrypt-ruby', '~> 3.0.0'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -17,6 +24,7 @@ end
 group :development, :test do
   gem 'sqlite3'
   gem 'rspec-rails'
+  gem 'debugger'
 end
 
 group :test do
@@ -27,14 +35,12 @@ group :test do
   gem 'factory_girl_rails'
 end
 
+group :development do
+  gem 'rails_best_practices'
+end
+
 group :production do
   gem 'pg'
 end
 
-gem 'jquery-rails'
-gem 'activeadmin'
-gem 'devise_cas_authenticatable'
-
-# To use ActiveModel has_secure_password
-gem 'bcrypt-ruby', '~> 3.0.0'
 
