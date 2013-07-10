@@ -21,4 +21,13 @@ describe User do
     user = FactoryGirl.create(:user)
     FactoryGirl.build(:user, email: user.email).should_not be_valid
   end
+
+  it "create from omniauth" do
+    type = FactoryGirl.create(:user_type)
+    user = User.create_from_omniauth(OmniAuth.config.mock_auth[:facebook], type.id)
+    user.persisted?.should be true
+    user.email.should eq 'facebook@test.domain'
+    user.confirmed?.should be true
+  end
+
 end

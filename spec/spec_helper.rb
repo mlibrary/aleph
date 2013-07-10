@@ -35,3 +35,13 @@ RSpec.configure do |config|
 end
 
 #Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+
+
+OmniAuth.config.test_mode = true
+OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
+  'provider' => 'facebook',
+  'uid' => '123545',
+  'info' => {
+    'email' => 'facebook@test.domain'
+  }
+})

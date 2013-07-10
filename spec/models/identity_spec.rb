@@ -24,4 +24,11 @@ describe Identity do
     FactoryGirl.build(:identity, uid: identity.uid, provider: "testingprovider").should be_valid
   end
 
+  it "find from omniauth" do
+    identity = FactoryGirl.create(:identity)
+    auth = { "provider" => identity.provider, "uid" => identity.uid }
+    result = Identity.find_with_omniauth(auth)
+    result.should eq identity
+  end
+
 end
