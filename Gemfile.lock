@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/dtulibrary/devise_cas_server_extension
+  revision: 8993f1a5d0297b7a07948b7a7eef2558e29efaa5
+  specs:
+    devise_cas_server_extension (1.0.1)
+      devise
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -49,6 +56,12 @@ GEM
       sass (>= 3.2.0)
       thor
     builder (3.0.4)
+    capistrano (2.15.5)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.1.0)
     code_analyzer (0.3.2)
       sexp_processor
     coffee-rails (3.2.2)
@@ -89,8 +102,8 @@ GEM
     formtastic (2.2.1)
       actionpack (>= 3.0)
     has_scope (0.5.1)
-    hashie (2.0.4)
-    hike (1.2.2)
+    hashie (2.0.5)
+    highline (1.6.19)
     hike (1.2.3)
     httpauth (0.2.0)
     i18n (0.6.1)
@@ -98,16 +111,16 @@ GEM
       has_scope (~> 0.5.0)
       responders (~> 0.9)
     journey (1.0.4)
-    jquery-rails (3.0.2)
+    jquery-rails (2.3.0)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
-    json (1.7.7)
     json (1.8.0)
     jwt (0.1.8)
       multi_json (>= 1.5)
     kaminari (0.14.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    libv8 (3.11.8.17)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -120,7 +133,6 @@ GEM
     mime-types (1.23)
     mocha (0.14.0)
       metaclass (~> 0.0.1)
-    multi_json (1.7.2)
     multi_json (1.7.7)
     multipart-post (1.2.0)
     oauth2 (0.8.1)
@@ -134,7 +146,7 @@ GEM
       rack
     omniauth-facebook (1.4.1)
       omniauth-oauth2 (~> 1.1.0)
-    omniauth-google-oauth2 (0.1.17)
+    omniauth-google-oauth2 (0.2.0)
       omniauth (~> 1.0)
       omniauth-oauth2
     omniauth-oauth2 (1.1.1)
@@ -234,8 +246,9 @@ DEPENDENCIES
   debugger
   devise
   devise_cas_authenticatable
+  devise_cas_server_extension!
   factory_girl_rails
-  jquery-rails
+  jquery-rails (~> 2.3.0)
   mocha
   omniauth
   omniauth-facebook

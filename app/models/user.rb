@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable,
+         :cas_server,
          :lockable, :omniauthable, :omniauth_providers => [:facebook]
 
   belongs_to :user_type

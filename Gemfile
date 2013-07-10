@@ -1,13 +1,15 @@
 source 'https://rubygems.org'
 
 gem 'rails'
-gem 'jquery-rails'
+gem 'jquery-rails', '~> 2.3.0'
 gem 'activeadmin'
 gem 'devise'
 gem 'devise_cas_authenticatable'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
+gem 'devise_cas_server_extension', :git => 
+       'https://github.com/dtulibrary/devise_cas_server_extension'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'

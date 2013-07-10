@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130515082054) do
+ActiveRecord::Schema.define(:version => 20130628085604) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -46,6 +46,28 @@ ActiveRecord::Schema.define(:version => 20130515082054) do
 
   add_index "identities", ["user_id"], :name => "index_identities_on_user_id"
 
+  create_table "login_tickets", :force => true do |t|
+    t.string   "ticket",          :null => false
+    t.datetime "consumed"
+    t.string   "client_hostname", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "login_tickets", ["ticket"], :name => "index_login_tickets_on_ticket"
+
+  create_table "service_tickets", :force => true do |t|
+    t.string   "ticket",                    :null => false
+    t.string   "service",                   :null => false
+    t.datetime "consumed"
+    t.integer  "ticket_granting_ticket_id", :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "service_tickets", ["ticket"], :name => "index_service_tickets_on_ticket"
+  add_index "service_tickets", ["ticket_granting_ticket_id"], :name => "index_service_tickets_on_ticket_granting_ticket_id"
+
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
     t.text     "data"
@@ -55,6 +77,17 @@ ActiveRecord::Schema.define(:version => 20130515082054) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "ticket_granting_tickets", :force => true do |t|
+    t.string   "ticket",                           :null => false
+    t.string   "client_hostname",                  :null => false
+    t.string   "username",                         :null => false
+    t.text     "extra_attributes", :limit => 2048
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+  end
+
+  add_index "ticket_granting_tickets", ["ticket"], :name => "index_ticket_granting_tickets_on_ticket"
 
   create_table "user_types", :force => true do |t|
     t.string   "code",       :null => false

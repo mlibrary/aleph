@@ -239,4 +239,18 @@ Devise.setup do |config|
   # CAS, uncomment the following line.
   config.cas_create_user = false
 
+  # => Cas Server Extension
+  # How long is a login ticket valid (seconds)
+  # cas_server_maximum_unused_login_ticket_lifetime
+  #   should not exceed 5 minutes (default 2 minutes)
+  #config.cas_server_maximum_session_lifetime = 120
+
+  # How long is a service ticket valid (seconds)
+  # cas_server_maximum_unused_service_ticket_lifetime
+  #   should not exceed 5 minutes (default 2 minutes)
+  #config.cas_server_maximum_unused_service_ticket_lifetime = 120
+
+  # How long is a ticket granting ticket (session) valid for (seconds)
+  # cas_server_maximum_session_lifetime (default 1 day)
+  #config.cas_server_maximum_session_lifetime = 86400
 end
