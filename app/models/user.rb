@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
          :lockable
 
   belongs_to :user_type
+  has_many :identities, :dependent => :destroy
 
   attr_accessible :email, :password, :password_confirmation, :remember_me,
     :user_type_id
@@ -14,4 +15,5 @@ class User < ActiveRecord::Base
   validates :password, :presence => true
   validates :password_confirmation, :presence => true
   validates :user_type, :presence => true
+
 end
