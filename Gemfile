@@ -8,9 +8,10 @@ gem 'devise_cas_authenticatable'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
-gem 'devise_cas_server_extension', :git => 
+gem 'devise_cas_server_extension', :git =>
        'https://github.com/dtulibrary/devise_cas_server_extension'
 gem 'capistrano'
+gem 'bootstrap-sass'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'
