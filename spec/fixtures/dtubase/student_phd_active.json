@@ -1,0 +1,11 @@
+{
+  "reason":"dtu_catch_student_active",
+  "email":"phd@test.domain",
+  "library_access":"1",
+  "firstname":"Test",
+  "lastname":"Phd",
+  "initials":"phd",
+  "matrikel_id":"1",
+  "user_type":"student",
+  "org_units":["stud"]
+}

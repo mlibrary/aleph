@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <account
+    matrikel_id="1"
+    username="test1"
+    firstname="Test"
+    lastname="Testsen"
+    official_email_address="student@test.domain"
+    primary_profile_id="100303"
+    external_Biblioteket="1">
+    <profile_student
+      fk_profile_id="100303"
+      fk_matrikel_id="1"
+      fk_orgunit_id="stud"
+      active="1"
+      phd="0"
+    </profile_student>
+  </account>
+</root>

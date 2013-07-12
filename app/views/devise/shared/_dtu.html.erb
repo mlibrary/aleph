@@ -1,0 +1,16 @@
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+  <%= image_tag 'dtu.png' %>
+  <p>
+  EMPLOYEE
+  </p>
+  <p>
+  STUDENT
+  </p>
+  <%= hidden_field_tag 'dtu_user', 'true' %>
+  <div>
+    <%= f.label :remember_dtu_user %> <%= f.check_box :remember_dtu_user %>
+  </div>
+  <p>
+  <%= f.submit "Sign in as DTU user" %>
+  </p>
+<% end %>

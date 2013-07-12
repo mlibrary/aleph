@@ -13,12 +13,15 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         private_id).first
       user = User.create_from_omniauth(auth, private_id) if !user
 
-      identity = Identity.create(uid: auth.uid, provider:auth.provider, user_id: user.id)
+      identity = Identity.create(:uid => auth.uid, :provider => auth.provider,
+        :user_id => user.id)
       identity.save!
     else
       user = identity.user
     end
     if user.persisted?
+      user.authenticator = auth.provider
+      user.save!
       sign_in_and_redirect user, :event => :authentication
     else
       redirect_to root_url

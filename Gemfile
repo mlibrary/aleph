@@ -12,6 +12,9 @@ gem 'devise_cas_server_extension', :git =>
        'https://github.com/dtulibrary/devise_cas_server_extension'
 gem 'capistrano'
 gem 'bootstrap-sass'
+gem 'rubycas-client'
+gem 'httparty'
+gem 'nokogiri'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'
@@ -39,6 +42,7 @@ group :test do
   gem 'simplecov-rcov', :require => false
   gem 'mocha', :require => false
   gem 'factory_girl_rails'
+  gem 'webmock'
 end
 
 group :development do

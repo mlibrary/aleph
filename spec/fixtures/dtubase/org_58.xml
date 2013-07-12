@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <orgunit orgunit_id="58" acr_dk="DTU Bibliotek" acr_en="DTU Library" date_created="2003-07-04T15:53:00" last_updated="2013-04-24T13:50:00" active="1" fk_parentunit_id="instgrp" can_be_archived="1" unit_identifier="DTV" fk_unithead_matrikel_id="2225" note="" name_dk="Danmarks Tekniske Informationscenter" name_uk="Technical Information Center of Denmark" Domain="dtic" full_path_dk="/Institutter/Danmarks Tekniske Informationscenter" full_path_uk="/Departments/Technical Information Center of Denmark" full_path_unit_id=" instgrp 58" full_path_acr_dk="/Institutter/DTU Bibliotek" full_path_acr_en="/Departments/DTU Library" Institutnummer="55">
+    <address_dk address_id="29" hide_address="0" is_primary_address="1" is_secret_address="0" street="Anker Engelunds Vej 1" building="101D" room="" zipcode="2800" city="Kgs. Lyngby" country="" phone1="45 25 72 00" phone2="" phone3="" mobile_phone="" fax="45 88 30 40" picture_url="" homepage_url="http://www.dtic.dtu.dk/" email_address="dtic@dtic.dtu.dk" institution_name="" institution_number="" title="" location_map_name="" location_map_coordinates="">
+      <address_campus id="12" Name="Lyngby Campus" />
+    </address_dk>
+    <address_uk address_id="30" hide_address="0" is_primary_address="0" is_secret_address="0" street="" building="" room="" zipcode="" city="" country="" phone1="" phone2="" phone3="" mobile_phone="" fax="" picture_url="" homepage_url="" email_address="" institution_name="" institution_number="" title="" location_map_name="" location_map_coordinates="" />
+  </orgunit>
+</root>

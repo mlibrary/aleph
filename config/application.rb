@@ -67,6 +67,16 @@ module Riyosha
 
     config.action_mailer.default_url_options = { :host => 'localhost' }
     config.action_mailer.smtp_settings = { :address => 'localhost' }
+
+    config.dtubase = {
+      :url => '',
+      :username => '',
+      :password => '',
+    }
+
+    if File.exists? File.dirname(__FILE__) + '/../application.local.rb'
+      require File.dirname(__FILE__) + '/../application.local.rb'
+    end
   end
 end
 
