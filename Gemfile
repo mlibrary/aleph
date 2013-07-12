@@ -29,6 +29,7 @@ group :assets do
   gem 'therubyracer', :platforms => :ruby
   gem 'uglifier', '>= 1.0.3'
   gem 'findit_font', :git => 'git://github.com/dtulibrary/findit_font.git'
+  gem 'turbo-sprockets-rails3'
 end
 
 group :development, :test do

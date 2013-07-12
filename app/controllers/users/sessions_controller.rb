@@ -4,7 +4,7 @@ require 'dtubase'
 class Users::SessionsController < Devise::SessionsController
 
   def new
-    session[:template] = params[:template] if params[:template] 
+    session[:template] = params[:template] if params[:template]
     session[:template] ||= 'local_user'
     if (user = ticket_valid(params['ticket']))
       sign_in_and_redirect user, :event => :authentication
