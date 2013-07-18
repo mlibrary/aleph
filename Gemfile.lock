@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/dtulibrary/devise_cas_server_extension
-  revision: e61f1fdd4068fdc7729d470f897289861028d4b6
+  revision: 3436429f5fe10dc63c170621ea32f74ae1bf4c25
   specs:
-    devise_cas_server_extension (1.0.2)
+    devise_cas_server_extension (1.0.3)
       devise
 
 GEM
@@ -81,11 +81,11 @@ GEM
       debugger-ruby_core_source (~> 1.2.3)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.2.3)
-    devise (2.2.4)
+    devise (3.0.0)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
-      railties (~> 3.1)
-      warden (~> 1.2.1)
+      railties (>= 3.2.6, < 5)
+      warden (~> 1.2.3)
     devise_cas_authenticatable (1.3.0)
       devise (>= 1.2.0)
       rubycas-client (>= 2.2.1)
@@ -202,7 +202,7 @@ GEM
     ref (1.0.5)
     responders (0.9.3)
       railties (~> 3.1)
-    rspec-core (2.14.2)
+    rspec-core (2.14.3)
     rspec-expectations (2.14.0)
       diff-lcs (>= 1.1.3, < 2.0)
     rspec-mocks (2.14.1)
@@ -243,10 +243,10 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.37)
-    uglifier (2.1.1)
+    uglifier (2.1.2)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
-    warden (1.2.1)
+    warden (1.2.3)
       rack (>= 1.0)
 
 PLATFORMS
