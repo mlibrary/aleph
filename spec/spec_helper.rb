@@ -34,6 +34,9 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
   config.mock_with :mocha
 end
+Riyosha::Application.config.secret_token = '2a9bd08baa64aa149bbbbcc3f13'\
+  '298ac013192f48f0a1839e0687ffa3c17807d4b451637e816fd55b6817a1ffa46d04e'\
+  '016f0c6bd7c1275373fcf3139dba307c'
 
 Dir[Rails.root.join("spec/helpers/*.rb")].each {|f| require f}
 

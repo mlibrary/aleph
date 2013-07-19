@@ -12,9 +12,6 @@ describe Users::SessionsController do
       DtuBase.config[:username] = 'x'
       DtuBase.config[:password] = 'p'
       Rails.application.config.dtu_auth_url = 'http://localhost'
-      Riyosha::Application.config.secret_token = '2a9bd08baa64aa149bbbbcc3f13'\
-        '298ac013192f48f0a1839e0687ffa3c17807d4b451637e816fd55b6817a1ffa46d04e'\
-        '016f0c6bd7c1275373fcf3139dba307c'
     end
 
     before :each do
