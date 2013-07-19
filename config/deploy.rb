@@ -20,7 +20,8 @@ if fetch(:application).end_with?('vagrant.vm')
   set :repository, '.'
   set :deploy_via, :copy
   set :copy_strategy, :export
-  ssh_options[:keys] = [ENV['IDENTITY'] || './vagrant/puppet-applications/vagrant-modules/vagrant_capistrano_id_dsa']
+  ssh_options[:keys] = [ENV['IDENTITY'] || './vagrant/puppet-applications/'\
+    'vagrant-modules/vagrant_capistrano_id_dsa']
 else
   set :deploy_via, :remote_cache
   set :scm, :git
@@ -38,11 +39,17 @@ end
 before "deploy:assets:precompile", "config:symlink"
 after "deploy:update", "deploy:cleanup"
 
+def link_config_file(name)
+  run "ln -nfs #{deploy_to}/shared/config/#{name} "\
+    "#{release_path}/config/#{name}"
+end
+
 namespace :config do
   desc "linking configuration to current release"
   task :symlink do
-    run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
-    run "ln -nfs #{deploy_to}/shared/config/initializers/devisecas.local.rb #{release_path}/config/initializers/devisecas.local.rb"
+    link_config_file('database.yml')
+    link_config_file('initializers/devisecas.local.rb')
+    link_config_file('initializers/secret_token.local.rb')
   end
 end
 
