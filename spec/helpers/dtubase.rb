@@ -1,5 +1,11 @@
 module DtuBaseStub
 
+  def dtubase_test_setup
+    DtuBase.config[:url] = 'http://localhost'
+    DtuBase.config[:username] = 'x'
+    DtuBase.config[:password] = 'p'
+  end
+
   def stub_dtubase_cwis_request(name, org_unit)
     stub_dtubase_orgunit(org_unit)
 

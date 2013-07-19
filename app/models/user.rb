@@ -1,5 +1,6 @@
 require 'httparty'
 require 'nokogiri'
+require 'dtubase'
 
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
@@ -41,6 +42,20 @@ class User < ActiveRecord::Base
     user.confirm!
     user.save!
     user
+  end
+
+  def expand
+    @expanded = as_json
+    @expanded[:user_type] = user_type.code
+    ident = Identity.find_by_user_id_and_provider(id, 'dtu')
+    if ident
+      expand_dtu ident.uid
+    end
+    @expanded
+  end
+
+  def expand_dtu(uid)
+    @expanded[:dtu] = DtuBase.lookup(:cwis => uid)
   end
 
 end

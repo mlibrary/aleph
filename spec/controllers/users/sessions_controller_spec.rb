@@ -8,9 +8,7 @@ describe Users::SessionsController do
 
   describe "new session" do
     before :all do
-      DtuBase.config[:url] = 'http://localhost'
-      DtuBase.config[:username] = 'x'
-      DtuBase.config[:password] = 'p'
+      dtubase_test_setup
       Rails.application.config.dtu_auth_url = 'http://localhost'
     end
 
