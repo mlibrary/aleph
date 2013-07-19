@@ -48,7 +48,7 @@ namespace :config do
   desc "linking configuration to current release"
   task :symlink do
     link_config_file('database.yml')
-    link_config_file('initializers/devisecas.local.rb')
+    link_config_file('initializers/devisesetup.local.rb')
     link_config_file('initializers/secret_token.local.rb')
     link_config_file('initializers/dtuauth.local.rb')
   end
