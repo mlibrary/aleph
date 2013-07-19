@@ -34,6 +34,7 @@ group :development, :test do
   gem 'sqlite3'
   gem 'rspec-rails'
   gem 'debugger'
+  gem 'brakeman'
 end
 
 group :test do
