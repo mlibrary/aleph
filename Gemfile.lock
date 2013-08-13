@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/dtulibrary/devise_cas_server_extension
-  revision: 3436429f5fe10dc63c170621ea32f74ae1bf4c25
+  revision: 9b177c34f30dde5f4df402b6f8e9b029408e318f
   specs:
-    devise_cas_server_extension (1.0.3)
+    devise_cas_server_extension (1.0.4)
       devise
 
 GEM
@@ -95,7 +95,7 @@ GEM
       debugger-ruby_core_source (~> 1.2.3)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.2.3)
-    devise (3.0.0)
+    devise (3.0.2)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
@@ -155,7 +155,7 @@ GEM
     mini_portile (0.5.1)
     mocha (0.14.0)
       metaclass (~> 0.0.1)
-    multi_json (1.7.7)
+    multi_json (1.7.9)
     multi_xml (0.5.4)
     multipart-post (1.2.0)
     net-scp (1.1.2)
