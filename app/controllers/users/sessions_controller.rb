@@ -2,40 +2,25 @@ require 'rubycas-client'
 require 'dtubase'
 
 class Users::SessionsController < Devise::SessionsController
-  def new
-    if (params['clear_checked'])
-      session[:checked_in_dtu_base] = false
-      session[:fake_login] = nil
-    end
-    session[:fake_login] = params['fake_login'] if !Rails.env.production?
 
-    # Set default template
-    @login_template = session[:template] || 'local_user'
+  def new
     if (user = ticket_valid(params['ticket']))
-      logger.info "Redirect sign_in"
       sign_in_and_redirect user, :event => :authentication
-    elsif send_to_dtu
+    elsif params[:only] == 'dtu'
       redirect_to dtu_login_url
-    elsif !session[:checked_in_dtu_base]
-      session[:checked_in_dtu_base] = true
-      logger.info "Redirect to #{dtu_login_url}"
-      redirect_to dtu_login_url+"&gateway=true"
     else
-      case params['template']
-      when 'dtu_user'
-        @login_template = params['template']
-      end
-      session[:template] = @login_template
+      @login_template = params[:template] || 'local_user'
       super
     end
   end
 
   def dtu_login_url
-    cas_client.add_service_to_login_url url_for(:only_path => false) 
+    cas_client.add_service_to_login_url url_for(:only_path => false)
   end
 
-  def send_to_dtu
-    params['only'] == 'dtu'
+  def cas_client
+    @@cas_client ||= CASClient::Client.new(:cas_base_url =>
+      Rails.application.config.dtu_auth_url)
   end
 
   def ticket_valid(ticket)
@@ -77,9 +62,37 @@ class Users::SessionsController < Devise::SessionsController
     end
   end
 
-  def cas_client
-    @@cas_client ||= CASClient::Client.new(:cas_base_url =>
-      Rails.application.config.dtu_auth_url)
+  def x_new
+    if (params['clear_checked'])
+      session[:checked_in_dtu_base] = false
+      session[:fake_login] = nil
+    end
+    session[:fake_login] = params['fake_login'] if !Rails.env.production?
+
+    # Set default template
+    @login_template = session[:template] || 'local_user'
+    if (user = ticket_valid(params['ticket']))
+      logger.info "Redirect sign_in"
+      sign_in_and_redirect user, :event => :authentication
+    elsif send_to_dtu
+      redirect_to dtu_login_url
+    elsif !session[:checked_in_dtu_base]
+      session[:checked_in_dtu_base] = true
+      logger.info "Redirect to #{dtu_login_url}"
+      redirect_to dtu_login_url+"&gateway=true"
+    else
+      case params['template']
+      when 'dtu_user'
+        @login_template = params['template']
+      end
+      session[:template] = @login_template
+      super
+    end
   end
+
+  def send_to_dtu
+    params['only'] == 'dtu'
+  end
+
 
 end
