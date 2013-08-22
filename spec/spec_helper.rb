@@ -46,6 +46,8 @@ OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
   'provider' => 'facebook',
   'uid' => '123545',
   'info' => {
-    'email' => 'facebook@test.domain'
+    'email' => 'facebook@test.domain',
+    'first_name' => 'Test',
+    'last_name' => 'User',
   }
 })
