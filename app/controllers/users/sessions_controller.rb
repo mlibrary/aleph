@@ -38,19 +38,9 @@ class Users::SessionsController < Devise::SessionsController
         info = DtuBase.lookup(:username => st.user)
       end
       return nil if info.nil?
-      logger.info "DtuBase info #{info.inspect}"
-      User.login_from_omniauth(OmniAuth::AuthHash.new(
-        'provider' => 'dtu',
-        'uid' => info['matrikel_id'],
-        'info' => {
-          'email' => info['email'],
-          'first_name' => info['firstname'],
-          'last_name' => info['lastname'],
-          'user_type' => info['user_type'],
-        }
-      ))
+      User.create_from_dtubase_info(info)
     else
-      nil 
+      nil
     end
   end
 

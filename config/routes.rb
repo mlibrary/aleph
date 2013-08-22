@@ -15,6 +15,7 @@ Riyosha::Application.routes.draw do
 
   namespace :rest do
     resources :users, :only => [ :show ]
+    get 'create_dtu/:id' => 'users#dtu', :as => 'create_dtu'
   end
 
 end

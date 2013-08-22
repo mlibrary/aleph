@@ -66,6 +66,19 @@ class User < ActiveRecord::Base
     self.last_name = auth.info.last_name
   end
 
+  def self.create_from_dtubase_info(info)
+    self.login_from_omniauth(OmniAuth::AuthHash.new(
+      'provider' => 'dtu',
+      'uid' => info['matrikel_id'],
+      'info' => {
+        'email' => info['email'],
+        'first_name' => info['firstname'],
+        'last_name' => info['lastname'],
+        'user_type' => info['user_type'],
+      }
+    ))
+  end
+
   def expand
     @expanded = as_json
     @expanded[:user_type] = user_type.code
