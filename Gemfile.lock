@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/dtulibrary/findit_font.git
+  revision: 48e074e0ef89f8bd073569b354ad892f8ca3ab61
+  specs:
+    findit_font (0.0.1)
+      railties (>= 3.2)
+
+GIT
   remote: https://github.com/dtulibrary/devise_cas_server_extension
   revision: a0639423e26eec94a2dae0cb7824c1e6088fc29b
   specs:
@@ -307,6 +314,7 @@ DEPENDENCIES
   devise_cas_authenticatable
   devise_cas_server_extension!
   factory_girl_rails
+  findit_font!
   httparty
   jquery-rails (~> 2.3.0)
   mocha
@@ -320,7 +328,7 @@ DEPENDENCIES
   rails_best_practices
   rspec-rails
   rubycas-client
-  sass-rails (~> 3.2.3)
+  sass-rails
   simplecov
   simplecov-html
   simplecov-rcov

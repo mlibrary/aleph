@@ -1,12 +1,25 @@
-<h2>Resend unlock instructions</h2>
+<div class="row">
+  <div class="span12">
+    <h4><%= I18n.t('riyosha.unlock.title') %></h4>
+  </div>
+</div>
 
-<%= form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :html => { :method => :post }) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
-
-  <div><%= f.submit "Resend unlock instructions" %></div>
+<%= form_for(resource, :as => resource_name, :url => unlock_path(resource_name),
+      :html => { :method => :post }) do |f| %>
+<div class="row">
+  <div class="span12">
+    <%= devise_error_messages! %>
+  </div>
+</div>
+<div class="row">
+  <div class="span3">
+    <%= f.label :email %>
+    <%= f.email_field :email, :autofocus => true %>
+  </div>
+  <div class="span9">
+    <label>&nbsp;</label>
+    <%= f.submit I18n.t('riyosha.unlock.request'),
+        :class => 'btn btn-primary' %>
+  </div>
+</div>
 <% end %>
-
-<%= render "devise/shared/links" %>

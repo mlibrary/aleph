@@ -3,9 +3,17 @@
 
 #header-navbar-fixed-top {
   position: inherit;
+  box-shadow: none;
 
   .navbar-inner {
     min-height: 0px;
+    background-color: #fff;
+  }
+
+  .header-gradient {
+    background-image: image-url('header_gradient.png');
+    background-position: top left;
+    background-repeat: repeat-x;
   }
 
   .level1-navbar {
@@ -18,13 +26,17 @@
     padding-bottom: 5px;
     line-height: 25px;
 
-    a { 
+    a {
       color: #fff;
 
       &:hover, &:active {
         color: #fff;
-        text-decoration: underline;
-      }   
+        text-decoration: none;
+      }
+
+      i {
+        color: #fff;
+      }
     }
 
     h5 {
@@ -32,39 +44,66 @@
       line-height: 25px;
       padding: 0px;
     }
+
+    .dropdown-menu {
+      a {
+        color: #000;
+      }
+      &:before {
+        position: absolute;
+        top: -7px;
+        left: 9px;
+        display: inline-block;
+        border-right: 7px solid transparent;
+        border-bottom: 7px solid #ccc;
+        border-left: 7px solid transparent;
+        border-bottom-color: rgba(0, 0, 0, 0.2);
+        content: '';
+      }
+      &:after {
+        position: absolute;
+        top: -6px;
+        left: 10px;
+        display: inline-block;
+        border-right: 6px solid transparent;
+        border-bottom: 6px solid #ffffff;
+        border-left: 6px solid transparent;
+        content: '';
+      }
+    }
   }
 
   .level2-navbar {
     padding-top: 0em;
-    padding-bottom: 0em;
-    
+    padding-bottom: 23px;
+    background-image: image-url('header_shadow.png');
+    background-position: bottom left;
+    background-repeat: repeat-x;
+    box-shadow: none;
+    border-width: 0px;
+
     .container {
-      height: 109px;
-      padding-top: 30px;
-      padding-bottom: 10px;
       background-image: image-url('pageheaderoverlay1.png');
       background-position: top right;
       background-repeat: no-repeat;
+      height: 149px;
 
-      .logos {
-        height: 79px;
-
-        .logo {
-          font-size: 36px;
-          color: #333;
-          font-family: "DTU Medium";
-          text-decoration: none;
-          text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-        }
+      .findit-logo {
+        font-size: 36px;
+        line-height: 149px;
+        color: #333;
+        font-family: "DTU Medium";
+        text-decoration: none;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
       }
 
-      .row { 
-        h4 {
-          padding-top: 5px;
-          padding-bottom: 5px;
-          text-align: right;
-          margin: 0px;
-        }
+      .login_header {
+        font-size: 24px;
+        line-height: 149px;
+        color: #333;
+        font-family: "DTU Medium";
+        text-decoration: none;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
       }
 
       .dtu-logo {
@@ -73,15 +112,9 @@
         background-image: image_url('dtu.png');
         background-position: top left;
         background-repeat: no-repeat;
+        margin-top: 40px;
       }
 
-      .dtu-library-logo {
-        height: 32px;
-        width: 357px;
-        background-image: image_url('dtu_library_logo.png');
-        background-position: top left;
-        background-repeat: no-repeat;
-      }
-    }   
+    }
   }
 }

@@ -1,4 +1,55 @@
 en:
   riyosha:
+    sign_up:
+      non_dtu: "Sign up as non-DTU user"
+      submit: "Sign up"
+      with_provider: "Sign up using your %{provider} account"
+      social: "Sign up with your favorite social network"
+    sign_in:
+      non_dtu: "Login as non-DTU user"
+      dtu_user: "Login as DTU user"
+      final_dtu_user: "Login with your DTU credentials"
+      remember_dtu: "FindIT remembers that you are a DTU affiliate"
+      submit: "Login"
+      with_provider: "%{provider}"
+      social: "Sign In with your favorite social network"
+    edit:
+      title: "Edit your profile"
+      wait_confirm: "Currently waiting confirmation for:"
+      new_password: "New password"
+      leave: "(leave blank for no change)"
+      need_confirm: "(we need your current password to confirm your changes)"
+      submit: "Update"
+      cancel:
+        title: "Cancel my account"
+        text: "Unhappy?"
+        submit: "Cancel my account"
+        confirm: "Are you sure?"
+    confirmation:
+      link: "Didn't receive confirmation instructions?"
+      title: "Resend confirmation instructions"
+      request: "Resend confirmation instructions"
+    unlock:
+      link: "Didn't receive unlock instructions?"
+      title: &unlock_title "Resend unlock instructions"
+      request: *unlock_title
+    password:
+      title: "Change your password"
+      new: "New password"
+      confirm: "Confirm new password"
+      change: "Change my password"
+      forgot:
+        link: "Forgot your password?"
+        request: "Send me reset password instructions"
+        title: "Forgot your password?"
     dtu:
       direct_login: "Send me directly to DTU login every time I need to login"
+    provider:
+      icons:
+        'facebook': "icon-facebook"
+        'linkedin': "icon-linkedin"
+        'google_oauth2': "icon-google-plus"
+      text:
+        'facebook': "Facebook"
+        'linkedin': "LinkedIn"
+        'google_oauth2': "Google"

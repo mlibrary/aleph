@@ -7,8 +7,8 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :cas_server,
-         :lockable, :omniauthable, :omniauth_providers => [:facebook]
+         :cas_server, :lockable, :omniauthable,
+         :omniauth_providers => [:facebook, :linkedin, :google_oauth2]
 
   belongs_to :user_type
   has_many :identities, :dependent => :destroy

@@ -1,16 +1,50 @@
-<h2>Change your password</h2>
+<div class="row>
+  <div class="span12">
+    <h4><%= t('riyosha.password.title') %></h4>
+  </div>
+</div>
 
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
-  <%= devise_error_messages! %>
-  <%= f.hidden_field :reset_password_token %>
+<%= form_for(resource, :as => resource_name,
+    :url => password_path(resource_name),
+    :html => { :method => :put }) do |f| %>
+  <div class="row">
+    <div class="span12">
+      <%= devise_error_messages! %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span3">
+      <%= f.label :first_name %>
+      <%= f.text_field :first_name, :autofocus => true %>
+    </div>
+    <div class="span3">
+      <%= f.label :email %>
+      <%= f.email_field :email %>
+    </div>
+    <div class="span3">
+      <%= f.label :password, t('riyosha.password.new') %>
+      <%= f.password_field :password %>
+    </div>
+    <div class="span3">
+      <label>&nbsp;</label>
+      <button type="submit" class="btn btn-primary">
+        <%= I18n.t('riyosha.password.change') %>
+      </button>
+    </div>
+  </div>
 
-  <div><%= f.label :password, "New password" %><br />
-  <%= f.password_field :password, :autofocus => true %></div>
+  <div class="row">
+    <div class="span3">
+      <%= f.label :last_name %>
+      <%= f.text_field :last_name %>
+    </div>
+    <div class="span3">
+      <%= f.hidden_field :reset_password_token %>
+    </div>
+    <div class="span3">
+      <%= f.label :password_confirmation, t('riyosha.password.confirm') %>
+      <%= f.password_field :password_confirmation %>
+    </div>
+  </div>
 
-  <div><%= f.label :password_confirmation, "Confirm new password" %><br />
-  <%= f.password_field :password_confirmation %></div>
-
-  <div><%= f.submit "Change my password" %></div>
 <% end %>
-
-<%= render "devise/shared/links" %>

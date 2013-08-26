@@ -1,29 +1,81 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="row">
+  <div class="span12">
+    <h4><%= t('riyosha.edit.title') %></h4>
+  </div>
+</div>
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
-  <%= devise_error_messages! %>
+<%= form_for(resource, :as => resource_name,
+      :url => registration_path(resource_name),
+      :html => { :method => :put }) do |f| %>
+  <div class="row">
+    <div class="span12">
+      <%= devise_error_messages! %>
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <%= t('riyosha.edit.wait_confirm') %> <%= resource.unconfirmed_email %>
+      <% end %>
+    </div>
+  </div>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
+  <div class="row">
+    <div class="span3">
+      <%= f.label :first_name %>
+      <%= f.text_field :first_name, :autofocus => true %>
+    </div>
+    <div class="span3">
+      <%= f.label :email %>
+      <%= f.email_field :email %>
+    </div>
+    <div class="span3">
+      <%= f.label :current_password %>
+      <%= f.password_field :current_password, :class => 'no-margin' %>
+    </div>
+    <div class="span3">
+      <label>&nbsp;</label>
+      <button type="submit" class="btn btn-primary">
+        <%= I18n.t('riyosha.edit.submit') %>
+      </button>
+    </div>
+  </div>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
-
-  <div><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-  <%= f.password_field :password, :autocomplete => "off" %></div>
-
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
-
-  <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-  <%= f.password_field :current_password %></div>
-
-  <div><%= f.submit "Update" %></div>
+  <div class="row">
+    <div class="span3">
+      <%= f.label :last_name %>
+      <%= f.text_field :last_name %>
+    </div>
+    <div class="span3">
+    </div>
+    <div class="span3">
+      <%= f.label :password, t('riyosha.edit.new_password') %>
+      <%= f.password_field :password, :autocomplete => "off",
+          :class => 'no-margin' %>
+      <span class="help-block"><%= t('riyosha.edit.leave') %></span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span3 offset6">
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation %>
+    </div>
+  </div>
 <% end %>
 
-<h3>Cancel my account</h3>
+<!--
+<div class="row">
+  <div class="span12">
+    <h4><%= t('riyosha.edit.cancel.title') %></h4>
+  </div>
+</div>
 
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete %></p>
-
-<%= link_to "Back", :back %>
+<div class="row">
+  <div class="span3">
+    <%= t('riyosha.edit.cancel.text') %>
+  </div>
+  <div class="span9">
+    <%= button_to t('riyosha.edit.cancel.submit'),
+          registration_path(resource_name),
+          :data => { :confirm => t('riyosha.edit.cancel.confirm') },
+          :method => :delete,
+          :class => 'btn' %>
+  </div>
+</div>
+-->

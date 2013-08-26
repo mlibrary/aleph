@@ -1,17 +1,42 @@
-<h2>Sign in</h2>
-
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <%= image_tag 'dtu.png' %>
-  <p>
-  EMPLOYEE
-  </p>
-  <p>
-  STUDENT
-  </p>
-  <%= hidden_field_tag 'lt', session['lt'].ticket %>
-  <%= hidden_field_tag 'only', 'dtu' %>
-  <p>
-  <%= f.submit "Sign in as DTU user" %>
-  </p>
+<%= form_for(resource, :as => resource_name,
+      :url => session_path(resource_name)) do |f| %>
+<div class="row">
+  <div class="span3">
+    <%= hidden_field_tag 'lt', session['lt'].ticket %>
+    <%= hidden_field_tag 'only', 'dtu' %>
+    <button type="submit" class="btn btn-primary btn-large">
+      <i class='icon-signin'></i>&nbsp;&nbsp;
+      <%= t('riyosha.sign_in.dtu_user') %>
+    </button>
+  </div>
+  <div class="span9">
+    <%= t('riyosha.sign_in.remember_dtu') %>
+  </div>
+</div>
 <% end %>
-<%= link_to "Login as normal user", new_user_session_path({ :template => 'local_user' }) %>
+<div class="row dtu-spacing">
+  <div class="span12">
+    <h4>Not from DTU?</h4>
+  </div>
+</div>
+<div class="row">
+  <div class="span12">
+    <%= link_to I18n.t('riyosha.sign_in.non_dtu'),
+      new_user_session_path({ :template => 'local_user' }),
+      :class => '' %>
+  </div>
+</div>
+<div class="row dtu-spacing">
+  <div class="span12">
+    <h4>New to DTU?</h4>
+  </div>
+</div>
+<%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+<div class="row">
+  <div class="span12">
+    <%= link_to I18n.t('riyosha.sign_up.non_dtu'),
+      new_registration_path(resource_name),
+      :class => '' %>
+  </div>
+</div>
+<% end -%>
