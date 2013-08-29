@@ -7,7 +7,7 @@ class Identity < ActiveRecord::Base
   validates_uniqueness_of :uid, :scope => :provider
 
   def self.find_with_omniauth(auth)
-    find_by_provider_and_uid(auth['provider'], auth['uid'])
+    where(:provider => auth.provider, :uid => auth.uid).first
   end
 
 end

@@ -24,30 +24,46 @@ class User < ActiveRecord::Base
   validates :first_name, :presence => true, :if => "!anon?"
   validates :last_name, :presence => true, :if => "!anon?"
 
+  def self.login_from_omniauth(auth)
+    identity = Identity.find_with_omniauth(auth)
+    type_id = UserType.where(:code => (auth.info.user_type || 'private')).first.id
+
+    if identity.nil?
+      user = self.where(:email => auth.info.email, :user_type_id =>
+        type_id).first
+      user = self.create_from_omniauth(auth, type_id) unless user
+      return nil if user.nil?
+
+      identity = Identity.create(:uid => auth.uid, :provider => auth.provider,
+        :user_id => user.id)
+      identity.save!
+    else
+      user = identity.user
+      user.update_from_omniauth(auth)
+      user.user_type_id = type_id
+    end
+    user.authenticator = auth.provider
+    user.save!
+    user
+  end
+
   def self.create_from_omniauth(auth, type_id)
     user = User.new
-    user.email = auth.info.email
-    user.first_name = auth.info.first_name
-    user.last_name = auth.info.last_name
-    user.password = Devise.friendly_token[0,20]
+    user.update_from_omniauth(auth)
     user.user_type_id = type_id
+    user.password = Devise.friendly_token[0,20]
     user.password_confirmation = user.password
     user.confirm!
     user.save!
     user
   end
 
-  def self.create_from_dtu(info, type_id)
-    user = User.new
-    user.email = info['email']
-    user.first_name = info['firstname']
-    user.last_name = info['lastname']
-    user.user_type_id = type_id
-    user.password = Devise.friendly_token[0,20]
-    user.password_confirmation = user.password
-    user.confirm!
-    user.save!
-    user
+  def update_from_omniauth(auth)
+    logger.info "First name #{auth.info.first_name}"
+    logger.info "Last name #{auth.info.first_name}"
+    self.email = auth.info.email
+    self.first_name = auth.info.first_name
+    self.last_name = auth.info.last_name
   end
 
   def expand

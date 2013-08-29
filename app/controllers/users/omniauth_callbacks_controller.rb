@@ -3,25 +3,17 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     omniauth_common
   end
 
+  def linkedin
+    omniauth_common
+  end
+
+  def google_oauth2
+    omniauth_common
+  end
+
   def omniauth_common
-    auth = request.env["omniauth.auth"]
-    identity = Identity.find_with_omniauth(auth)
-
-    if !identity
-      private_id = UserType.find_by_code('private').id
-      user = User.where(:email => auth.info.email, :user_type_id =>
-        private_id).first
-      user = User.create_from_omniauth(auth, private_id) if !user
-
-      identity = Identity.create(:uid => auth.uid, :provider => auth.provider,
-        :user_id => user.id)
-      identity.save!
-    else
-      user = identity.user
-    end
+    user = User.login_from_omniauth(request.env["omniauth.auth"])
     if user.persisted?
-      user.authenticator = auth.provider
-      user.save!
       sign_in_and_redirect user, :event => :authentication
     else
       redirect_to root_url

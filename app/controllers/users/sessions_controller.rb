@@ -39,24 +39,16 @@ class Users::SessionsController < Devise::SessionsController
       end
       return nil if info.nil?
       logger.info "DtuBase info #{info.inspect}"
-      # Do we know this user already?
-      identity = Identity.find_by_provider_and_uid('dtu', info['matrikel_id'])
-      type_id = UserType.find_by_code(info['user_type']).id
-      if identity.nil?
-        user = User.where(:email => info['email'], :user_type_id => type_id).first
-        user = User.create_from_dtu(info, type_id) unless user
-        return nil if user.nil?
-        identity = Identity.create(:uid => info['matrikel_id'],
-          :provider => 'dtu', user_id: user.id)
-        identity.save!
-      else
-        # TODO: Check for duplicate email!
-        identity.user.email = info['email']
-        identity.user.user_type_id = type_id
-      end
-      identity.user.authenticator = 'dtu'
-      identity.user.save!
-      identity.user
+      User.login_from_omniauth(OmniAuth::AuthHash.new(
+        'provider' => 'dtu',
+        'uid' => info['matrikel_id'],
+        'info' => {
+          'email' => info['email'],
+          'first_name' => info['firstname'],
+          'last_name' => info['lastname'],
+          'user_type' => info['user_type'],
+        }
+      ))
     else
       nil 
     end

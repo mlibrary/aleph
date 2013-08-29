@@ -7,6 +7,7 @@ gem 'devise'
 gem 'devise_cas_authenticatable'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'omniauth-linkedin-oauth2'
 gem 'omniauth-google-oauth2'
 gem 'devise_cas_server_extension', :git =>
        'https://github.com/dtulibrary/devise_cas_server_extension'

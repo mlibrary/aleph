@@ -26,7 +26,9 @@ describe Identity do
 
   it "find from omniauth" do
     identity = FactoryGirl.create(:identity)
-    auth = { "provider" => identity.provider, "uid" => identity.uid }
+    auth = OmniAuth::AuthHash.new(
+      "provider" => identity.provider,
+      "uid" => identity.uid )
     result = Identity.find_with_omniauth(auth)
     result.should eq identity
   end

@@ -41,17 +41,17 @@ describe User do
     user.confirmed?.should be true
   end
 
-  it "create from dtubasen" do
-    type = FactoryGirl.create(:user_type)
-    dtu_base = {
-      'email' => 'dtu@test.domain',
-      'firstname' => 'First',
-      'lastname' => 'Last',
-    }
-    user = User.create_from_dtu(dtu_base, type.id)
-    user.persisted?.should be true
-    user.email.should eq 'dtu@test.domain'
-    user.confirmed?.should be true
-  end
+#  it "create from dtubasen" do
+#    type = FactoryGirl.create(:user_type)
+#    dtu_base = {
+#      'email' => 'dtu@test.domain',
+#      'firstname' => 'First',
+#      'lastname' => 'Last',
+#    }
+#    user = User.create_from_dtu(dtu_base, type.id)
+#    user.persisted?.should be true
+#    user.email.should eq 'dtu@test.domain'
+#    user.confirmed?.should be true
+#  end
 
 end
