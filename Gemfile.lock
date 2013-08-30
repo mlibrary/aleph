@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/dtulibrary/devise_cas_server_extension
-  revision: 9b177c34f30dde5f4df402b6f8e9b029408e318f
+  revision: a0639423e26eec94a2dae0cb7824c1e6088fc29b
   specs:
-    devise_cas_server_extension (1.0.4)
+    devise_cas_server_extension (1.0.5)
       devise
 
 GEM
@@ -180,9 +180,6 @@ GEM
     omniauth-facebook (1.4.1)
       omniauth-oauth2 (~> 1.1.0)
     omniauth-google-oauth2 (0.2.1)
-      omniauth (~> 1.0)
-      omniauth-oauth2
-    omniauth-linkedin-oauth2 (0.1.1)
       omniauth (~> 1.0)
       omniauth-oauth2
     omniauth-linkedin-oauth2 (0.1.1)
