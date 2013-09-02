@@ -76,6 +76,8 @@ module Riyosha
 
     config.sendit_url = "http://localhost"
 
+    config.main_service_url = ""
+
     if File.exists? File.dirname(__FILE__) + '/../application.local.rb'
       require File.dirname(__FILE__) + '/../application.local.rb'
     end
