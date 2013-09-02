@@ -9,7 +9,7 @@ en:
       non_dtu: "Login as non-DTU user"
       dtu_user: "Login as DTU user"
       final_dtu_user: "Login with your DTU credentials"
-      remember_dtu: "FindIT remembers that you are a DTU affiliate"
+      remember_dtu: "You only have to do this at first login. DTU Findit remembers your DTU affiliation"
       submit: "Login"
       with_provider: "%{provider}"
       social: "Sign In with your favorite social network"
