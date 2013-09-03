@@ -1,18 +1,24 @@
 en:
   riyosha:
     sign_up:
-      non_dtu: "Sign up as non-DTU user"
+      non_dtu: "Sign up"
       submit: "Sign up"
+      directly: "Sign up directly"
       with_provider: "Sign up using your %{provider} account"
-      social: "Sign up with your favorite social network"
+      social: "Sign up through social network"
     sign_in:
       non_dtu: "Login as non-DTU user"
-      dtu_user: "Login as DTU user"
+      dtu_user: "Sign in as DTU user"
       final_dtu_user: "Login with your DTU credentials"
-      remember_dtu: "You only have to do this at first login. DTU Findit remembers your DTU affiliation"
+      directly: "Sign in directly"
+      from_dtu: "Are you DTU Staff or Student?"
+      new_user: "New to DTU Findit?"
+      dtu_affiliate: "You appear to be affiliated to DTU"
+      dtu_max_use: "Choose this option to take full advantage of DTU Findit"
+      dtu_remember: "Your browser will remember your choice"
       submit: "Login"
       with_provider: "%{provider}"
-      social: "Sign In with your favorite social network"
+      social: "Sign in through social network"
     edit:
       title: "Edit your profile"
       wait_confirm: "Currently waiting confirmation for:"

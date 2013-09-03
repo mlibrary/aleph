@@ -1,15 +1,39 @@
 
+  <div class="row">
+    <div class="offset3 span3">
+      <b class="text-error"><%= t('riyosha.sign_in.from_dtu') %></b>
+    </div>
+    <div class="span6">
+      <%= link_to I18n.t('riyosha.sign_in.dtu_user'),
+        new_user_session_path({ :only => 'dtu' }),
+        :class => 'btn' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span12">
+      <hr>
+    </div>
+  </div>
+
+
   <%= render 'devise/shared/logins' %>
 
-  <div class="row dtu-spacing">
+  <div class="row">
     <div class="span12">
-      <h4>Sign In Directly:</h4>
+      <hr>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span12">
+      <h4><%= t('riyosha.sign_in.directly') %></h4>
     </div>
   </div>
 <%= form_for(resource, :as => resource_name,
       :url => session_path(resource_name)) do |f| %>
   <div class="row">
-    <div class="span3">
+    <div class="offset3 span3">
       <%= f.label :email %>
       <%= f.email_field :email, :autofocus => true,
             :class => 'input-block-level' %>
@@ -19,7 +43,7 @@
       <%= f.password_field :password, :class => 'input-block-level' %>
     </div>
     <%= hidden_field_tag 'lt', session['lt'].ticket %>
-    <div class="span6">
+    <div class="span3">
       <label>&nbsp;</label>
       <%= f.submit I18n.t('riyosha.sign_in.submit'),
           :class => 'btn' %>
@@ -27,48 +51,58 @@
   </div>
 
   <div class="row">
-    <div class="span3">
+    <div class="offset3 span3">
   <% if devise_mapping.rememberable? -%>
       <label class="checkbox">
         <%= f.check_box :remember_me %> <%= f.label :remember_me %>
       </label>
   <% end -%>
     </div>
-    <div class="span9">
-      <ul class="inline">
-<%= render "devise/shared/links" %>
-      </ul>
+    <div class="span6">
+<%- if devise_mapping.recoverable? %>
+      <%= link_to t('riyosha.password.forgot.link'),
+        new_password_path(resource_name) %>
+<% end -%>
     </div>
   </div>
 <% end %>
 
 <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
   <div class="row dtu-spacing">
-    <div class="span12">
-      <h4>New to DTU?</h4>
+    <div class="offset6 span3">
+      <b><%= t('riyosha.sign_in.new_user') %></b>
+    </div>
+    <div class="span3">
+      <%= link_to I18n.t('riyosha.sign_up.non_dtu'),
+        new_registration_path(resource_name),
+        :class => 'btn' %></li>
     </div>
   </div>
 
   <div class="row">
     <div class="span12">
-      <%= link_to I18n.t('riyosha.sign_up.non_dtu'),
-        new_registration_path(resource_name),
-        :class => '' %></li>
+      <hr>
+    </div>
+  </div>
+
+  <div class="row dtu-spacing">
+    <div class="span3">
+      <b>Problems with signup</b><br />
+    </div>
+    <div class="span9">
+<%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
+    <%= link_to t('riyosha.confirmation.link'),
+      new_confirmation_path(resource_name) %>
+    <br />
+<% end -%>
+
+<%- if devise_mapping.lockable? &&
+       resource_class.unlock_strategy_enabled?(:email) &&
+       controller_name != 'unlocks' %>
+    <%= link_to t('riyosha.unlock.link'), new_unlock_path(resource_name) %>
+<% end -%>
     </div>
   </div>
 <% end -%>
 
-  <div class="row dtu-spacing">
-    <div class="span12">
-    <h4>DTU Employee or Student?</h4>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="span12">
-    <%= link_to I18n.t('riyosha.sign_in.dtu_user'),
-      new_user_session_path({ :template => 'dtu_user' }),
-      :class => '' %>
-    </div>
-  </div>
 

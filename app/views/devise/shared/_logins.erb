@@ -12,13 +12,16 @@
       <h4><%= t('social', :scope => scope) %></h4>
     </div>
   </div>
+
   <div class="row">
   <%- if devise_mapping.omniauthable? %>
+    <% offset="offset3" -%>
     <%- resource_class.omniauth_providers.each do |provider| %>
-      <div class="span3">
+      <div class="span3 <%= offset %>">
       <%= link_to ('<i class="'+t(provider, :scope => 'riyosha.provider.icons')+
             '"></i> '+ t(provider, :scope => 'riyosha.provider.text')).html_safe,
         omniauth_authorize_path(resource_name, provider) %><br />
+        <% offset = "" -%>
       </div>
     <% end -%>
   <% end -%>

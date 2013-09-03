@@ -3,7 +3,13 @@
 
   <div class="row">
     <div class="span12">
-      <h4>Sign Up Directly:</h4>
+      <hr />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span12">
+      <h4><%= t('riyosha.sign_up.directly') %></h4>
     </div>
   </div>
 
@@ -17,19 +23,19 @@
   <div class="row">
     <div class="span3">
       <%= f.label :first_name %>
-      <%= f.text_field :first_name, :autofocus => true %>
+      <%= f.text_field :first_name, :autofocus => true, :tabindex => '1' %>
     </div>
     <div class="span3">
       <%= f.label :email %>
-      <%= f.email_field :email %>
+      <%= f.email_field :email, :tabindex => '3' %>
     </div>
     <div class="span3">
       <%= f.label :password %>
-      <%= f.password_field :password %>
+      <%= f.password_field :password, :tabindex => '4' %>
     </div>
     <div class="span3">
       <label>&nbsp;</label>
-      <button type="submit" class="btn">
+      <button type="submit" class="btn" tabindex="6">
         <%= I18n.t('riyosha.sign_up.submit') %>
       </button>
     </div>
@@ -38,14 +44,14 @@
   <div class="row">
     <div class="span3">
       <%= f.label :last_name %>
-      <%= f.text_field :last_name %>
+      <%= f.text_field :last_name, :tabindex => '2' %>
     </div>
     <div class="span3">
       <%= f.hidden_field :user_type_id, :value => UserType.find_by_code('private').id %>
     </div>
     <div class="span3">
       <%= f.label :password_confirmation %>
-      <%= f.password_field :password_confirmation %>
+      <%= f.password_field :password_confirmation, :tabindex => '5' %>
     </div>
   </div>
 <% end %>

@@ -19,19 +19,20 @@
   <div class="row">
     <div class="span3">
       <%= f.label :first_name %>
-      <%= f.text_field :first_name, :autofocus => true %>
+      <%= f.text_field :first_name, :autofocus => true, :tabindex => '1' %>
     </div>
     <div class="span3">
       <%= f.label :email %>
-      <%= f.email_field :email %>
+      <%= f.email_field :email, :tabindex => '3' %>
     </div>
     <div class="span3">
       <%= f.label :current_password %>
-      <%= f.password_field :current_password, :class => 'no-margin' %>
+      <%= f.password_field :current_password, :class => 'no-margin',
+          :tabindex => '4' %>
     </div>
     <div class="span3">
       <label>&nbsp;</label>
-      <button type="submit" class="btn btn-primary">
+      <button type="submit" class="btn btn-primary" tabindex="7">
         <%= I18n.t('riyosha.edit.submit') %>
       </button>
     </div>
@@ -40,21 +41,21 @@
   <div class="row">
     <div class="span3">
       <%= f.label :last_name %>
-      <%= f.text_field :last_name %>
+      <%= f.text_field :last_name, tabindex => '2' %>
     </div>
     <div class="span3">
     </div>
     <div class="span3">
       <%= f.label :password, t('riyosha.edit.new_password') %>
       <%= f.password_field :password, :autocomplete => "off",
-          :class => 'no-margin' %>
+          :class => 'no-margin', :tabindex => '5' %>
       <span class="help-block"><%= t('riyosha.edit.leave') %></span>
     </div>
   </div>
   <div class="row">
     <div class="span3 offset6">
       <%= f.label :password_confirmation %>
-      <%= f.password_field :password_confirmation %>
+      <%= f.password_field :password_confirmation, :tabindex => '6' %>
     </div>
   </div>
 <% end %>
