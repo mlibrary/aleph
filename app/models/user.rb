@@ -54,7 +54,6 @@ class User < ActiveRecord::Base
     user.password = Devise.friendly_token[0,20]
     user.password_confirmation = user.password
     user.confirm!
-    user.save!
     user
   end
 

@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe User do
   it "has a valid factory" do
-    FactoryGirl.create(:user).should be_valid
+    expect(FactoryGirl.create(:user)).to be_valid
   end
 
   it "fails without email" do
-    FactoryGirl.build(:user, email: nil).should_not be_valid
+    expect(FactoryGirl.build(:user, email: nil)).not_to be_valid
   end
 
 #  it "fails without password" do
@@ -19,39 +19,49 @@ describe User do
 
   it "email is unique" do
     user = FactoryGirl.create(:user)
-    FactoryGirl.build(:user, email: user.email).should_not be_valid
+    expect(FactoryGirl.build(:user, email: user.email)).not_to be_valid
   end
 
-  it "name is filled for regular user" do
-    FactoryGirl.build(:user, :first_name => nil).should_not be_valid
-    FactoryGirl.build(:user, :last_name => nil).should_not be_valid
+  context "Regular users" do
+    it "firstname is filled" do
+      expect(FactoryGirl.build(:user, :first_name => nil)).not_to be_valid
+    end
+
+    it "lastname is filled" do
+      expect(FactoryGirl.build(:user, :last_name => nil)).not_to be_valid
+    end
   end
 
   it "name is not filled for anon user" do
     user_type = FactoryGirl.create(:user_type, code: "anon")
-    FactoryGirl.build(:user, :user_type => user_type, :first_name => nil,
-      :last_name => nil).should be_valid
+    expect(FactoryGirl.build(:user, :user_type => user_type,
+      :first_name => nil, :last_name => nil)).to be_valid
   end
 
-  it "create from omniauth" do
-    type = FactoryGirl.create(:user_type)
-    user = User.create_from_omniauth(OmniAuth.config.mock_auth[:facebook], type.id)
-    user.persisted?.should be true
-    user.email.should eq 'facebook@test.domain'
-    user.confirmed?.should be true
-  end
+  describe "omniauth" do
+    before :each do
+      @type = FactoryGirl.create(:user_type, code: 'testing')
+      @mock1 = OmniAuth.config.mock_auth[:facebook]
+      @user1 = User.login_from_omniauth(@mock1)
+    end
 
-#  it "create from dtubasen" do
-#    type = FactoryGirl.create(:user_type)
-#    dtu_base = {
-#      'email' => 'dtu@test.domain',
-#      'firstname' => 'First',
-#      'lastname' => 'Last',
-#    }
-#    user = User.create_from_dtu(dtu_base, type.id)
-#    user.persisted?.should be true
-#    user.email.should eq 'dtu@test.domain'
-#    user.confirmed?.should be true
-#  end
+    context "create" do
+      it { expect(@user1.persisted?).to be true }
+      it { expect(@user1.email).to eq(@mock1['info']['email']) }
+      it { expect(@user1.confirmed?).to be true }
+    end
+
+    context "update" do
+      before :each do
+        @mock2 = OmniAuth.config.mock_auth[:facebook_update]
+        @user2 = User.login_from_omniauth(@mock2)
+      end
+
+      it { expect(@user2.id).to eq(@user1.id) }
+      it { expect(@user2.email).to eq(@mock2['info']['email']) }
+      it { expect(@user2.first_name).to eq(@mock2['info']['first_name']) }
+      it { expect(@user2.last_name).to eq(@mock2['info']['last_name']) }
+    end
+  end
 
 end

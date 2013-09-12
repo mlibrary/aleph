@@ -54,7 +54,7 @@ describe DtuBase do
       result = result.gsub(/\n */, "")
 
       info = DtuBase.lookup(:cwis => 1)
-      info.to_json.should eq result
+      expect(info.to_json).to eq result
     end
 
   end
@@ -65,7 +65,7 @@ describe DtuBase do
         "[@matrikel_id='1']&dbversion=dtubasen&password=p&username=x").
         to_return(:status => 404, :body => "", :headers => {})
       info = DtuBase.lookup(:cwis => 1)
-      info['reason'].should eq "lookup_failed"
+      expect(info['reason']).to eq "lookup_failed"
     end
   end
 

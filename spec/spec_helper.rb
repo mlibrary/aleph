@@ -33,6 +33,10 @@ RSpec.configure do |config|
 
   config.infer_base_class_for_anonymous_controllers = false
   config.mock_with :mocha
+
+  config.expect_with :rspec do |c|
+    c.syntax = :expect
+  end
 end
 Riyosha::Application.config.secret_token = '2a9bd08baa64aa149bbbbcc3f13'\
   '298ac013192f48f0a1839e0687ffa3c17807d4b451637e816fd55b6817a1ffa46d04e'\
@@ -49,5 +53,36 @@ OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
     'email' => 'facebook@test.domain',
     'first_name' => 'Test',
     'last_name' => 'User',
+    'user_type' => 'testing',
+  }
+})
+OmniAuth.config.mock_auth[:facebook_update] = OmniAuth::AuthHash.new({
+  'provider' => 'facebook',
+  'uid' => '123545',
+  'info' => {
+    'email' => 'updated@test.domain',
+    'first_name' => 'Test2',
+    'last_name' => 'User2',
+    'user_type' => 'testing',
+  }
+})
+OmniAuth.config.mock_auth[:linkedin] = OmniAuth::AuthHash.new({
+  'provider' => 'linkedin',
+  'uid' => '123556',
+  'info' => {
+    'email' => 'linkedin@test.domain',
+    'first_name' => 'Test',
+    'last_name' => 'User',
+    'user_type' => 'testing',
+  }
+})
+OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
+  'provider' => 'google_oauth2',
+  'uid' => '123567',
+  'info' => {
+    'email' => 'google@test.domain',
+    'first_name' => 'Test',
+    'last_name' => 'User',
+    'user_type' => 'testing',
   }
 })

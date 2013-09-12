@@ -20,23 +20,23 @@ describe Rest::UsersController do
 
     it "renders user" do
       get :show, id: @user1, :format => :json
-      response.header['Content-Type'].should include 'application/json'
+      expect(response.header['Content-Type']).to include 'application/json'
       expanded_user = @user1.as_json
       expanded_user[:user_type] = @user1.user_type.code
-      response.body.should eq expanded_user.to_json      
+      expect(response.body).to eq expanded_user.to_json      
     end
 
     it "requests dtubase info" do
       stub_dtubase_cwis_request('dtu_employee_primary', '58')
       get :show, id: @user2, :format => :json
-      response.header['Content-Type'].should include 'application/json'
+      expect(response.header['Content-Type']).to include 'application/json'
       expanded_user = @user2.as_json
       expanded_user[:user_type] = @type.code
       expanded_user[:dtu] = { :reason => nil, :email => 'employee@test.domain',
         :library_access => '1', :firstname => 'Test', :lastname => 'Employee',
         :initials => 'empl', :matrikel_id => '1', :user_type => 'dtu_empl',
         :org_units => ['58', '55'] }
-      response.body.should eq expanded_user.to_json
+      expect(response.body).to eq expanded_user.to_json
     end
   end
 
@@ -48,9 +48,9 @@ describe Rest::UsersController do
     it "creates dtu employee from cwis" do
       stub_dtubase_cwis_request('dtu_employee_primary', '58')
       get :dtu, :id => 1, :format => :json
-      User.all.count.should eq 1
+      expect(User.all.count).to eq 1
       user = User.all.first
-      response.header['Content-Type'].should include 'application/json'
+      expect(response.header['Content-Type']).to include 'application/json'
       expanded_user = FactoryGirl.build(:user, :user_type => @type,
         :id => user.id, :email => 'employee@test.domain',
         :authenticator => 'dtu', :first_name => 'Test',
@@ -61,7 +61,7 @@ describe Rest::UsersController do
         :library_access => '1', :firstname => 'Test', :lastname => 'Employee',
         :initials => 'empl', :matrikel_id => '1', :user_type => 'dtu_empl',
         :org_units => ['58', '55'] }
-      response.body.should eq expanded_user.to_json
+      expect(response.body).to eq expanded_user.to_json
     end
 
     it "returns existing user from cwis" do
@@ -71,14 +71,14 @@ describe Rest::UsersController do
         :uid => '1', :user => @user2)
       stub_dtubase_cwis_request('dtu_employee_primary', '58')
       get :dtu, :id => 1, :format => :json
-      response.header['Content-Type'].should include 'application/json'
+      expect(response.header['Content-Type']).to include 'application/json'
       expanded_user = @user2.as_json
       expanded_user[:user_type] = @type.code
       expanded_user[:dtu] = { :reason => nil, :email => 'employee@test.domain',
         :library_access => '1', :firstname => 'Test', :lastname => 'Employee',
         :initials => 'empl', :matrikel_id => '1', :user_type => 'dtu_empl',
         :org_units => ['58', '55'] }
-      response.body.should eq expanded_user.to_json
+      expect(response.body).to eq expanded_user.to_json
     end
 
   end

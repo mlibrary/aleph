@@ -16,8 +16,8 @@ describe Admin::DashboardController do
   describe "Get dashboard" do
     it "renders the dashboard view" do
       get :index
-      response.status.should be(200)
-      response.should render_template :index
+      expect(response.status).to be(200)
+      expect(response).to render_template :index
     end
   end
 end

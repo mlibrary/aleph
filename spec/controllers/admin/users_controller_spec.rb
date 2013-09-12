@@ -17,32 +17,32 @@ describe Admin::UsersController do
     it "renders the :index view" do
       FactoryGirl.create(:user)
       get :index
-      response.status.should be(200)
-      response.should render_template :index
+      expect(response.status).to be(200)
+      expect(response).to render_template :index
     end
   end
 
   describe "GET #show" do
     it "renders the #show view" do
       get :show, id: FactoryGirl.create(:user)
-      response.status.should be(200)
-      response.should render_template :show
+      expect(response.status).to be(200)
+      expect(response).to render_template :show
     end
   end
 
   describe "GET #new" do
     it "shows the new template" do
       get :new
-      response.status.should be(200)
-      response.should render_template :new
+      expect(response.status).to be(200)
+      expect(response).to render_template :new
     end
   end
 
   describe "GET #edit" do
     it "shows the edit template" do
       get :edit, id: FactoryGirl.create(:user)
-      response.status.should be(200)
-      response.should render_template :edit
+      expect(response.status).to be(200)
+      expect(response).to render_template :edit
     end
   end
 

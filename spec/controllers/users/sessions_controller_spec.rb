@@ -23,20 +23,27 @@ describe Users::SessionsController do
 
     it "shows local_user template" do
       get :new
-      response.header['Content-Type'].should include 'text/html'
+      expect(response.header['Content-Type']).to include 'text/html'
       # TODO: Should render _local_user partial
     end
 
     it "shows dtu_user template" do
       get :new, :template => 'dtu_user'
-      response.header['Content-Type'].should include 'text/html'
+      expect(response.header['Content-Type']).to include 'text/html'
       # TODO: Should render _dtu_user partial
     end
 
+    it "redirects to dtu" do
+      get :new, :only => 'dtu'
+      expect(response.status).to be (302)
+      expect(response.status).to redirect_to ('http://localhost/login?'+
+        'service=http%3A%2F%2Ftest.host%2Fusers%2Flogin')
+    end
+
     it "fails validation of ticket" do
-       stub_request(:get, "http://localhost/proxyValidate?service="\
-         "http://test.host/users/login&ticket=ST-fail-ticket").
-         to_return(:status => 404, :body => "", :headers => {})
+      stub_request(:get, "http://localhost/proxyValidate?service="\
+        "http://test.host/users/login&ticket=ST-fail-ticket").
+        to_return(:status => 404, :body => "", :headers => {})
       assert_raise RuntimeError do
         get :new, :ticket => 'ST-fail-ticket'
       end
@@ -46,20 +53,28 @@ describe Users::SessionsController do
       stub_valid_ticket
       stub_dtubase_username_request('test', 'stud')
       get :new, :ticket => 'ST-valid-ticket'
-      response.header['Content-Type'].should include 'text/html'
+      expect(response.header['Content-Type']).to include 'text/html'
     end
 
-#    it "update email on existing user" do
-#      ident = FactoryGirl.create(:identity, :provider => 'dtu', :uid => '1')
-#      stub_valid_ticket
-#      stub_dtubase_username_request('test', 'stud')
-#      get :new, :ticket => 'ST-valid-ticket'
-#      response.header['Content-Type'].should include 'text/html'
-#      user = User.find(ident.user_id)
-#      user.email.should eq 'student@test.domain'
-#      user.user_type.should eq @user_type
-#      user.authenticator.should eq 'dtu'
-#    end
+    it "fakes validate ticket" do
+      session[:fake_login] = 1
+      stub_valid_ticket
+      stub_dtubase_cwis_request('test', 'stud')
+      get :new, :ticket => 'ST-valid-ticket'
+      expect(response.header['Content-Type']).to include 'text/html'
+    end
+
+    it "update email on existing user" do
+      ident = FactoryGirl.create(:identity, :provider => 'dtu', :uid => '1')
+      stub_valid_ticket
+      stub_dtubase_username_request('test', 'stud')
+      get :new, :ticket => 'ST-valid-ticket'
+      expect(response.header['Content-Type']).to include 'text/html'
+      user = User.find(ident.user_id)
+      expect(user.email).to eq 'student@test.domain'
+      expect(user.user_type).to eq @usertype
+      expect(user.authenticator).to eq 'dtu'
+    end
 
 
     def stub_valid_ticket
