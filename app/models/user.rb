@@ -26,7 +26,8 @@ class User < ActiveRecord::Base
 
   def self.login_from_omniauth(auth)
     identity = Identity.find_with_omniauth(auth)
-    type_id = UserType.where(:code => (auth.info.user_type || 'private')).first.id
+    type_id = UserType.where(:code => (auth.info.user_type ||
+      'private')).first.id
 
     if identity.nil?
       user = self.where(:email => auth.info.email, :user_type_id =>
@@ -34,9 +35,8 @@ class User < ActiveRecord::Base
       user = self.create_from_omniauth(auth, type_id) unless user
       return nil if user.nil?
 
-      identity = Identity.create(:uid => auth.uid, :provider => auth.provider,
+      identity = Identity.create!(:uid => auth.uid, :provider => auth.provider,
         :user_id => user.id)
-      identity.save!
     else
       user = identity.user
       user.update_from_omniauth(auth)
@@ -59,11 +59,11 @@ class User < ActiveRecord::Base
   end
 
   def update_from_omniauth(auth)
-    logger.info "First name #{auth.info.first_name}"
-    logger.info "Last name #{auth.info.first_name}"
+    skip_reconfirmation!
     self.email = auth.info.email
     self.first_name = auth.info.first_name
     self.last_name = auth.info.last_name
+    confirm!
   end
 
   def self.create_from_dtubase_info(info)
