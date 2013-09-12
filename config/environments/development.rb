@@ -35,3 +35,17 @@ Riyosha::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 end
+
+class DtuBase
+  def write_person(id, body)
+    File.open("spec/fixtures/dtubase/person_#{id}.local.xml", 'wb') do |f|
+      f.write(body)
+    end
+  end
+
+  def write_org(id, body)
+    File.open("spec/fixtures/dtubase/org_#{id}.local.xml", 'wb') do |f|
+      f.write(response.body)
+    end
+  end
+end

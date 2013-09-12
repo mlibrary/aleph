@@ -20,11 +20,8 @@ class DtuBase
       return
     end
 
-    if Rails.env.development?
-      File.open("spec/fixtures/dtubase/person_#{identifier}.local.xml", 'wb') do |f|
-        f.write(response.body)
-      end
-    end
+    write_person(identifier, response.body) if Rails.env.development?
+
     entry = Nokogiri.XML(response.body, nil, 'UTF-8')
     parse_account(entry.xpath('//account'))
   end
@@ -132,7 +129,7 @@ class DtuBase
     profile = account.xpath("profile_employee[@active = '1']")
     if !profile.empty?
       @user_type = 'dtu_empl'
-      return profile.first 
+      return profile.first
     end
 
     profile = account.xpath("profile_guest[@active = '1']")
@@ -147,7 +144,7 @@ class DtuBase
     if !profile.empty?
       @reason = "dtu_catch_student_active"
       @user_type = 'student'
-      return profile.first 
+      return profile.first
     end
     return nil
   end
@@ -155,12 +152,10 @@ class DtuBase
   def get_org_unit (id)
     response = request('orgunit', 'orgunit_id', id)
     return nil if response.nil?
+
+    write_org(id, response.body) if Rails.env.development?
+
     entry = Nokogiri.XML(response.body, nil, 'UTF-8')
-    if Rails.env.development?
-      File.open("spec/fixtures/dtubase/org_#{id}.local.xml", 'wb') do |f|
-        f.write(response.body)
-      end
-    end
     entry.xpath('//orgunit')
   end
 
