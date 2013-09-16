@@ -3,7 +3,7 @@ require 'nokogiri'
 
 class DtuBase
   attr_reader :reason, :email, :firstname, :lastname, :initials,
-    :matrikel_id, :user_type, :library_access, :org_units
+    :matrikel_id, :user_type, :library_access, :org_units, :address
 
   def self.lookup(attrs)
     dtubase = self.new
@@ -56,7 +56,7 @@ class DtuBase
     flag = org_unit.xpath('@fk_parentunit_id').text
     if flag != 'instgrp' && flag != 'dtu'
       @reason = 'not_dtu_org'
-      #@user_type = 'private'
+      @user_type = 'private'
     end
 
     # Find organizations unit attached to this user
@@ -68,8 +68,29 @@ class DtuBase
         @org_units << id unless @org_units.include?(id)
       end
     end
-    logger.info "Lookup complete"
 
+    # Create organization address.
+    adr = org_unit.xpath("address_dk[@is_primary_address = '1']") or
+          org_unit.xpath("address_uk[@is_primary_address = '1']")
+    org_address = extract_address (adr)
+    org_address['name'] = org_unit.xpath('@name_dk').text or
+                          org_unit.xpath('@name_uk').text
+
+    # Find the primary address
+    adr = profile.xpath("address[@is_primary_address = '1']")
+
+    #
+    user_address = extract_address (adr)
+
+    # TODO: Make sure all fields are filled
+    #user_address['street'] ||= org_address['street']
+
+    # Create address entry
+    user_address['name'] = org_address['name']
+    address = create_address(user_address)
+    @address = address.to_hash
+
+    logger.info "Lookup complete"
   end
 
 #  def success
@@ -79,7 +100,7 @@ class DtuBase
   def to_hash
     values = Hash.new
     %w(reason email library_access firstname lastname initials matrikel_id
-       user_type org_units).each do |k|
+       user_type org_units address).each do |k|
       values[k] = send(k)
     end
     values
@@ -174,6 +195,46 @@ class DtuBase
         "#{response.message}."
     end
     response
+  end
+
+  # Return hash with values for address
+  def extract_address (address)
+    hash = Hash.new
+    hash['street']   = address.xpath('@street').text
+    hash['building'] = address.xpath('@building').text
+    hash['room']     = address.xpath('@room').text
+    hash['zipcode']  = address.xpath('@zipcode').text
+    hash['city']     = address.xpath('@city').text
+    hash['country']  = address.xpath('@country').text
+    return hash
+  end
+
+  def create_address(fields)
+    address = Address.new
+    lines = Array.new
+    if !fields['building'].blank? or !fields['room'].blank? 
+      line = ''
+      sep = ''
+      if fields['building'] != ''
+        line += "Bygning "+fields['building']
+        sep = ', '
+      end
+      if fields['room'] != ''
+        line += sep + "Rum "+fields['room']
+      end
+      lines << line
+    end
+    lines = lines + fields['street'].split(/\r?\n/)
+    address.line1 = fields['name']
+    address.line2 = "Att: #{@firstname} #{@lastname}"
+    address.line3 = lines[0]
+    address.line4 = lines[1]
+    address.line5 = lines[2]
+    address.line6 = lines[3]
+    address.zipcode = fields['zipcode']
+    address.cityname = fields['city']
+    address.country = fields['country']
+    address
   end
 
   def logger
