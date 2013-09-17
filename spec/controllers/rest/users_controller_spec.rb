@@ -6,8 +6,29 @@ describe Rest::UsersController do
 
   before :all do
     dtubase_test_setup
+    @dtu_info = {
+      :reason => nil,
+      :email => 'employee@test.domain',
+      :library_access => '1',
+      :firstname => 'Test',
+      :lastname => 'Employee',
+      :initials => 'empl',
+      :matrikel_id => '1',
+      :user_type => 'dtu_empl',
+      :org_units => ['58', '55']
+    }
+    @address = {
+      "line1" => "Danmarks Tekniske Informationscenter",
+      "line2" => "Att: Test Employee",
+      "line3" => "Bygning 1, Rum 1",
+      "line4" => "Test 2",
+      "line5" => nil,
+      "line6" => nil,
+      "zipcode" => "9999",
+      "cityname" => "Test",
+      "country" => "dk"
+    }
   end
-
 
   describe "GET #show" do
     before :each do
@@ -32,10 +53,8 @@ describe Rest::UsersController do
       expect(response.header['Content-Type']).to include 'application/json'
       expanded_user = @user2.as_json
       expanded_user[:user_type] = @type.code
-      expanded_user[:dtu] = { :reason => nil, :email => 'employee@test.domain',
-        :library_access => '1', :firstname => 'Test', :lastname => 'Employee',
-        :initials => 'empl', :matrikel_id => '1', :user_type => 'dtu_empl',
-        :org_units => ['58', '55'] }
+      expanded_user[:dtu] = @dtu_info
+      expanded_user[:address] = @address
       expect(response.body).to eq expanded_user.to_json
     end
   end
@@ -57,10 +76,8 @@ describe Rest::UsersController do
         :last_name => 'Employee',
         :created_at => user.created_at, :updated_at => user.updated_at).as_json
       expanded_user[:user_type] = @type.code
-      expanded_user[:dtu] = { :reason => nil, :email => 'employee@test.domain',
-        :library_access => '1', :firstname => 'Test', :lastname => 'Employee',
-        :initials => 'empl', :matrikel_id => '1', :user_type => 'dtu_empl',
-        :org_units => ['58', '55'] }
+      expanded_user[:dtu] = @dtu_info
+      expanded_user[:address] = @address
       expect(response.body).to eq expanded_user.to_json
     end
 
@@ -74,10 +91,8 @@ describe Rest::UsersController do
       expect(response.header['Content-Type']).to include 'application/json'
       expanded_user = @user2.as_json
       expanded_user[:user_type] = @type.code
-      expanded_user[:dtu] = { :reason => nil, :email => 'employee@test.domain',
-        :library_access => '1', :firstname => 'Test', :lastname => 'Employee',
-        :initials => 'empl', :matrikel_id => '1', :user_type => 'dtu_empl',
-        :org_units => ['58', '55'] }
+      expanded_user[:dtu] = @dtu_info
+      expanded_user[:address] = @address
       expect(response.body).to eq expanded_user.to_json
     end
 

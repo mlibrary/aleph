@@ -8,7 +8,7 @@ class DtuBase
   def self.lookup(attrs)
     dtubase = self.new
     dtubase.lookup_single(attrs)
-    dtubase.to_hash
+    [ dtubase.to_hash, dtubase.address ]
   end
 
   def lookup_single(attrs)
@@ -78,12 +78,15 @@ class DtuBase
 
     # Find the primary address
     adr = profile.xpath("address[@is_primary_address = '1']")
+    adr = profile.xpath("address[position() = 1]") if adr.nil? || adr.empty?
 
     #
     user_address = extract_address (adr)
 
     # TODO: Make sure all fields are filled
-    #user_address['street'] ||= org_address['street']
+    %w(street zipcode city country).each do |f|
+      user_address[f] ||= org_address[f]
+    end
 
     # Create address entry
     user_address['name'] = org_address['name']
@@ -100,7 +103,7 @@ class DtuBase
   def to_hash
     values = Hash.new
     %w(reason email library_access firstname lastname initials matrikel_id
-       user_type org_units address).each do |k|
+       user_type org_units).each do |k|
       values[k] = send(k)
     end
     values
@@ -212,7 +215,7 @@ class DtuBase
   def create_address(fields)
     address = Address.new
     lines = Array.new
-    if !fields['building'].blank? or !fields['room'].blank? 
+    if !fields['building'].blank? or !fields['room'].blank?
       line = ''
       sep = ''
       if fields['building'] != ''

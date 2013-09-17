@@ -53,8 +53,12 @@ describe DtuBase do
       result = File.read("spec/fixtures/dtubase/#{name}.json")
       result = result.gsub(/\n */, "")
 
-      info = DtuBase.lookup(:cwis => 1)
+      address = File.read("spec/fixtures/dtubase/#{name}_address.json")
+      address = address.gsub(/\n */, "")
+
+      info, adr = DtuBase.lookup(:cwis => 1)
       expect(info.to_json).to eq result
+      expect(adr.to_json).to eq address
     end
 
   end
@@ -64,7 +68,7 @@ describe DtuBase do
       stub_request(:get, "http://localhost/?XPathExpression=/account"\
         "[@matrikel_id='1']&dbversion=dtubasen&password=p&username=x").
         to_return(:status => 404, :body => "", :headers => {})
-      info = DtuBase.lookup(:cwis => 1)
+      info, adr = DtuBase.lookup(:cwis => 1)
       expect(info['reason']).to eq "lookup_failed"
     end
   end

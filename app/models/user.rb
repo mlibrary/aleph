@@ -89,7 +89,7 @@ class User < ActiveRecord::Base
   end
 
   def expand_dtu(uid)
-    @expanded[:dtu] = DtuBase.lookup(:cwis => uid)
+    @expanded[:dtu], @expanded[:address] = DtuBase.lookup(:cwis => uid)
   end
 
   def anon?

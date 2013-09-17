@@ -12,8 +12,9 @@ class Rest::UsersController < ApplicationController
     uid = params[:id]
     identity = Identity.where(:provider => 'dtu', :uid => uid).first
     if identity.nil?
-      info = DtuBase.lookup(:cwis => uid)
-      User.create_from_dtubase_info(info)
+      info, address = DtuBase.lookup(:cwis => uid)
+      user = User.create_from_dtubase_info(info)
+      params[:id] = user.id
     else
       params[:id] = identity.user.id
     end

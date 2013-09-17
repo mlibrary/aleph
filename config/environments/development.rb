@@ -45,7 +45,7 @@ class DtuBase
 
   def write_org(id, body)
     File.open("spec/fixtures/dtubase/org_#{id}.local.xml", 'wb') do |f|
-      f.write(response.body)
+      f.write(body)
     end
   end
 end

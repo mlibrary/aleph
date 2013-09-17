@@ -34,9 +34,9 @@ class Users::SessionsController < Devise::SessionsController
     if st.is_valid?
       logger.info "Service Ticket is valid for #{st.user}"
       if session[:fake_login]
-        info = DtuBase.lookup(:cwis => session[:fake_login])
+        info, adr = DtuBase.lookup(:cwis => session[:fake_login])
       else
-        info = DtuBase.lookup(:username => st.user)
+        info, adr = DtuBase.lookup(:username => st.user)
       end
       return nil if info.nil?
       User.create_from_dtubase_info(info)
