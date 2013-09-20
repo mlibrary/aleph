@@ -1,7 +1,7 @@
 
   <div class="row">
-    <div class="offset3 span3">
-      <b class="text-error"><%= t('riyosha.sign_in.from_dtu') %></b>
+    <div class="span6">
+      <h4 class="dtu-red"><%= t('riyosha.sign_in.from_dtu') %></h4>
     </div>
     <div class="span6">
       <%= link_to I18n.t('riyosha.sign_in.dtu_user'),
@@ -27,7 +27,10 @@
 
   <div class="row">
     <div class="span12">
-      <h4><%= t('riyosha.sign_in.directly') %></h4>
+      <h4>
+        <%= t('riyosha.sign_in.non_dtu_prefix') %> -
+        <%= t('riyosha.sign_in.directly') %>
+      </h4>
     </div>
   </div>
 <%= form_for(resource, :as => resource_name,
@@ -85,11 +88,15 @@
     </div>
   </div>
 
-  <div class="row dtu-spacing">
+  <div class="row dtu-large-spacing">
     <div class="span3">
-      <b>Problems with signup</b><br />
+      <h4><%= t('riyosha.sign_in.problem') %></h4>
     </div>
     <div class="span9">
+      <a href="http://api.libguides.com/api_box.php?iid=3935&bid=15458568">
+        <%= t('riyosha.sign_in.help') %>
+      </a>
+      <br />
 <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
     <%= link_to t('riyosha.confirmation.link'),
       new_confirmation_path(resource_name) %>
