@@ -8,9 +8,10 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 [
-  { code: 'student' },
-  { code: 'private' },
-  { code: 'dtu_empl' },
+  { code: 'student', :aleph_bor_status => '88', :aleph_bor_type => '05' },
+  { code: 'private', :aleph_bor_status => '09', :aleph_bor_type => '06' },
+  { code: 'dtu_empl', :aleph_bor_status => '18', :aleph_bor_type => '08' },
+  { code: 'library', :aleph_bor_status => '02', :aleph_bor_type => '01' },
 ].each do |usertype|
   UserType.find_or_create_by_code(usertype)
 end
