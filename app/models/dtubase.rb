@@ -3,7 +3,7 @@ require 'nokogiri'
 
 class DtuBase
   attr_reader :reason, :email, :firstname, :lastname, :initials,
-    :matrikel_id, :user_type, :library_access, :org_units, :address
+    :matrikel_id, :user_type, :library_access, :org_units, :address, :cpr
 
   def self.lookup(attrs)
     dtubase = self.new
@@ -34,6 +34,7 @@ class DtuBase
     @initials = account.xpath('@dtu_initials').text
     @matrikel_id = account.xpath('@matrikel_id').text
     @library_access = account.xpath('@external_Biblioteket').text
+    @cpr = account.xpath('@cprnr').text.gsub('-', '')
     @reason = nil
     @org_units = Array.new
     logger.info "Matrikel id #{matrikel_id}"
@@ -110,6 +111,10 @@ class DtuBase
 
   def self.config
     Rails.application.config.dtubase
+  end
+
+  def cpr
+    @cpr
   end
 
   private
@@ -211,7 +216,7 @@ class DtuBase
     hash['room']     = address.xpath('@room').text
     hash['zipcode']  = address.xpath('@zipcode').text
     hash['city']     = address.xpath('@city').text
-    hash['country']  = address.xpath('@country').text
+    hash['country']  = address.xpath('@country').text.upcase
     return hash
   end
 

@@ -24,13 +24,13 @@ describe Users::SessionsController do
     it "shows local_user template" do
       get :new
       expect(response.header['Content-Type']).to include 'text/html'
-      # TODO: Should render _local_user partial
+      expect(response).to render_template '_local_user'
     end
 
     it "shows dtu_user template" do
       get :new, :template => 'dtu_user'
       expect(response.header['Content-Type']).to include 'text/html'
-      # TODO: Should render _dtu_user partial
+      expect(response).to render_template '_dtu_user'
     end
 
     it "redirects to dtu" do
@@ -53,6 +53,7 @@ describe Users::SessionsController do
       stub_valid_ticket
       stub_dtubase_orgunit('stud')
       stub_dtubase_username_request('test')
+      stub_dtubase_cwis_request('test')
       get :new, :ticket => 'ST-valid-ticket'
       expect(response.header['Content-Type']).to include 'text/html'
     end
@@ -71,6 +72,7 @@ describe Users::SessionsController do
       stub_valid_ticket
       stub_dtubase_orgunit('stud')
       stub_dtubase_username_request('test')
+      stub_dtubase_cwis_request('test')
       get :new, :ticket => 'ST-valid-ticket'
       expect(response.header['Content-Type']).to include 'text/html'
       user = User.find(ident.user_id)

@@ -7,6 +7,7 @@ class Users::SessionsController < Devise::CasServerSessionsController
     session[:template] = params[:template] if params[:template]
     session[:template] ||= 'local_user'
     if (user = ticket_valid(params['ticket']))
+      user.aleph_borrower
       sign_in_and_redirect user, :event => :authentication
     elsif params[:only] == 'dtu'
       redirect_to dtu_login_url

@@ -1,4 +1,6 @@
 class Address < ActiveRecord::Base
+  SKIP_COUNTRY_VALUES = [ 'DK', 'DANMARK' ]
+
   attr_accessible :cityname, :country, :line1, :line2, :line3, :line4,
     :line5, :line6, :zipcode
 
@@ -28,7 +30,16 @@ class Address < ActiveRecord::Base
     "#{line1}, #{line2}, #{zipcode} #{cityname}"
   end
 
-  def each
-    [line1, line2, line3, line4, line5, line6].each {|x| yield x}
+  def to_a
+    line7 = SKIP_COUNTRY_VALUES.include?(country) ? "" : "#{country}-"
+    line7 << "#{zipcode} #{cityname}"
+    [line1, line2, line3, line4, line5, line6, line7].compact
   end
+
+  def each
+    to_a.each do |x|
+      yield x unless x.blank?
+    end
+  end
+
 end

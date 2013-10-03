@@ -23,11 +23,18 @@ GIT
       xmldsig (~> 0.2)
 
 GIT
+  remote: https://github.com/dtulibrary/ruby_aleph_integration
+  revision: bbc96f207095ab534e8d7dc9d73e69345806f5f4
+  specs:
+    ruby_aleph_integration (1.0.0)
+      httparty
+      nokogiri
+
+GIT
   remote: https://github.com/dtulibrary/xmldsig
   revision: 7df1d363dfc7b1181aa2db83a831f150dd84fd39
   specs:
     xmldsig (0.2.4)
-      nokogiri
 
 GEM
   remote: https://rubygems.org/
@@ -379,6 +386,7 @@ DEPENDENCIES
   rails (~> 3.2)
   rails_best_practices
   rspec-rails
+  ruby_aleph_integration!
   rubycas-client
   sass-rails (~> 3.2.3)
   simplecov

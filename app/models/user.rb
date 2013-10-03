@@ -13,13 +13,13 @@ class User < ActiveRecord::Base
          :authentication_keys => [:email]
 
   belongs_to :user_type
+  belongs_to :user_sub_type
   has_many :identities, :dependent => :destroy
   has_many :dk_nemid_users, :dependent => :destroy
   belongs_to :address, :dependent => :destroy
 
   attr_accessible :email, :password, :password_confirmation, :remember_me,
-    :user_type_id, :authenticator, :first_name, :last_name,
-    :accept_payment_terms, :accept_printed_terms
+    :user_type_id, :authenticator, :first_name, :last_name, :user_sub_type_id
   attr_reader :direct_login
 
   # Devise does validation for email and password
@@ -91,7 +91,7 @@ class User < ActiveRecord::Base
 
   def dtu_affiliate?
     case self.user_type.code
-    when "dtu_employee", "student"
+    when "dtu_empl", "student"
       true
     else
       false
@@ -130,7 +130,7 @@ class User < ActiveRecord::Base
   end
 
   def nemid_needed?
-    if user_type.code == 'dtu_employee' || user_type.code == 'student'
+    if user_type.code == 'dtu_empl' || user_type.code == 'student'
       return false
     end
     local_cpr.nil? ? true : false;
@@ -161,13 +161,79 @@ class User < ActiveRecord::Base
     true
   end
 
+  def aleph_borrower
+     @aleph ||= Aleph::Borrower.new(self) if may_lend_printed?
+  end
+
+  def aleph_bor_status_type
+    expand
+    return [aleph_bor_status, aleph_bor_type]
+  end
+
+  def birth_day
+    expand 
+    return '' if @cpr.nil?
+    day = @cpr[0, 2].to_i
+    month = @cpr[2, 2].to_i
+    year = @cpr[4, 2].to_i
+    century = @cpr[6, 1].to_i
+    if century <= 3
+      year += 1900
+    elsif century == 4 || century == 9
+      if year <= 36
+        year += 2000
+      else
+        year += 1900
+      end
+    else
+      if year <= 57
+        year += 2000
+      else
+        year += 1800
+      end
+    end
+    format("%04d%02d%02d", year, month, day)
+  end
+
+  def gender
+    expand
+    return '' if @cpr.nil?
+    ((@cpr[9, 1].to_i % 2) == 1) ? 'M' : 'F'
+  end
+
+  def aleph_ids
+    expand
+    # Create additional ids
+    ids = Array.new
+    ids << { 'type' => '03',
+      'id' => "DTU#{@cpr}",
+      'pin'  => nil,
+    } if self.user_type.code == 'dtu_empl'
+
+    ids << { 'type' => '03',
+      'id' => @cpr,
+      'pin'  => nil,
+    } if self.user_type.code == 'student'
+
+    ids << { 'type' => '03',
+      'id' => @expanded[:dtu]['initials'].upcase,
+      'pin'  => nil,
+    } if @expanded[:dtu] && !@expanded[:dtu]['initials'].blank?
+
+    ids << { 'type' => '03',
+      'id' => @cpr,
+      'pin'  => nil,
+    } if self.user_type.code == 'private'
+    ids
+  end
+
   private
 
   def do_expand_user
     @expanded = as_json
     @expanded[:user_type] = user_type.code
-    ident = Identity.find_by_user_id_and_provider(id, 'dtu')
-    if ident
+    if dtu_affiliate?
+      ident = Identity.find_by_user_id_and_provider(id, 'dtu')
       expand_dtu ident.uid
     else
       expand_local
@@ -180,7 +246,7 @@ class User < ActiveRecord::Base
     @dtubase.lookup_single(:cwis => uid)
     @expanded[:dtu] = @dtubase.to_hash
     @expanded[:address] = @dtubase.address
-    #@cpr = @dtubase.cpr
+    @cpr = @dtubase.cpr
   end
 
   def expand_local
@@ -189,7 +255,11 @@ class User < ActiveRecord::Base
   end
 
   def set_may_lend_printed
-    if user_type.code == 'dtu_employee' || user_type.code == 'student'
+    expand
+    if @cpr.blank?
+      return false
+    end
+    if user_type.code == 'dtu_empl' || user_type.code == 'student'
       return true
     end
     if !nemid_needed? && accept_payment_terms && accept_printed_terms
@@ -203,6 +273,16 @@ class User < ActiveRecord::Base
       return nemid.cpr unless nemid.cpr.blank?
     end
     nil
+  end
+
+  def aleph_bor_status
+    (user_sub_type.nil? ? nil : user_sub_type.aleph_bor_status) ||
+      user_type.aleph_bor_status
+  end
+
+  def aleph_bor_type
+    (user_sub_type.nil? ? nil : user_sub_type.aleph_bor_type) ||
+      user_type.aleph_bor_type
   end
 
 end

@@ -26,7 +26,7 @@ describe Rest::UsersController do
       "line6" => nil,
       "zipcode" => "9999",
       "cityname" => "Test",
-      "country" => "dk"
+      "country" => "DK"
     }
   end
 
