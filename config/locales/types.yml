@@ -4,4 +4,13 @@ en:
       user_type:
         'private': 'Private'
         'student': 'Student'
-        'dtuempl': 'DTU Employee'
+        'dtu_empl': 'DTU Employee'
+        'library': 'Library'
+      user_sub_type:
+        library:
+          research_with: 'Research library'
+          research_without: 'Research institution without library'
+          nordic_public: 'Nordic public library'
+          world_public: 'Foreign public library'
+          public_dk: 'Danish Public library'
+          dtu: 'DTU library'

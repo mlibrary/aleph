@@ -55,4 +55,18 @@ describe UserType do
       :code => user_type.code)).not_to be_valid
   end
 
+  it "restrict delete with subtypes" do
+    subtype = FactoryGirl.create(:user_sub_type)
+    assert_raise ActiveRecord::DeleteRestrictionError do
+      subtype.user_type.destroy
+    end
+  end
+
+  it "restrict delete with users" do
+    user = FactoryGirl.create(:user)
+    assert_raise ActiveRecord::DeleteRestrictionError do
+      user.user_type.destroy
+    end
+  end
+
 end

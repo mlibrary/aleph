@@ -117,6 +117,15 @@ ActiveRecord::Schema.define(:version => 20140109125056) do
 
   add_index "ticket_granting_tickets", ["ticket"], :name => "index_ticket_granting_tickets_on_ticket"
 
+  create_table "user_sub_types", :force => true do |t|
+    t.string   "code",             :null => false
+    t.integer  "user_type_id",     :null => false
+    t.integer  "aleph_bor_status"
+    t.integer  "aleph_bor_type"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
   create_table "user_types", :force => true do |t|
     t.string   "code",                            :null => false
     t.datetime "created_at",                      :null => false

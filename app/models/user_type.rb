@@ -6,6 +6,7 @@ class UserType < ActiveRecord::Base
   validates :aleph_bor_type, :numericality => { :only_integer => true }
 
   has_many :users, :dependent => :restrict
+  has_many :user_sub_types, :dependent => :restrict
 
   def name
     I18n.t code, :scope => 'riyosha.code.user_type'
