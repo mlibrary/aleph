@@ -54,7 +54,7 @@ class DtuBase
 
     # Org unit must be in the correct groping
     flag = org_unit.xpath('@fk_parentunit_id').text
-    if flag != 'instgrp' && flag != 'dtu'
+    if flag != 'instgrp' && flag != 'dtu' && flag != 'admgrp'
       @reason = 'not_dtu_org'
       @user_type = 'private'
     end
