@@ -31,6 +31,11 @@ describe DtuBase do
       lookup("dtu_employee_active", '58')
     end
 
+    it "lookups dtu employee third level" do
+      stub_dtubase_orgunit('58')
+      lookup("dtu_employee_third_level", '5801')
+    end
+
     it "lookups student phd primary" do
       lookup("student_phd_primary", '58')
     end
@@ -48,7 +53,8 @@ describe DtuBase do
     end
 
     def lookup(name, org_unit)
-      stub_dtubase_cwis_request(name, org_unit)
+      stub_dtubase_orgunit(org_unit)
+      stub_dtubase_cwis_request(name)
 
       result = File.read("spec/fixtures/dtubase/#{name}.json")
       result = result.gsub(/\n */, "")

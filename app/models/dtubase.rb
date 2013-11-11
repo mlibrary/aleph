@@ -53,8 +53,7 @@ class DtuBase
     org_unit = get_org_unit(org_unit_id)
 
     # Org unit must be in the correct groping
-    flag = org_unit.xpath('@fk_parentunit_id').text
-    if flag != 'instgrp' && flag != 'dtu' && flag != 'admgrp'
+    unless valid_dtu_org_unit(org_unit)
       @reason = 'not_dtu_org'
       @user_type = 'private'
     end
@@ -238,6 +237,20 @@ class DtuBase
     address.cityname = fields['city']
     address.country = fields['country']
     address
+  end
+
+  def valid_dtu_org_unit(org_unit)
+    # Valid if stud org unit
+    return true if org_unit.xpath('@orgunit_id').text == 'stud'
+
+    # Valid if parent is instgrp or admgrp
+    flag = org_unit.xpath('@fk_parentunit_id').text
+    while flag != ''
+      return true if flag == 'instgrp' || flag == 'admgrp'
+      org_unit = get_org_unit(flag)
+      flag = org_unit.xpath('@fk_parentunit_id').text
+    end
+    return false
   end
 
   def logger

@@ -48,7 +48,8 @@ describe Rest::UsersController do
     end
 
     it "requests dtubase info" do
-      stub_dtubase_cwis_request('dtu_employee_primary', '58')
+      stub_dtubase_orgunit('58')
+      stub_dtubase_cwis_request('dtu_employee_primary')
       get :show, id: @user2, :format => :json
       expect(response.header['Content-Type']).to include 'application/json'
       expanded_user = @user2.as_json
@@ -65,7 +66,8 @@ describe Rest::UsersController do
     end
 
     it "creates dtu employee from cwis" do
-      stub_dtubase_cwis_request('dtu_employee_primary', '58')
+      stub_dtubase_orgunit('58')
+      stub_dtubase_cwis_request('dtu_employee_primary')
       get :dtu, :id => 1, :format => :json
       expect(User.all.count).to eq 1
       user = User.all.first
@@ -86,7 +88,8 @@ describe Rest::UsersController do
       @user2 = FactoryGirl.create(:user, :user_type => @type)
       @identity = FactoryGirl.create(:identity, :provider => 'dtu',
         :uid => '1', :user => @user2)
-      stub_dtubase_cwis_request('dtu_employee_primary', '58')
+      stub_dtubase_orgunit('58')
+      stub_dtubase_cwis_request('dtu_employee_primary')
       get :dtu, :id => 1, :format => :json
       expect(response.header['Content-Type']).to include 'application/json'
       expanded_user = @user2.as_json

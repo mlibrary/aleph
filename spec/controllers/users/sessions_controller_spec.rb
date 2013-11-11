@@ -51,7 +51,8 @@ describe Users::SessionsController do
 
     it "validates ticket" do
       stub_valid_ticket
-      stub_dtubase_username_request('test', 'stud')
+      stub_dtubase_orgunit('stud')
+      stub_dtubase_username_request('test')
       get :new, :ticket => 'ST-valid-ticket'
       expect(response.header['Content-Type']).to include 'text/html'
     end
@@ -59,7 +60,8 @@ describe Users::SessionsController do
     it "fakes validate ticket" do
       session[:fake_login] = 1
       stub_valid_ticket
-      stub_dtubase_cwis_request('test', 'stud')
+      stub_dtubase_orgunit('stud')
+      stub_dtubase_cwis_request('test')
       get :new, :ticket => 'ST-valid-ticket'
       expect(response.header['Content-Type']).to include 'text/html'
     end
@@ -67,7 +69,8 @@ describe Users::SessionsController do
     it "update email on existing user" do
       ident = FactoryGirl.create(:identity, :provider => 'dtu', :uid => '1')
       stub_valid_ticket
-      stub_dtubase_username_request('test', 'stud')
+      stub_dtubase_orgunit('stud')
+      stub_dtubase_username_request('test')
       get :new, :ticket => 'ST-valid-ticket'
       expect(response.header['Content-Type']).to include 'text/html'
       user = User.find(ident.user_id)
