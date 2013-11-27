@@ -85,6 +85,12 @@ module Riyosha
       :password => '',
     }
 
+    config.cpr = {
+      :url => '',
+      :username => '',
+      :password => '',
+    }
+
     config.sendit_url = "http://localhost"
     config.sendit_from = "from@local.host"
 

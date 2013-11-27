@@ -14,3 +14,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require jquery.cookie
+//= require nemid
+//= require bootstrap

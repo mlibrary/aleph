@@ -1,0 +1,125 @@
+<%= form_for(resource, :as => resource_name,
+      :url => registration_path(resource_name),
+      :html => { :method => :put }) do |f| %>
+
+  <div class="row">
+    <div class="span3">
+      <%= f.label :first_name %>
+      <%= f.text_field :first_name, :autofocus => true, :tabindex => '1' %>
+    </div>
+    <div class="span3">
+      <%= f.label :email %>
+      <%= f.email_field :email, :tabindex => '3' %>
+    </div>
+    <div class="span3">
+      <%= f.label :current_password %>
+      <%= f.password_field :current_password, :class => 'no-margin',
+          :tabindex => '4' %>
+    </div>
+    <div class="span3">
+      <label>&nbsp;</label>
+      <button type="submit" class="btn btn-primary", :tabindex="7">
+        <%= I18n.t('riyosha.edit.submit') %>
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span3">
+      <%= f.label :last_name %>
+      <%= f.text_field :last_name, :tabindex => '2' %>
+    </div>
+    <div class="span3">
+      <%= f.check_box :accept_payment_terms %>
+      <%= t('riyosha.edit.payment_terms.description') %><br/>
+      <a href="<%= t('riyosha.edit.payment_terms.link') %>">
+        <%= t('riyosha.edit.payment_terms.link_text') %>
+      </a>
+    </div>
+    <div class="span3">
+      <%= f.label :password, t('riyosha.edit.new_password') %>
+      <%= f.password_field :password, :autocomplete => "off",
+          :class => 'no-margin', :tabindex => '5' %>
+      <span class="help-block"><%= t('riyosha.edit.leave') %></span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span3">
+    <% if @user.nemid_needed? %>
+      <%= link_to I18n.t('riyosha.edit.printed_signup'),
+          new_dk_nemid_user_session_path, :class => 'btn' %>
+    <% end %>
+    </div>
+    <div class="span3">
+      <%= f.check_box :accept_printed_terms %>
+      <%= t('riyosha.edit.printed_terms.description') %><br/>
+      <a href="<%= t('riyosha.edit.printed_terms.link') %>">
+        <%= t('riyosha.edit.printed_terms.link_text') %>
+      </a>
+    </div>
+    <div class="span3">
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation, :tabindex => '6' %>
+    </div>
+  </div>
+
+<% end %>
+
+<div class="row">
+  <div class="span12">
+    <hr/>
+  </div>
+</div>
+
+<% if @user.address %>
+<div class="row">
+  <div class="span12">
+    <hr/>
+  </div>
+</div>
+
+<div class="row">
+  <div class="span12">
+    <b><%= I18n.t('riyosha.edit.user_address') %></b>
+  </div>
+</div>
+
+<div class="row">
+  <div class="span9">
+    <% @user.address.each do |line| %>
+    <%   unless line.blank?  %>
+      <%= line %><br/>
+    <%   end %>
+    <% end %>
+    <%= @user.address.zipcode %> <%= @user.address.cityname %><br/>
+  </div>
+  <div class="span3">
+    <a href="<%= user_update_address_path(@user) %>">
+      <button type="submit" class="btn">
+        <%= I18n.t('riyosha.edit.update_address') %>
+      </button>
+    </a>
+  </div>
+</div>
+
+<% end %>
+<!--
+<div class="row">
+  <div class="span12">
+    <h4><%= t('riyosha.edit.cancel.title') %></h4>
+  </div>
+</div>
+
+<div class="row">
+  <div class="span3">
+    <%= t('riyosha.edit.cancel.text') %>
+  </div>
+  <div class="span9">
+    <%= button_to t('riyosha.edit.cancel.submit'),
+          registration_path(resource_name),
+          :data => { :confirm => t('riyosha.edit.cancel.confirm') },
+          :method => :delete,
+          :class => 'btn' %>
+  </div>
+</div>
+-->

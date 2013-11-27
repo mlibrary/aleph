@@ -1,6 +1,8 @@
 require "omniauth-facebook"
 require "omniauth-linkedin-oauth2"
 require "omniauth-google-oauth2"
+require "devise_cas_server_extension"
+require "devise_dk_nemid"
 
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
@@ -198,7 +200,7 @@ Devise.setup do |config|
 
   # Configure the default scope given to Warden. By default it's the first
   # devise role declared in your routes (usually :user).
-  # config.default_scope = :user
+  config.default_scope = :user
 
   # Set this configuration to false if you want /users/sign_out to sign out
   # only the current scope. By default, Devise signs out all scopes.

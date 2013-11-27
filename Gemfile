@@ -17,6 +17,8 @@ gem 'bootstrap-sass', '~> 2.3.0'
 gem 'rubycas-client'
 gem 'httparty'
 gem 'nokogiri'
+gem 'devise_dk_nemid', :git => 'https://github.com/dtulibrary/devise_dk_nemid'
+gem 'xmldsig', :git => 'https://github.com/dtulibrary/xmldsig'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'
@@ -30,6 +32,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
   gem 'findit_font', :git => 'git://github.com/dtulibrary/findit_font.git'
   gem 'turbo-sprockets-rails3'
+  gem 'jquery-cookie-rails'
 end
 
 group :development, :test do
