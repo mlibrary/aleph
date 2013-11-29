@@ -30,8 +30,8 @@ class User < ActiveRecord::Base
       'private')).first.id
 
     if identity.nil?
-      user = self.where(:email => auth.info.email, :user_type_id =>
-        type_id).first
+      user = self.where(:email => auth.info.email.downcase, :user_type_id =>
+        type_id).first unless auth.info.email.blank?
       user = self.create_from_omniauth(auth, type_id) unless user
       return nil if user.nil?
 
@@ -59,7 +59,7 @@ class User < ActiveRecord::Base
 
   def update_from_omniauth(auth)
     skip_reconfirmation!
-    self.email = auth.info.email
+    self.email = auth.info.email.downcase
     self.first_name = auth.info.first_name
     self.last_name = auth.info.last_name
     confirm!
