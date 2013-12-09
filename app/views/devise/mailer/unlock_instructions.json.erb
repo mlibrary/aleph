@@ -1,0 +1,10 @@
+<%
+  params = Hash.new
+  params['user'] = @resource.as_json
+  params['to'] = @email
+  params['unlock_url'] = unlock_url(@resource,
+    :unlock_token => @resource.unlock_token)
+  params['from'] = config.sendit_from
+  params['priority'] = 'now'
+%>
+<%= params.to_json.html_safe %>
