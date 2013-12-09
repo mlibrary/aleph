@@ -44,4 +44,7 @@ Riyosha::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # Tell Action Mailer to deliver emails through sendit.
+  config.action_mailer.delivery_method = :sendit_delivery
 end

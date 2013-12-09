@@ -1,5 +1,6 @@
 Riyosha::Application.configure do
-  # Settings specified here will take precedence over those in config/application.rb
+  # Settings specified here will take precedence over those in
+  # config/application.rb
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
@@ -34,6 +35,9 @@ Riyosha::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # Tell Action Mailer to deliver emails to the real world and not sendit.
+  config.action_mailer.delivery_method = :smtp
 end
 
 class DtuBase
