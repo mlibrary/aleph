@@ -21,8 +21,8 @@ class User < ActiveRecord::Base
 #  validates :password, :presence => true
 #  validates :password_confirmation, :presence => true
   validates :user_type, :presence => true
-  validates :first_name, :presence => true, :if => "!anon?"
-  validates :last_name, :presence => true, :if => "!anon?"
+  validates :first_name, :presence => true, :unless => "anon?"
+  validates :last_name, :presence => true, :unless => "anon?"
 
   def self.login_from_omniauth(auth)
     identity = Identity.find_with_omniauth(auth)
