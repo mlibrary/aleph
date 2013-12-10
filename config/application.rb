@@ -86,6 +86,7 @@ module Riyosha
     }
 
     config.sendit_url = "http://localhost"
+    config.sendit_from = "from@local.host"
 
     config.main_service_url = ""
 
