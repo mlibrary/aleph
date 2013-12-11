@@ -130,7 +130,11 @@ class DtuBase
       else
         profile = account.xpath(
           "profile_guest[@fk_profile_id = #{primary_id} and @active = '1']")
-        @user_type = "dtu_empl"
+        if @library_access == "1"
+          @user_type = "dtu_empl"
+        else
+          @user_type = "private"
+        end
       end
     end
 
