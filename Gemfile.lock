@@ -7,9 +7,9 @@ GIT
 
 GIT
   remote: https://github.com/dtulibrary/devise_cas_server_extension
-  revision: a0639423e26eec94a2dae0cb7824c1e6088fc29b
+  revision: 1bfc199b83cc17d74205e2ea1120d8a8cd82b493
   specs:
-    devise_cas_server_extension (1.0.5)
+    devise_cas_server_extension (1.0.6)
       devise
 
 GEM
@@ -108,11 +108,11 @@ GEM
       railties (>= 3.2.6, < 5)
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
-    devise_cas_authenticatable (1.3.3)
+    devise_cas_authenticatable (1.3.4)
       devise (>= 1.2.0)
       rubycas-client (>= 2.2.1)
     diff-lcs (1.2.5)
-    docile (1.1.1)
+    docile (1.1.2)
     erubis (2.7.0)
     execjs (2.0.2)
     factory_girl (4.3.0)
@@ -120,7 +120,7 @@ GEM
     factory_girl_rails (4.3.0)
       factory_girl (~> 4.3.0)
       railties (>= 3.0.0)
-    faraday (0.8.8)
+    faraday (0.8.9)
       multipart-post (~> 1.2.0)
     fastercsv (1.5.5)
     formtastic (2.2.1)
@@ -146,7 +146,7 @@ GEM
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.1)
-    jwt (0.1.8)
+    jwt (0.1.10)
       multi_json (>= 1.5)
     kaminari (0.15.0)
       actionpack (>= 3.0.0)
@@ -160,12 +160,12 @@ GEM
       activerecord (~> 3.1)
       activesupport (~> 3.1)
       polyamorous (~> 0.5.0)
-    metaclass (0.0.1)
+    metaclass (0.0.2)
     mime-types (1.25.1)
     mini_portile (0.5.2)
-    mocha (0.14.0)
+    mocha (1.0.0)
       metaclass (~> 0.0.1)
-    multi_json (1.8.2)
+    multi_json (1.8.4)
     multi_xml (0.5.5)
     multipart-post (1.2.0)
     net-scp (1.1.2)
@@ -186,8 +186,8 @@ GEM
     omniauth (1.1.4)
       hashie (>= 1.2, < 3)
       rack
-    omniauth-facebook (1.5.1)
-      omniauth-oauth2 (~> 1.1.0)
+    omniauth-facebook (1.6.0)
+      omniauth-oauth2 (~> 1.1)
     omniauth-google-oauth2 (0.2.2)
       omniauth (~> 1.0)
       omniauth-oauth2

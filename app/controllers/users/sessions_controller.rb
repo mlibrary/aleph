@@ -1,7 +1,7 @@
 require 'rubycas-client'
 require 'dtubase'
 
-class Users::SessionsController < Devise::SessionsController
+class Users::SessionsController < Devise::CasServerSessionsController
 
   def new
     session[:template] = params[:template] if params[:template]
@@ -32,7 +32,6 @@ class Users::SessionsController < Devise::SessionsController
     st = CASClient::ServiceTicket.new(ticket, url_for(:only_path => false))
     cas_client.validate_service_ticket(st)
     if st.is_valid?
-      logger.info "Service Ticket is valid for #{st.user}"
       if session[:fake_login]
         info, adr = DtuBase.lookup(:cwis => session[:fake_login])
       else
