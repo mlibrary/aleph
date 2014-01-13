@@ -16,6 +16,14 @@ class Address < ActiveRecord::Base
     values
   end
 
+  def <<(value)
+    @index ||= 1
+    if @index < 7
+      self.send("line#{@index}=", value)
+      @index += 1;
+    end
+  end
+
   def name
     "#{line1}, #{line2}, #{zipcode} #{cityname}"
   end
