@@ -1,4 +1,5 @@
 <div class="flash_messages">
+  <% devise_error_messages! %>
   <% [:success, :notice, :error, :alert].each do |type| %>
     <%- alert_class = type == :notice ? 'info' : type %>
     <% if flash[type].respond_to? :each %>

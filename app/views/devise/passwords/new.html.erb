@@ -7,11 +7,6 @@
     :url => password_path(resource_name),
     :html => { :method => :post }) do |f| %>
 <div class="row">
-  <div class="span12">
-    <%= devise_error_messages! %>
-  </div>
-</div>
-<div class="row">
   <div class="span3">
     <%= f.label :email %>
     <%= f.email_field :email, :autofocus => true %>

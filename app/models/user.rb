@@ -17,9 +17,7 @@ class User < ActiveRecord::Base
     :user_type_id, :authenticator, :first_name, :last_name
   attr_reader :direct_login
 
-  validates :email, :presence => true, :uniqueness => true
-#  validates :password, :presence => true
-#  validates :password_confirmation, :presence => true
+  # Devise does validation for email and password
   validates :user_type, :presence => true
   validates :first_name, :presence => true, :unless => "anon?"
   validates :last_name, :presence => true, :unless => "anon?"
