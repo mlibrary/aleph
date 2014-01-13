@@ -217,7 +217,8 @@ class DtuBase
 
   def create_address(fields)
     address = Address.new
-    lines = Array.new
+    address << fields['name']
+    address << "Att: #{@firstname} #{@lastname}"
     if !fields['building'].blank? or !fields['room'].blank?
       line = ''
       sep = ''
@@ -228,15 +229,9 @@ class DtuBase
       if fields['room'] != ''
         line += sep + "Rum "+fields['room']
       end
-      lines << line
+      address << line
     end
-    lines = lines + fields['street'].split(/\r?\n/)
-    address.line1 = fields['name']
-    address.line2 = "Att: #{@firstname} #{@lastname}"
-    address.line3 = lines[0]
-    address.line4 = lines[1]
-    address.line5 = lines[2]
-    address.line6 = lines[3]
+    fields['street'].split(/\r?\n/).each { |line| address << line }
     address.zipcode = fields['zipcode']
     address.cityname = fields['city']
     address.country = fields['country']
