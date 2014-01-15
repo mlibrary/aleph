@@ -38,11 +38,11 @@ en:
         confirm: "Are you sure?"
       payment_terms:
         description: "Yes, I accept the payment terms"
-        link: "http://"
+        link: "http://www.dtic.dtu.dk/english/servicemenu/find/borrow/payment"
         link_text: "Click here to read the payment terms"
       printed_terms:
         description: "Yes, I accept the lending policy for printed material"
-        link: "http://"
+        link: "http://www.dtic.dtu.dk/english/servicemenu/find/borrow"
         link_text: "Click here to read the lending policy"
       dtu_base_reference: "Information about dtu users are stored in the dtu base. Any wrong or missing information must be changed there."
       dtu_base_link_text: "Click here to go to the DTUbase change page"
