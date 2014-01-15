@@ -1,4 +1,4 @@
-class AddUserTermAndAddress < ActiveRecord::Migration
+class AddUserTermsAndAddress < ActiveRecord::Migration
   def change
     add_column :users, :accept_payment_terms, :boolean, :default => false
     add_column :users, :accept_printed_terms, :boolean, :default => false

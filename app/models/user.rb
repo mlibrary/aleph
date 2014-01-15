@@ -184,7 +184,7 @@ class User < ActiveRecord::Base
   end
 
   def expand_local
-    @expanded[:address] = user.address.to_hash
+    @expanded[:address] = address.to_hash if address
     @cpr = local_cpr
   end
 
