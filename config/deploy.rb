@@ -49,9 +49,6 @@ namespace :config do
   task :symlink do
     link_config_file('database.yml')
     link_config_file('application.local.rb')
-    link_config_file('initializers/devisesetup.local.rb')
-    link_config_file('initializers/secret_token.local.rb')
-    link_config_file('initializers/dtuauth.local.rb')
   end
 end
 
