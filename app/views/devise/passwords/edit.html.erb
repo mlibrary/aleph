@@ -7,6 +7,8 @@
 <%= form_for(resource, :as => resource_name,
     :url => password_path(resource_name),
     :html => { :method => :put }) do |f| %>
+  <%= f.hidden_field :reset_password_token %>
+
   <div class="row">
     <div class="span3">
       <%= f.label :password, t('riyosha.password.new') %>
