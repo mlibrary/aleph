@@ -14,9 +14,9 @@ GIT
 
 GIT
   remote: https://github.com/dtulibrary/ruby_aleph_integration
-  revision: bbc96f207095ab534e8d7dc9d73e69345806f5f4
+  revision: 74ab82605929485e9ca4bc9fdd5b49687ee03536
   specs:
-    ruby_aleph_integration (1.0.0)
+    ruby_aleph_integration (1.0.1)
       httparty
       nokogiri
 

@@ -64,7 +64,7 @@ describe DtuBase do
 
       info, adr = DtuBase.lookup(:cwis => 1)
       expect(info.to_json).to eq result
-      expect(adr.to_json).to eq address
+      expect(adr.to_hash.to_json).to eq address
     end
 
   end

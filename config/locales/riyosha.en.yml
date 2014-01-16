@@ -36,22 +36,17 @@ en:
         text: "Unhappy?"
         submit: "Cancel my account"
         confirm: "Are you sure?"
-      payment_terms:
-        description: "Yes, I accept the payment terms"
-        link: "http://www.dtic.dtu.dk/english/servicemenu/find/borrow/payment"
-        link_text: "Click here to read the payment terms"
-      printed_terms:
-        description: "Yes, I accept the lending policy for printed material"
-        link: "http://www.dtic.dtu.dk/english/servicemenu/find/borrow"
-        link_text: "Click here to read the lending policy"
+      basic_information: "Basic information"
+      lending_information: "Lending information"
+      enable_lending_printed: "Enable book lending through DTU book system"
+      payment_terms: 'Yes, I accept the <a href="http://www.dtic.dtu.dk/english/servicemenu/find/borrow/payment"> payment terms</a>'
+      printed_terms: 'Yes, I accept the <a href="http://www.dtic.dtu.dk/english/servicemenu/find/borrow">lending policy</a>'
+      allow_lending_printed: "You may lend printed material"
       dtu_base_reference: "Information about dtu users are stored in the dtu base. Any wrong or missing information must be changed there."
       dtu_base_link_text: "Click here to go to the DTUbase change page"
       need:
-        accept: "Before lending printed material you must "
-        nemid: "login with NemID"
-        cpr: "relogin through NemID"
-        payment_terms: "accept the payment terms"
-        printed_terms: "accept the lending policy"
+        payment_terms: "You must accept the payment terms"
+        printed_terms: "You must accept the lending policy"
       user_address: "The address we use"
       update_address: "Update address from CPR"
     confirmation:

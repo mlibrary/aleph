@@ -2,6 +2,8 @@ class Rest::UsersController < ApplicationController
   def show
     @user = User.find_by_id(params[:id])
     @expanded_user = @user.expand
+    @expanded_user[:address] = @expanded_user[:address].to_hash if
+      @expanded_user[:address]
     respond_to do |format|
       format.json { render :json => @expanded_user }
       format.text { render :text => @user.id }

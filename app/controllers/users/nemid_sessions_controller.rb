@@ -1,6 +1,19 @@
 require 'dtubase'
 
 class Users::NemidSessionsController < Devise::DkNemidSessionsController
+  def new
+    flash[:error] = Array.new
+    %w{payment_terms printed_terms}.each do |term|
+      if params["accept_#{term}"] != '1'
+        flash[:error] << I18n.t(term, :scope => 'riyosha.edit.need')
+      end
+    end
+    if flash[:error].empty?
+      super
+    else
+      redirect_to edit_user_registration_path
+    end
+  end
 
   # Devise doen't return in create function, so can't add code after
   # a super call.
@@ -32,4 +45,7 @@ class Users::NemidSessionsController < Devise::DkNemidSessionsController
     flash.clear
   end
 
+  def auth_options
+    super.merge({:recall => "users/registration#edit"})
+  end
 end

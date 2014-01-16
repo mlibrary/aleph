@@ -90,8 +90,7 @@ class DtuBase
 
     # Create address entry
     user_address['name'] = org_address['name']
-    address = create_address(user_address)
-    @address = address.to_hash
+    @address = create_address(user_address)
 
     logger.info "Lookup complete"
   end

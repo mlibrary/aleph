@@ -105,30 +105,6 @@ class User < ActiveRecord::Base
     @may_lend_printed ||= set_may_lend_printed
   end
 
-  def requirements_for_lending_printed
-    if dtu_affiliate?
-      return nil
-    end
-    nemid_needed = nemid_needed?
-    # If no part of the process completed, assume the user hasn't begun
-    # the process and return an empty list of requirements.
-    if nemid_needed && !accept_payment_terms && !accept_printed_terms
-      return nil
-    end
-    list = Array.new
-    if dk_nemid_users.nil?
-      list << I18n.t('riyosha.edit.need.nemid')
-    elsif nemid_needed
-      list << I18n.t('riyosha.edit.need.cpr')
-    end
-    if !accept_payment_terms
-      list << I18n.t('riyosha.edit.need.payment_terms')
-    end
-    if !accept_printed_terms
-      list << I18n.t('riyosha.edit.need.printed_terms')
-    end
-  end
-
   def nemid_needed?
     if user_type.code == 'dtu_empl' || user_type.code == 'student'
       return false
@@ -227,6 +203,11 @@ class User < ActiveRecord::Base
     ids
   end
 
+  def address_lines
+    expand
+    @expanded[:address] ? @expanded[:address].to_a : Array.new
+  end
+
   private
 
   def do_expand_user
@@ -250,7 +231,7 @@ class User < ActiveRecord::Base
   end
 
   def expand_local
-    @expanded[:address] = address.to_hash if address
+    @expanded[:address] = address unless address.nil?
     @cpr = local_cpr
   end
 
@@ -262,7 +243,7 @@ class User < ActiveRecord::Base
     if user_type.code == 'dtu_empl' || user_type.code == 'student'
       return true
     end
-    if !nemid_needed? && accept_payment_terms && accept_printed_terms
+    if !nemid_needed?
       return true
     end
     false

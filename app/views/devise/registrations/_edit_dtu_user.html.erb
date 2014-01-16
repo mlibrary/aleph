@@ -1,14 +1,41 @@
 
   <div class="row">
     <div class="span12">
+      <h5><%= I18n.t('riyosha.edit.basic_information') %></h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span9">
+      <%= @user.email %><br/>
+      <% @user.address_lines.each do |line| %>
+        <%= line %><br/>
+      <% end %>
+    </div>
+    <div class="span3">
       <%= I18n.t('riyosha.edit.dtu_base_reference') %>
+      <a href="https://www.dtubasen.dtu.dk/admin">
+        <%= I18n.t('riyosha.edit.dtu_base_link_text') %>
+      </a>
     </div>
   </div>
 
   <div class="row">
     <div class="span12">
-      <a href="http://portalen.dtu.dk/dtubasen">
-        <%= I18n.t('riyosha.edit.dtu_base_link_text') %>
-      </a>
+      <h5><%= I18n.t('riyosha.edit.lending_information') %></h5>
     </div>
   </div>
+
+<% if @user.may_lend_printed? %>
+  <div class="row">
+    <div class="span12">
+      <%= I18n.t('riyosha.edit.allow_lending_printed') %>
+    </div>
+  </div>
+<% else %>
+  <div class="row">
+    <div class="span12">
+      Failed to create aleph entry
+    </div>
+  </div>
+<% end %>
