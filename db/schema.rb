@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140117065846) do
+ActiveRecord::Schema.define(:version => 20140117071815) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -160,6 +160,7 @@ ActiveRecord::Schema.define(:version => 20140117065846) do
     t.string   "last_name"
     t.integer  "address_id"
     t.integer  "user_sub_type_id"
+    t.string   "librarycard"
   end
 
   add_index "users", ["address_id"], :name => "index_users_on_address_id"

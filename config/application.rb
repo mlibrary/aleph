@@ -96,6 +96,12 @@ module Riyosha
 
     config.main_service_url = ""
 
+    config.dtu_card = {
+      :server => "",
+      :user => "",
+      :password => "",
+    }
+    
     if File.exists? File.dirname(__FILE__) + '/../application.local.rb'
       require File.dirname(__FILE__) + '/../application.local.rb'
     end

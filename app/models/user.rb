@@ -19,7 +19,8 @@ class User < ActiveRecord::Base
   belongs_to :address, :dependent => :destroy
 
   attr_accessible :email, :password, :password_confirmation, :remember_me,
-    :user_type_id, :authenticator, :first_name, :last_name, :user_sub_type_id
+    :user_type_id, :authenticator, :first_name, :last_name, :user_sub_type_id,
+    :librarycard
   attr_reader :direct_login
 
   # Devise does validation for email and password
@@ -181,6 +182,7 @@ class User < ActiveRecord::Base
     expand
     # Create additional ids
     ids = Array.new
+
     ids << { 'type' => '03',
       'id' => "DTU#{@cpr}",
       'pin'  => nil,
@@ -200,6 +202,12 @@ class User < ActiveRecord::Base
       'id' => @cpr,
       'pin'  => nil,
     } if self.user_type.code == 'private'
+
+    ids << { 'type' => '01',
+      'id' => librarycard,
+      'pin' => nil,
+    } unless librarycard.blank?
+
     ids
   end
 
