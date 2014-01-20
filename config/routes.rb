@@ -13,6 +13,8 @@ Riyosha::Application.routes.draw do
   devise_scope :user do
     get "users/:id/update_address", :to => "users/registrations#update_address",
       :as => "user_update_address"
+    get "users/library", :to => "users/registrations#new_library", :as =>
+      "user_new_library"
   end
 
   devise_for :dk_nemid_users,

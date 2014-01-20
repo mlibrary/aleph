@@ -18,15 +18,17 @@ class User < ActiveRecord::Base
   has_many :dk_nemid_users, :dependent => :destroy
   belongs_to :address, :dependent => :destroy
 
+  accepts_nested_attributes_for :address
+
   attr_accessible :email, :password, :password_confirmation, :remember_me,
     :user_type_id, :authenticator, :first_name, :last_name, :user_sub_type_id,
-    :librarycard
+    :librarycard, :address_attributes
   attr_reader :direct_login
 
   # Devise does validation for email and password
   validates :user_type, :presence => true
-  validates :first_name, :presence => true, :unless => "anon?"
-  validates :last_name, :presence => true, :unless => "anon?"
+  validates :first_name, :presence => true, :if => "require_first_name?"
+  validates :last_name, :presence => true, :if => "require_last_name?"
 
   def self.login_from_omniauth(auth)
     identity = Identity.find_with_omniauth(auth)
@@ -89,6 +91,10 @@ class User < ActiveRecord::Base
 
   def anon?
     self.user_type.code == 'anon'
+  end
+
+  def library?
+    self.user_type.code == 'library'
   end
 
   def dtu_affiliate?
@@ -275,6 +281,14 @@ class User < ActiveRecord::Base
   def aleph_bor_type
     (user_sub_type.nil? ? nil : user_sub_type.aleph_bor_type) ||
       user_type.aleph_bor_type
+  end
+
+  def require_first_name?
+    !anon?
+  end
+
+  def require_last_name?
+    !(anon? || library?)
   end
 
 end

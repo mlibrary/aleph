@@ -7,6 +7,7 @@ en:
       with_provider: "Sign up using your %{provider} account"
       social: "Sign up through social network"
       non_dtu_prefix: &non_dtu_prefix "For Non-DTU users"
+      library: "Sign up as library"
     sign_in:
       non_dtu: "Login as non-DTU user"
       dtu_user: "Sign in as DTU user"
@@ -49,6 +50,15 @@ en:
       must_accept_terms: "You must accept the payment terms and lending policy"
       user_address: "The address we use"
       update_address: "Update address from CPR"
+      library_name: "Library name"
+      address2: "Address"
+      address3: &adr_cont "Address (continued)"
+      address4: *adr_cont
+      address5: *adr_cont
+      library_type: "Type of library (statistical use)"
+      library_number: "Danish library number"
+      country: "Country code (only foreign libraries)"
+      aleph: "Push user to Aleph"
     confirmation:
       link: "Didn't receive confirmation instructions?"
       title: "Resend confirmation instructions"
