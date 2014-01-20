@@ -13,6 +13,16 @@ GIT
       devise
 
 GIT
+  remote: https://github.com/dtulibrary/devise_dk_nemid
+  revision: 9fecd8fce72372226ead09e9ede19375b88cac14
+  specs:
+    devise_dk_nemid (1.0.1)
+      devise (~> 3.2)
+      jquery-cookie-rails (~> 1.3)
+      savon (~> 2.3)
+      xmldsig (~> 0.2)
+
+GIT
   remote: https://github.com/dtulibrary/ruby_aleph_integration
   revision: 74ab82605929485e9ca4bc9fdd5b49687ee03536
   specs:
@@ -25,15 +35,6 @@ GIT
   revision: 7df1d363dfc7b1181aa2db83a831f150dd84fd39
   specs:
     xmldsig (0.2.4)
-
-PATH
-  remote: ../devise_dk_nemid
-  specs:
-    devise_dk_nemid (1.0.1)
-      devise (~> 3.2)
-      jquery-cookie-rails (~> 1.3)
-      savon (~> 2.3)
-      xmldsig (~> 0.2)
 
 GEM
   remote: https://rubygems.org/
