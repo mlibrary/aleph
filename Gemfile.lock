@@ -14,9 +14,9 @@ GIT
 
 GIT
   remote: https://github.com/dtulibrary/devise_dk_nemid
-  revision: 95b589464a29f6718d86bee3ecbd24adb898cfc2
+  revision: ccb34ca9de094cdc0c6f07dfe3fda4e0fc12f93a
   specs:
-    devise_dk_nemid (1.0.2)
+    devise_dk_nemid (1.0.3)
       devise (~> 3.2)
       jquery-cookie-rails (~> 1.3)
       savon (~> 2.3)
