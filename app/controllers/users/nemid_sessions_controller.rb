@@ -3,14 +3,17 @@ require 'dtubase'
 class Users::NemidSessionsController < Devise::DkNemidSessionsController
   def new
     flash[:error] = Array.new
+    accepted = true
     %w{payment_terms printed_terms}.each do |term|
       if params["accept_#{term}"] != '1'
-        flash[:error] << I18n.t(term, :scope => 'riyosha.edit.need')
+        accepted = false
       end
     end
-    if flash[:error].empty?
+    if accepted
+      sign_out(:dk_nemid)
       super
     else
+      flash[:error] << I18n.t('riyosha.edit.must_accept_terms')
       redirect_to edit_user_registration_path
     end
   end

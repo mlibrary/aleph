@@ -46,6 +46,7 @@ class Users::SessionsController < Devise::CasServerSessionsController
   end
 
   def destroy
+    sign_out_all_scopes
     super
     flash.clear
   end

@@ -39,14 +39,12 @@ en:
       basic_information: "Basic information"
       lending_information: "Lending information"
       enable_lending_printed: "Enable book lending through DTU book system"
-      payment_terms: 'Yes, I accept the <a href="http://www.dtic.dtu.dk/english/servicemenu/find/borrow/payment"> payment terms</a>'
-      printed_terms: 'Yes, I accept the <a href="http://www.dtic.dtu.dk/english/servicemenu/find/borrow">lending policy</a>'
+      payment_terms: 'I accept the <a href="http://www.dtic.dtu.dk/english/servicemenu/find/borrow/payment"> payment terms</a>'
+      printed_terms: 'I accept the <a href="http://www.dtic.dtu.dk/english/servicemenu/find/borrow">lending policy</a>'
       allow_lending_printed: "You may lend printed material"
-      dtu_base_reference: "Information about dtu users are stored in the dtu base. Any wrong or missing information must be changed there."
-      dtu_base_link_text: "Click here to go to the DTUbase change page"
-      need:
-        payment_terms: "You must accept the payment terms"
-        printed_terms: "You must accept the lending policy"
+      dtu_base_reference: "Your basic information is stored in DTUBasen"
+      dtu_base_link_text: "Manage in DTUBasen"
+      must_accept_terms: "You must accept the payment terms and lending policy"
       user_address: "The address we use"
       update_address: "Update address from CPR"
     confirmation:
