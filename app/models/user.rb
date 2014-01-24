@@ -140,7 +140,9 @@ class User < ActiveRecord::Base
   end
 
   def aleph_borrower
+     if show_feature?(:aleph)
      @aleph ||= Aleph::Borrower.new(self) if may_lend_printed?
+     end
   end
 
   def aleph_bor_status_type
