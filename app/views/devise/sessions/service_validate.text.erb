@@ -1,0 +1,7 @@
+<% if @response.status == 200 %>
+yes
+<%= Aleph.config.bor_prefix %>-<%= @response.service_ticket.ticket_granting_ticket.username.to_s %>
+<% else %>
+no
+
+<% end %>
