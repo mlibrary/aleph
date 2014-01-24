@@ -113,9 +113,9 @@ GEM
       net-ssh-gateway (>= 1.1.0)
     code_analyzer (0.4.4)
       sexp_processor
-    coffee-rails (3.2.1)
+    coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
-      railties (~> 3.2.0.beta)
+      railties (~> 3.2.0)
     coffee-script (2.2.0)
       coffee-script-source
       execjs
@@ -151,6 +151,7 @@ GEM
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
     fastercsv (1.5.5)
+    feature_flipper (1.3.0)
     formtastic (2.2.1)
       actionpack (>= 3.0)
     gyoku (1.1.1)
@@ -300,8 +301,8 @@ GEM
     rubyntlm (0.3.4)
     safe_yaml (0.9.7)
     sass (3.2.13)
-    sass-rails (3.2.6)
-      railties (~> 3.2.0)
+    sass-rails (3.2.3)
+      railties (~> 3.2.0.beta)
       sass (>= 3.1.10)
       tilt (~> 1.3)
     savon (2.3.3)
@@ -374,6 +375,7 @@ DEPENDENCIES
   devise_cas_server_extension!
   devise_dk_nemid!
   factory_girl_rails
+  feature_flipper (~> 1.3)
   findit_font!
   httparty
   jquery-cookie-rails

@@ -21,6 +21,7 @@ gem 'devise_dk_nemid', :git => 'https://github.com/dtulibrary/devise_dk_nemid'
 gem 'xmldsig', :git => 'https://github.com/dtulibrary/xmldsig'
 gem 'ruby_aleph_integration', :git =>
       'https://github.com/dtulibrary/ruby_aleph_integration'
+gem 'feature_flipper', '~> 1.3'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'
