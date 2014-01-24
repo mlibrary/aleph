@@ -16,7 +16,6 @@ class DtuBase
     attr = attrs[:cwis] ? "matrikel_id" : "username"
     response = request('account', attr, identifier)
     unless response.success?
-      @reason = 'lookup_failed'
       return
     end
 
@@ -41,7 +40,7 @@ class DtuBase
 
     profile = dtu_select_profile(account)
     if profile.nil?
-      @reason = 'dtu_no_primary_profile'
+      @reason ||= 'dtu_no_primary_profile'
       logger.warn "Doing fallback because of missing (active) primary "\
         "profile for #{@matrikel_id}"
       profile = dtu_select_active_profile(account)
@@ -55,7 +54,7 @@ class DtuBase
 
     # Org unit must be in the correct groping
     unless valid_dtu_org_unit(org_unit)
-      @reason = 'not_dtu_org'
+      @reason ||= 'not_dtu_org'
       @user_type = 'private'
     end
 
@@ -130,7 +129,9 @@ class DtuBase
       profile = account.xpath(
         "profile_student[@fk_profile_id = #{primary_id} and @active = '1']")
       if !profile.empty?
-        @user_type = "student"
+        phd = profile.xpath('@phd').text
+        @reason ||= "dtu_catch_student_active" if phd == '1'
+        @user_type = 'student'
       else
         profile = account.xpath(
           "profile_guest[@fk_profile_id = #{primary_id} and @active = '1']")
@@ -173,7 +174,7 @@ class DtuBase
     # entry have been created.
     profile = account.xpath("profile_student[@active = '1']")
     if !profile.empty?
-      @reason = "dtu_catch_student_active"
+      @reason ||= "dtu_catch_student_active"
       @user_type = 'student'
       return profile.first
     end
@@ -200,6 +201,7 @@ class DtuBase
       )
     response = HTTParty.get(url)
     unless response.success?
+      @reason = 'lookup_failed'
       logger.warn "Could not get #{type} with #{attr} containing "\
         "#{identifier} from DTUbasen with request #{url}. Message: "\
         "#{response.message}."

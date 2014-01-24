@@ -70,6 +70,7 @@ class User < ActiveRecord::Base
   end
 
   def self.create_from_dtubase_info(info)
+    return nil if info['reason'] == 'lookup_failed'
     self.login_from_omniauth(OmniAuth::AuthHash.new(
       'provider' => 'dtu',
       'uid' => info['matrikel_id'],

@@ -39,7 +39,9 @@ class Users::SessionsController < Devise::CasServerSessionsController
         info, adr = DtuBase.lookup(:username => st.user)
       end
       return nil if info.nil?
-      User.create_from_dtubase_info(info)
+      user = User.create_from_dtubase_info(info)
+      flash[:error] = I18n.t('riyosha.error.dtubase') if user.nil?
+      user
     else
       nil
     end

@@ -23,6 +23,8 @@ en:
       social: "Sign in through social network"
       problem: "Problems?"
       help: "Need help to choose a login option?"
+    error:
+      dtubase: "DTUBasen is unavailable at the moment - please try again later"
     edit:
       title: "Edit your profile"
       wait_confirm: "Currently waiting confirmation for:"
