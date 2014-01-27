@@ -25,14 +25,28 @@ ActiveAdmin.register User do
 
   member_action :update_address, :method => :get do
     user = User.find(params[:id])
-    #user.address_from_cpr
-    logger.info "Update admin address"
+    user.address_from_cpr
     redirect_to admin_user_path
   end
 
   action_item :only => :show do
     link_to I18n.t('riyosha.edit.update_address'),
       update_address_admin_user_path
+  end
+
+  member_action :update_aleph, :method => :get do
+    user = User.find(params[:id])
+    begin
+      user.aleph_borrower
+    rescue Aleph::Error
+      flash[:error] = e.message
+    end
+    redirect_to admin_user_path
+  end
+
+  action_item :only => show do
+    link_to I18n.t('riyosha.edit.aleph'),
+      update_aleph_admin_user_path
   end
 
 end
