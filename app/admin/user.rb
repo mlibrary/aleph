@@ -22,6 +22,19 @@ ActiveAdmin.register User do
       f.input :user_type
       f.input :user_sub_type
     end
+    f.has_many :address, :new_record => false do |a|
+      a.inputs I18n.t('riyosha.admin.user.address') do
+        a.input :line1
+        a.input :line2
+        a.input :line3
+        a.input :line4
+        a.input :line5
+        a.input :line6
+        a.input :zipcode
+        a.input :cityname
+        a.input :country, :as => :string
+      end
+    end
     f.actions
   end
 
