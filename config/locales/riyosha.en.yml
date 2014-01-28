@@ -63,6 +63,9 @@ en:
       link: "Didn't receive confirmation instructions?"
       title: "Resend confirmation instructions"
       request: "Resend confirmation instructions"
+      wait:
+        title: "Confirmation pending"
+        text: "Please wait for the mail to arrive and then click on the link in mail"
     unlock:
       link: "Didn't receive unlock instructions?"
       title: &unlock_title "Resend unlock instructions"

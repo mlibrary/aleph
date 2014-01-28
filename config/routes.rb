@@ -7,6 +7,7 @@ Riyosha::Application.routes.draw do
       :omniauth_callbacks => "users/omniauth_callbacks",
       :sessions => "users/sessions",
       :registrations => "users/registrations",
+      :confirmations => "users/confirmations",
     },
     :path => '/users',
     :path_names => {:sign_in => 'login', :sign_out => 'logout'}
@@ -15,6 +16,8 @@ Riyosha::Application.routes.draw do
       :as => "user_update_address"
     get "users/library", :to => "users/registrations#new_library", :as =>
       "user_new_library"
+    get "users/mail", :to => "users/confirmations#wait_mail", :as =>
+      "user_wait_mail"
   end
 
   devise_for :dk_nemid_users,
