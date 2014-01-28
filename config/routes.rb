@@ -18,6 +18,8 @@ Riyosha::Application.routes.draw do
       "user_new_library"
     get "users/mail", :to => "users/confirmations#wait_mail", :as =>
       "user_wait_mail"
+    get "users/confirmed", :to => "users/confirmations#confirmed", :as =>
+      "user_confirmed"
   end
 
   devise_for :dk_nemid_users,

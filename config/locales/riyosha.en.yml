@@ -66,6 +66,10 @@ en:
       wait:
         title: "Confirmation pending"
         text: "Please wait for the mail to arrive and then click on the link in mail"
+      confirmed:
+        title: "Thank you for confirming your mail"
+        text: "We recommend that you review your information"
+        go: "Review information"
     unlock:
       link: "Didn't receive unlock instructions?"
       title: &unlock_title "Resend unlock instructions"
