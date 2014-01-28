@@ -46,7 +46,7 @@ ActiveAdmin.register User do
     redirect_to admin_user_path
   end
 
-  action_item :only => show do
+  action_item :only => :show do
     link_to I18n.t('riyosha.edit.aleph'),
       update_aleph_admin_user_path
   end
