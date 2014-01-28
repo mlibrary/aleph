@@ -29,6 +29,11 @@ class User < ActiveRecord::Base
   validates :user_type, :presence => true
   validates :first_name, :presence => true, :if => "require_first_name?"
   validates :last_name, :presence => true, :if => "require_last_name?"
+  validates_each :email do |record, attr, value|
+    if (!record.dtu_affiliate?) && value =~ /[@.]dtu\.dk$/
+      record.errors.add(attr, I18n.t('riyosha.user.dtu_email'))
+    end
+  end
 
   def self.login_from_omniauth(auth)
     identity = Identity.find_with_omniauth(auth)

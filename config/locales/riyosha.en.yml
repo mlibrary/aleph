@@ -85,6 +85,8 @@ en:
         title: "Forgot your password?"
     dtu:
       direct_login: "Send me directly to DTU login every time I need to login"
+    user:
+      dtu_email: "may not be a DTU address when signing up as public user - choose 'Sign in as DTU user' on login page"
     provider:
       icons:
         'facebook': "icon-facebook"
