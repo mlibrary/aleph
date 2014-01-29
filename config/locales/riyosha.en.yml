@@ -33,18 +33,18 @@ en:
       leave: "(leave blank for no change)"
       need_confirm: "(we need your current password to confirm your changes)"
       submit: "Update"
-      printed_signup: "I wish to lend printed material"
+      printed_signup: "I wish to enable borrowing books"
       cancel:
         title: "Cancel my account"
         text: "Unhappy?"
         submit: "Cancel my account"
         confirm: "Are you sure?"
       basic_information: "Basic information"
-      lending_information: "Lending information"
-      enable_lending_printed: "Enable book lending through DTU book system"
+      lending_information: "Boow borrowing"
+      enable_lending_printed: "Enable book borrowing by accepting payment term and lending policy"
       payment_terms: 'I accept the <a href="http://www.dtic.dtu.dk/english/servicemenu/find/borrow/payment"> payment terms</a>'
       printed_terms: 'I accept the <a href="http://www.dtic.dtu.dk/english/servicemenu/find/borrow">lending policy</a>'
-      allow_lending_printed: "You may lend printed material"
+      allow_lending_printed: "Book borrowing is enabled"
       dtu_base_reference: "Your basic information is stored in DTUBasen"
       dtu_base_link_text: "Manage in DTUBasen"
       must_accept_terms: "You must accept the payment terms and lending policy"
