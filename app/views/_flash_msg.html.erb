@@ -4,12 +4,12 @@
     <%- alert_class = type == :notice ? 'info' : type %>
     <% if flash[type].respond_to? :each %>
       <% flash[type].each do |msg| %>
-        <div class="alert alert-<%=alert_class%>"><%= msg %>
+        <div class="alert alert-<%=alert_class%>"><%= msg.html_safe %>
            <a class="close" data-dismiss="alert" href="#">&times;</a>
         </div>
       <% end %>
     <% elsif flash[type] %>
-      <div class="alert alert-<%=alert_class%>"><%= flash[type] %>
+      <div class="alert alert-<%=alert_class%>"><%= flash[type].html_safe %>
          <a class="close" data-dismiss="alert" href="#">&times;</a>
       </div>
     <% end %>

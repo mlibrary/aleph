@@ -68,7 +68,7 @@ en:
         text: "Please wait for the mail to arrive and then click on the link in mail"
       confirmed:
         title: "Thank you for confirming your mail"
-        text: "We recommend that you review your information"
+        text: "Want to borrow books? Please review your information and enable book lending. For security reasons you will be asked to sign in again."
         go: "Review information"
     unlock:
       link: "Didn't receive unlock instructions?"
@@ -87,6 +87,7 @@ en:
       direct_login: "Send me directly to DTU login every time I need to login"
     user:
       dtu_email: "may not be a DTU address when signing up as public user - choose 'Sign in as DTU user' on login page"
+    main_service_text: "Go to DTU Findit"
     provider:
       icons:
         'facebook': "icon-facebook"

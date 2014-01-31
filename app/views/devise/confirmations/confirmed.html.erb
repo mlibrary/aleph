@@ -5,13 +5,28 @@
 </div>
 
 <div class="row">
-  <div class="span12">
+  <div class="span4">
+    <a href="<%= config.main_service_url %>">
+      <button class="btn">
+        <%= t('riyosha.main_service_text') %>
+      </button>
+    </a>
+  </div>
+  <div class="span4">
     <%= t('riyosha.confirmation.confirmed.text') %>
   </div>
 </div>
 
 <div class="row">
   <div class="span12">
+    &nbsp;
+  </div>
+</div>
+
+<div class="row">
+  <div class="span4">
+  </div>
+  <div class="span4">
     <a href="<%= edit_user_registration_path %>">
       <button class="btn btn-primary">
         <%= t('riyosha.confirmation.confirmed.go') %>
