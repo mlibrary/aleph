@@ -41,7 +41,7 @@ describe Users::SessionsController do
     end
 
     it "fails validation of ticket" do
-      stub_request(:get, "http://localhost/proxyValidate?service="\
+      stub_request(:get, "http://localhost/serviceValidate?service="\
         "http://test.host/users/login&ticket=ST-fail-ticket").
         to_return(:status => 404, :body => "", :headers => {})
       assert_raise RuntimeError do
@@ -83,7 +83,7 @@ describe Users::SessionsController do
 
 
     def stub_valid_ticket
-      stub_request(:get, "http://localhost/proxyValidate?service="\
+      stub_request(:get, "http://localhost/serviceValidate?service="\
         "http://test.host/users/login&ticket=ST-valid-ticket").
         to_return(:status => 200, :body => 
           '<?xml version="1.0" encoding="utf-8"?>'\

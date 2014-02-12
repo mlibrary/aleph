@@ -22,8 +22,9 @@ class Users::SessionsController < Devise::CasServerSessionsController
   end
 
   def cas_client
-    @@cas_client ||= CASClient::Client.new(:cas_base_url =>
-      Rails.application.config.dtu_auth_url)
+    @@cas_client ||= CASClient::Client.new(
+      :cas_base_url => Rails.application.config.dtu_auth_url,
+      :validate_url => "#{Rails.application.config.dtu_auth_url}/serviceValidate")
   end
 
   def ticket_valid(ticket)
