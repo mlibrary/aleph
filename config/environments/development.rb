@@ -40,16 +40,6 @@ Riyosha::Application.configure do
   config.action_mailer.delivery_method = :smtp
 end
 
-class DtuBase
-  def write_person(id, body)
-    File.open("spec/fixtures/dtubase/person_#{id}.local.xml", 'wb') do |f|
-      f.write(body)
-    end
-  end
-
-  def write_org(id, body)
-    File.open("spec/fixtures/dtubase/org_#{id}.local.xml", 'wb') do |f|
-      f.write(body)
-    end
-  end
+if File.exists? File.dirname(__FILE__) + '/../application.local.rb'
+  require File.dirname(__FILE__) + '/../application.local.rb'
 end

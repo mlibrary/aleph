@@ -19,8 +19,6 @@ class DtuBase
       return
     end
 
-    write_person(identifier, response.body) if Rails.env.development?
-
     entry = Nokogiri.XML(response.body, nil, 'UTF-8')
     parse_account(entry.xpath('//account'))
   end
@@ -184,8 +182,6 @@ class DtuBase
   def get_org_unit (id)
     response = request('orgunit', 'orgunit_id', id)
     return nil if response.nil?
-
-    write_org(id, response.body) if Rails.env.development?
 
     entry = Nokogiri.XML(response.body, nil, 'UTF-8')
     entry.xpath('//orgunit')

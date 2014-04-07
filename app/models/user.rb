@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   def self.login_from_omniauth(auth)
     identity = Identity.find_with_omniauth(auth)
     type_id = UserType.where(:code => (auth.info.user_type ||
-      'private')).first.id
+        'private')).first.id
 
     if identity.nil?
       user = self.where(:email => auth.info.email.downcase, :user_type_id =>
@@ -152,7 +152,7 @@ class User < ActiveRecord::Base
 
   def aleph_borrower
      if show_feature?(:aleph)
-     @aleph ||= Aleph::Borrower.new(self) if may_lend_printed?
+       @aleph ||= Aleph::Borrower.new(self) if may_lend_printed?
      end
   end
 

@@ -10,8 +10,7 @@ gem 'omniauth-facebook'
 gem 'omniauth-linkedin-oauth2'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-linkedin-oauth2'
-gem 'devise_cas_server_extension', :git =>
-       'https://github.com/dtulibrary/devise_cas_server_extension'
+gem 'devise_cas_server_extension', :git => 'https://github.com/dtulibrary/devise_cas_server_extension'
 gem 'capistrano', '~> 2.15'
 gem 'bootstrap-sass', '~> 2.3.0'
 gem 'rubycas-client'
@@ -19,8 +18,7 @@ gem 'httparty'
 gem 'nokogiri'
 gem 'devise_dk_nemid', :git => 'https://github.com/dtulibrary/devise_dk_nemid'
 gem 'xmldsig', :git => 'https://github.com/dtulibrary/xmldsig'
-gem 'ruby_aleph_integration', :git =>
-      'https://github.com/dtulibrary/ruby_aleph_integration'
+gem 'ruby_aleph_integration', :git => 'https://github.com/dtulibrary/ruby_aleph_integration'
 gem 'feature_flipper', '~> 1.3'
 
 # To use ActiveModel has_secure_password

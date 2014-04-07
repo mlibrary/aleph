@@ -49,7 +49,7 @@ module Riyosha
     I18n.enforce_available_locales = true
 
     # Configure the default encoding used in templates for Ruby 1.9.
-    config.encoding = "utf-8"
+    config.encoding = 'utf-8'
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
@@ -80,35 +80,51 @@ module Riyosha
     config.action_mailer.default_url_options = { :host => 'localhost' }
     config.action_mailer.smtp_settings = { :address => 'localhost' }
 
+    config.devise = {
+      :pepper => 'pepper',
+      :secret_key => 'secret_key'
+    }
+
+    config.cas = {
+    }
+
+    config.omniauth = {
+      :facebook      => {},
+      :google_oauth2 => {},
+      :linkedin      => {},
+    }
+
     config.dtubase = {
-      :url => '',
+      :url      => '',
       :username => '',
       :password => '',
+    }
+
+    config.nemid = {
     }
 
     config.cpr = {
-      :url => '',
+      :url      => '',
       :username => '',
       :password => '',
     }
 
-    config.sendit_url = "http://localhost"
-    config.sendit_from = "from@local.host"
+    config.aleph = {
+      :url          => '',
+      :prefix       => 'STAGING',
+      :create_users => false,
+    }
 
-    config.main_service_url = ""
+    config.sendit_url  = 'http://localhost'
+    config.sendit_from = 'from@local.host'
+
+    config.main_service_url = ''
 
     config.dtu_card = {
-      :server => "",
-      :user => "",
-      :password => "",
+      :server   => '',
+      :user     => '',
+      :password => '',
     }
     
-    if File.exists? File.dirname(__FILE__) + '/../application.local.rb'
-      require File.dirname(__FILE__) + '/../application.local.rb'
-    end
   end
 end
-FeatureFlipper::Config.path_to_file = "#{Rails.root}/config/features.rb"
-
-file = File.expand_path('../application.local.rb', __FILE__)
-load file if(File.exists? file)

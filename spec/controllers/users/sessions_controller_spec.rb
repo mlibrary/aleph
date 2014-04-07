@@ -9,7 +9,7 @@ describe Users::SessionsController do
   describe "new session" do
     before :all do
       dtubase_test_setup
-      Rails.application.config.dtu_auth_url = 'http://localhost'
+      Rails.application.config.cas[:url] = 'http://localhost'
     end
 
     before :each do

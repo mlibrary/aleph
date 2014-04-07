@@ -35,4 +35,6 @@ Riyosha::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  config.secret_token = 'th1s_i5_a_v3ry_s3cr3t_t0k3n_pl3a5e_d0nt_73ll_any0n3'
 end
