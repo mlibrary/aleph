@@ -86,6 +86,7 @@ module Riyosha
     }
 
     config.cas = {
+      :base_url => 'http://localhost'
     }
 
     config.omniauth = {
