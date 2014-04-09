@@ -1,4 +1,6 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  include Devise::CasServer::SessionsControllerBehaviour
+
   def facebook
     omniauth_common
   end

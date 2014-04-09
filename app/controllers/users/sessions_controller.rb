@@ -1,7 +1,8 @@
 require 'rubycas-client'
 require 'dtubase'
 
-class Users::SessionsController < Devise::CasServerSessionsController
+class Users::SessionsController < Devise::SessionsController
+  include Devise::CasServer::SessionsControllerBehaviour
 
   def new
     session[:template] = params[:template] if params[:template]

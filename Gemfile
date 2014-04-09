@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 3.2'
+gem 'rails', '~> 3.2.17'
 gem 'jquery-rails', '~> 2.3.0'
 gem 'activeadmin'
 gem 'devise'
@@ -11,6 +11,7 @@ gem 'omniauth-linkedin-oauth2'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-linkedin-oauth2'
 gem 'devise_cas_server_extension', :git => 'https://github.com/dtulibrary/devise_cas_server_extension'
+#gem 'devise_cas_server_extension', :path => '../devise_cas_server_extension'
 gem 'capistrano', '~> 2.15'
 gem 'bootstrap-sass', '~> 2.3.0'
 gem 'rubycas-client'
@@ -27,7 +28,7 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
+  gem 'sass-rails'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'therubyracer', :platforms => :ruby
   gem 'uglifier', '>= 1.0.3'
