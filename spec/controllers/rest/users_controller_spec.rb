@@ -33,7 +33,7 @@ describe Rest::UsersController do
   describe "GET #show" do
     before :each do
       @user1 = FactoryGirl.create(:user)
-      @type = FactoryGirl.create(:user_type, :code => 'dtu_empl')
+      @type = UserType.find_by_code('dtu_empl')
       @user2 = FactoryGirl.create(:user, :user_type => @type)
       @identity = FactoryGirl.create(:identity, :provider => 'dtu',
         :uid => '1', :user => @user2)
@@ -62,7 +62,7 @@ describe Rest::UsersController do
 
   describe "GET #dtu" do
     before :each do
-      @type = FactoryGirl.create(:user_type, :code => 'dtu_empl')
+      @type = UserType.find_by_code('dtu_empl')
     end
 
     it "creates dtu employee from cwis" do

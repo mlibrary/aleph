@@ -1,3 +1,4 @@
+
 class Address < ActiveRecord::Base
   SKIP_COUNTRY_VALUES = [ 'DK', 'DANMARK' ]
 

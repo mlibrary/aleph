@@ -18,8 +18,17 @@ require 'rspec/autorun'
 require 'mocha'
 require 'factory_girl_rails'
 require 'webmock/rspec'
+require 'capybara/poltergeist'
+require 'capybara/mechanize'
 
 RSpec.configure do |config|
+  config.before(:suite) do
+    require File.dirname(__FILE__) + '/../db/seeds.rb'
+  end
+
+  config.formatter = :documentation
+  config.color_enabled = true
+
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
   config.use_transactional_fixtures = true
@@ -40,44 +49,21 @@ end
 
 Dir[Rails.root.join("spec/helpers/*.rb")].each {|f| require f}
 
-OmniAuth.config.test_mode = true
-OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
-  'provider' => 'facebook',
-  'uid' => '123545',
-  'info' => {
-    'email' => 'facebook@test.domain',
-    'first_name' => 'Test',
-    'last_name' => 'User',
-    'user_type' => 'testing',
-  }
-})
-OmniAuth.config.mock_auth[:facebook_update] = OmniAuth::AuthHash.new({
-  'provider' => 'facebook',
-  'uid' => '123545',
-  'info' => {
-    'email' => 'updated@test.domain',
-    'first_name' => 'Test2',
-    'last_name' => 'User2',
-    'user_type' => 'testing',
-  }
-})
-OmniAuth.config.mock_auth[:linkedin] = OmniAuth::AuthHash.new({
-  'provider' => 'linkedin',
-  'uid' => '123556',
-  'info' => {
-    'email' => 'linkedin@test.domain',
-    'first_name' => 'Test',
-    'last_name' => 'User',
-    'user_type' => 'testing',
-  }
-})
-OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
-  'provider' => 'google_oauth2',
-  'uid' => '123567',
-  'info' => {
-    'email' => 'google@test.domain',
-    'first_name' => 'Test',
-    'last_name' => 'User',
-    'user_type' => 'testing',
-  }
-})
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, {:debug => false, :phantomjs => Phantomjs.path})
+end
+Capybara.javascript_driver = :poltergeist
+
+
+# Forces all threads to share the same connection. This works on
+# Capybara because it starts the web server in a thread.
+class ActiveRecord::Base
+  mattr_accessor :shared_connection
+  @@shared_connection = nil
+
+  def self.connection
+    @@shared_connection || retrieve_connection
+  end
+end
+ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
+

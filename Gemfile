@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 3.2.17'
+gem 'rails', '~> 3.2.18'
 gem 'jquery-rails', '~> 2.3.0'
 gem 'activeadmin'
 gem 'devise'
@@ -11,7 +11,6 @@ gem 'omniauth-linkedin-oauth2'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-linkedin-oauth2'
 gem 'devise_cas_server_extension', :git => 'https://github.com/dtulibrary/devise_cas_server_extension'
-#gem 'devise_cas_server_extension', :path => '../devise_cas_server_extension'
 gem 'capistrano', '~> 2.15'
 gem 'bootstrap-sass', '~> 2.3.0'
 gem 'rubycas-client'
@@ -19,7 +18,7 @@ gem 'httparty'
 gem 'nokogiri'
 gem 'devise_dk_nemid', :git => 'https://github.com/dtulibrary/devise_dk_nemid'
 gem 'xmldsig', :git => 'https://github.com/dtulibrary/xmldsig'
-gem 'ruby_aleph_integration', :git => 'https://github.com/dtulibrary/ruby_aleph_integration'
+gem 'ruby_aleph_integration', :path => '../ruby_aleph_integration' # :git => 'https://github.com/dtulibrary/ruby_aleph_integration'
 gem 'feature_flipper', '~> 1.3'
 
 # To use ActiveModel has_secure_password
@@ -38,10 +37,16 @@ group :assets do
 end
 
 group :development, :test do
+  gem 'pry-rails'
   gem 'sqlite3'
   gem 'rspec-rails'
+  gem 'capybara'
+  gem 'poltergeist'
+  gem 'phantomjs', :require => 'phantomjs/poltergeist'
+  gem 'capybara-mechanize'
   gem 'debugger'
   gem 'brakeman'
+  gem 'quiet_assets'
 end
 
 group :test do
@@ -54,6 +59,7 @@ group :test do
 end
 
 group :development do
+  gem 'quiet_assets'
   gem 'rails_best_practices'
 end
 

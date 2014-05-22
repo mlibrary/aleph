@@ -47,14 +47,14 @@ describe User do
   end
 
   it "Lastname is not filled for library user" do
-    user_type = FactoryGirl.create(:user_type, code: "library")
+    user_type = UserType.find_by_code('library')
     expect(FactoryGirl.build(:user, :user_type => user_type,
       :first_name => "Library", :last_name => nil)).to be_valid
   end
 
   describe "omniauth" do
     before :each do
-      @type = FactoryGirl.create(:user_type, code: 'testing')
+      @type = UserType.find_by_code('private')
       @mock1 = OmniAuth.config.mock_auth[:facebook]
       @user1 = User.login_from_omniauth(@mock1)
     end

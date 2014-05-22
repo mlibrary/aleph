@@ -90,6 +90,7 @@ module Riyosha
     }
 
     config.omniauth = {
+      :stub          => false,
       :facebook      => {},
       :google_oauth2 => {},
       :linkedin      => {},

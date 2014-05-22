@@ -73,7 +73,7 @@
     </div>
     <div class="span3">
       <%= link_to I18n.t('riyosha.sign_up.non_dtu'),
-        new_registration_path(resource_name),
+        new_registration_path(resource_name, :service => params[:service]),
         :class => 'btn' %></li>
     </div>
   </div>

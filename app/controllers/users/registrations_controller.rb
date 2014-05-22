@@ -1,11 +1,22 @@
 class Users::RegistrationsController < Devise::RegistrationsController
+
   def create
     super
+    session[:pending_after_sign_in_path] = params[:service]
     if params[:address]
       address = Address.create(params[:address])
       address.line1 = resource.first_name
       resource.address = address
       resource.save!
+    end
+  end
+
+  def show
+    authenticate_scope!
+    if session[:pending_after_sign_in_path] && resource.may_lend_printed?
+      logger.info "Pending after_sign_in_path found in session and user may lend printed materials. Redirecting to pending path."
+      resource.aleph_borrower
+      redirect_to session.delete(:pending_after_sign_in_path) and return
     end
   end
 
@@ -20,7 +31,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def update_address
     user = User.find(params[:id])
-    user.address_from_cpr
+    user.aleph_borrower
     redirect_to edit_user_registration_path
   end
 

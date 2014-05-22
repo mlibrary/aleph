@@ -9,7 +9,12 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   end
 
   def after_confirmation_path_for(resource_name, resource)
-    user_confirmed_path
+    #pending_after_sign_in_path = session[:pending_after_sign_in_path]
+    debugger
+    sign_in(resource)
+    #session[:pending_after_sign_in_path] = pending_after_sign_in_path
+
+    show_user_registration_path
   end
 
 end

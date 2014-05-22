@@ -9,7 +9,7 @@ describe Users::OmniauthCallbacksController  do
         request.env["devise.mapping"] = Devise.mappings[:user]
         @mock = OmniAuth.config.mock_auth[provider]
         request.env["omniauth.auth"] = @mock
-        @type = FactoryGirl.create(:user_type, code: 'testing')
+        @type = UserType.find_by_code('private')
       end
 
       describe "new user" do

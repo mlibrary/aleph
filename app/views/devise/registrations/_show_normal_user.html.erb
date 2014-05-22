@@ -1,0 +1,71 @@
+
+<div class="span6">
+  <h4><%= @user.first_name %> <%= @user.last_name%></h4>
+  <%= @user.email %>
+</div>
+<div class="span6">
+  <% if show_feature?(:nemid) %>
+    Address goes here
+  <% end %>
+</div>
+
+<% if show_feature?(:nemid) %>
+  <div class="span12">
+    <hr/>
+  </div>
+  
+  <div class="span12">
+    <h5><%= I18n.t('riyosha.edit.lending_information') %></h5>
+  </div>
+  
+  <% if @user.may_lend_printed? %>
+    <div class="span9">
+      <%= I18n.t('riyosha.edit.allow_lending_printed') %>
+    </div>
+    <div class="span3">
+      <!-- Disable action -->
+    </div>
+  <% else %>
+    <%= form_tag(new_dk_nemid_user_session_path, :method => :get ) do %>
+      <div class="span6">
+        <%= I18n.t('riyosha.edit.enable_lending_printed') %>
+      </div>
+      <div class="span3">
+        <%= check_box_tag :accept_payment_terms  %>
+        <%= t('riyosha.edit.payment_terms').html_safe %><br/>
+        <%= check_box_tag :accept_printed_terms %>
+        <%= t('riyosha.edit.printed_terms').html_safe %>
+      </div>
+      <div class="span3">
+        <button type="submit" class="btn">
+          <%= I18n.t('riyosha.edit.printed_signup') %>
+        </button>
+      </div>
+    <% end %>
+  <% end %>
+
+
+  <% if @user.address %>
+    <div class="span12">
+      <hr/>
+    </div>
+    
+    <div class="span12">
+      <h5><%= I18n.t('riyosha.edit.user_address') %></h5>
+    </div>
+    
+    <div class="span9">
+      <% @user.address.each do |line| %>
+        <%= line %><br/>
+      <% end %>
+    </div>
+    <div class="span3">
+      <a href="<%= user_update_address_path(@user) %>">
+        <button type="submit" class="btn">
+          <%= I18n.t('riyosha.edit.update_address') %>
+        </button>
+      </a>
+    </div>
+  <% end %> <!-- feature end -->
+
+<% end %>

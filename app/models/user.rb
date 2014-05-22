@@ -115,7 +115,17 @@ class User < ActiveRecord::Base
   # Any DTU employee or student may always lend printed material
   # Private users need to login through Nemid, and accept our terms.
   def may_lend_printed?
-    @may_lend_printed ||= set_may_lend_printed
+    expand
+    if @cpr.blank?
+      return false
+    end
+    if user_type.code == 'dtu_empl' || user_type.code == 'student'
+      return true
+    end
+    if !nemid_needed?
+      return true
+    end
+    false
   end
 
   def nemid_needed?
@@ -151,11 +161,15 @@ class User < ActiveRecord::Base
   end
 
   def aleph_borrower
-     if show_feature?(:aleph)
-       @aleph ||= Aleph::Borrower.new(self) if may_lend_printed?
-     end
+    if show_feature?(:aleph)
+      begin
+        @aleph ||= Aleph::Borrower.new(self) if may_lend_printed?
+      rescue
+        logger.error "Could not update Aleph for user #{self.inspect}"
+      end
+    end
   end
-
+  
   def aleph_bor_status_type
     expand
     return [aleph_bor_status, aleph_bor_type]
@@ -203,7 +217,7 @@ class User < ActiveRecord::Base
     } if self.user_type.code == 'dtu_empl'
 
     ids << { 'type' => '03',
-      'id' => @cpr,
+      'id' => "STUD#{@cpr}",
       'pin'  => nil,
     } if self.user_type.code == 'student'
 
@@ -211,6 +225,11 @@ class User < ActiveRecord::Base
       'id' => @expanded[:dtu]['initials'].upcase,
       'pin'  => nil,
     } if @expanded[:dtu] && !@expanded[:dtu]['initials'].blank?
+
+    ids << { 'type' => '03',
+      'id' => "CWIS#{@expanded[:dtu]['matrikel_id']}",
+      'pin'  => nil,
+    } if @expanded[:dtu] && !@expanded[:dtu]['matrikel_id'].blank?
 
     ids << { 'type' => '03',
       'id' => @cpr,
@@ -255,20 +274,6 @@ class User < ActiveRecord::Base
   def expand_local
     @expanded[:address] = address unless address.nil?
     @cpr = local_cpr
-  end
-
-  def set_may_lend_printed
-    expand
-    if @cpr.blank?
-      return false
-    end
-    if user_type.code == 'dtu_empl' || user_type.code == 'student'
-      return true
-    end
-    if !nemid_needed?
-      return true
-    end
-    false
   end
 
   def local_cpr

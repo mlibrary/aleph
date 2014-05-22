@@ -37,4 +37,13 @@ Riyosha::Application.configure do
   config.active_support.deprecation = :stderr
 
   config.secret_token = 'th1s_i5_a_v3ry_s3cr3t_t0k3n_pl3a5e_d0nt_73ll_any0n3'
+
+  config.nemid[:stub]    = true
+  config.aleph[:stub]    = true
+  config.aleph[:prefix]  = 'TEST'
+  config.omniauth[:stub] = true
+end
+
+%w{render_template render_partial render_collection}.each do |event|
+  ActiveSupport::Notifications.unsubscribe "#{event}.action_view"
 end

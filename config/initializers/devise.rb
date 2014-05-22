@@ -78,6 +78,13 @@ Devise.setup do |config|
     config.dk_nemid_cpr_service = Rails.application.config.nemid[:cpr_service]
     config.dk_nemid_cpr_pid_spid = Rails.application.config.nemid[:cpr_pid_spid]
     config.dk_nemid_proxy = Rails.application.config.nemid[:proxy]
+
+    if Rails.application.config.nemid[:stub]
+      config.dk_nemid_test_mode = true
+      config.dk_nemid_test_pid = '1234'
+      config.dk_nemid_test_cpr = '123456780123'
+    end
+
   end
 
 end

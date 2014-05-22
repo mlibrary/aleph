@@ -8,12 +8,22 @@ class Users::SessionsController < Devise::SessionsController
     session[:template] = params[:template] if params[:template]
     session[:template] ||= 'local_user'
     if (user = ticket_valid(params['ticket']))
-      user.aleph_borrower
       sign_in_and_redirect user, :event => :authentication
     elsif params[:only] == 'dtu'
       redirect_to dtu_login_url
     else
       @login_template = session[:template]
+      super
+    end
+  end
+
+  def after_sign_in_path_for(resource) 
+    resource.aleph_borrower
+    if session[:cas_server_service] && session[:cas_server_service].start_with?(Rails.application.config.aleph[:url]) && !resource.may_lend_printed? 
+      logger.info "Authentication request is from Aleph and user may not lend printed materials. Storing after_sign_in_path in session."
+      session[:pending_after_sign_in_path] = super
+      show_user_registration_path
+    else 
       super
     end
   end

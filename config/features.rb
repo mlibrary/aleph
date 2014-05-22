@@ -2,6 +2,7 @@
 FeatureFlipper.features do
   
   in_state :development do
+    feature :nemid,   :description => "Nemid integration"
   end
 
   in_state :unstable do
@@ -9,7 +10,6 @@ FeatureFlipper.features do
 
   in_state :staging do
     feature :aleph,   :description => "Aleph integration"
-    feature :nemid,   :description => "Nemid integration"
   end
 
   in_state :live do    

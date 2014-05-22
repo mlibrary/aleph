@@ -2,10 +2,20 @@ require 'httparty'
 require 'nokogiri'
 
 class CprStam
+  @@mocks = {}
+
   def self.lookup(cpr)
+    if Rails.application.config.cpr[:stub]
+      return @@mocks[cpr]
+    end
+
     cprstam = self.new
     cprstam.lookup_cpr(cpr)
     cprstam.address
+  end
+
+  def self.add_mock(cpr, address)
+    @@mocks[cpr] = address    
   end
 
   def lookup_cpr(cpr)
@@ -16,7 +26,8 @@ class CprStam
         :Pword => config[:password],
         :Service => 'STAM',
         :valid_status => '01,03,05,07,20,30,50,60,70,80,90'
-      )}
+      ), 
+      :verify => false }
     if response.code != 200
       raise ArgumentError
     end
@@ -55,9 +66,10 @@ class CprStam
           @user['zipcode'] = value
           @user['cityname'] = field.attr("t")
           @user['country'] = 'DK'
-        else
-          logger.debug "CPR: #{field.attr("r")} #{value} #{field.attr("t")}"
+        else 
+          unused = '(unused)'
         end
+        logger.debug "CPR: #{field.attr("r")} [#{value}] [#{field.attr("t")}] #{unused}"
       end
     end
     logger.info "User: #{@user.inspect}"
@@ -72,7 +84,7 @@ class CprStam
     address.zipcode = @user['zipcode']
     address.cityname = @user['cityname']
     address.country = @user['country']
-    address
+    address if @user['cpr']
   end
 
   def config

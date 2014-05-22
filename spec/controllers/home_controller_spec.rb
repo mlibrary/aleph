@@ -6,6 +6,6 @@ describe HomeController do
   it "redirects index page" do
     get :index
     expect(response.status).to be (302)
-    expect(response).to redirect_to edit_user_registration_path
+    expect(response).to redirect_to show_user_registration_path
   end
 end

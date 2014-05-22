@@ -14,7 +14,7 @@ describe Users::SessionsController do
 
     before :each do
       @request.env["devise.mapping"] = Devise.mappings[:user]
-      @usertype = FactoryGirl.create(:user_type, :code => 'student')
+      @usertype = UserType.find_by_code('student')
     end
 
     after :all do

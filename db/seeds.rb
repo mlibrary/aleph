@@ -13,7 +13,8 @@
   { code: 'dtu_empl', :aleph_bor_status => '18', :aleph_bor_type => '08' },
   { code: 'library', :aleph_bor_status => '05', :aleph_bor_type => '01' },
 ].each do |usertype|
-  UserType.find_or_create_by_code(usertype)
+  ut = UserType.find_or_create_by_code(usertype)
+  ut.update_attributes(usertype)
 end
 
 user_type_id = UserType.find_by_code('library').id
@@ -31,5 +32,6 @@ user_type_id = UserType.find_by_code('library').id
   { :code => 'world_public', :user_type_id => user_type_id,
     :aleph_bor_status => '60', :aleph_bor_type => '01' },
 ].each do |subtype|
-  UserSubType.find_or_create_by_code(subtype)
+  ust = UserSubType.find_or_create_by_code(subtype)
+  ust.update_attributes(subtype)
 end
