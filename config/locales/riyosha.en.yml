@@ -40,11 +40,11 @@ en:
         submit: "Cancel my account"
         confirm: "Are you sure?"
       basic_information: "Basic information"
-      lending_information: "Book lending"
+      lending_information: "DTU Library printed book collection"
       enable_lending_printed: "Enable book lending by accepting payment term and lending policy"
       payment_terms: 'I accept the <a href="http://www.dtic.dtu.dk/english/servicemenu/find/borrow/payment"> payment terms</a>'
       printed_terms: 'I accept the <a href="http://www.dtic.dtu.dk/english/servicemenu/find/borrow">lending policy</a>'
-      allow_lending_printed: "Book lending is enabled"
+      allow_lending_printed: "Your account is registered to order and borrow books from DTU Library printed books collection."
       dtu_base_reference: "Your basic information is stored in DTUBasen"
       dtu_base_link_text: "Manage in DTUBasen"
       must_accept_terms: "You must accept the payment terms and lending policy"

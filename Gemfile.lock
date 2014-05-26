@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/dtulibrary/findit_font.git
-  revision: acd8744c00822c608c55faf5cbd71c93ba8c236d
+  revision: ef3a6b3e54fdc97ac66be21f58916e1b9eef7bce
   specs:
     findit_font (0.0.1)
       railties (>= 3.2)
