@@ -6,6 +6,13 @@ GIT
       railties (>= 3.2)
 
 GIT
+  remote: https://github.com/dtulibrary/devise_cas_server_extension
+  revision: b30adfcccb6799e4f99ca3aa6739e738a812ae0d
+  specs:
+    devise_cas_server_extension (1.1.10)
+      devise
+
+GIT
   remote: https://github.com/dtulibrary/devise_dk_nemid
   revision: c1cb1483db7b2de1aa9c642113ec43bf2ead7771
   specs:
@@ -21,12 +28,6 @@ GIT
   specs:
     xmldsig (0.2.4)
       nokogiri
-
-PATH
-  remote: ../devise_cas_server_extension
-  specs:
-    devise_cas_server_extension (1.1.10)
-      devise
 
 GEM
   remote: https://rubygems.org/
@@ -377,7 +378,7 @@ GEM
       libv8 (~> 3.16.14.0)
       ref
     thor (0.19.1)
-    thread_safe (0.3.3)
+    thread_safe (0.3.4)
     tilt (1.4.1)
     treetop (1.4.15)
       polyglot

@@ -7,8 +7,7 @@ gem 'sru'
 
 gem 'devise'
 gem 'devise_cas_authenticatable'
-#gem 'devise_cas_server_extension', :git => 'https://github.com/dtulibrary/devise_cas_server_extension'
-gem 'devise_cas_server_extension', :path => '../devise_cas_server_extension'
+gem 'devise_cas_server_extension', :git => 'https://github.com/dtulibrary/devise_cas_server_extension'
 gem 'devise_dk_nemid', :git => 'https://github.com/dtulibrary/devise_dk_nemid'
 gem 'xmldsig', :git => 'https://github.com/dtulibrary/xmldsig'
 
