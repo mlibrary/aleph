@@ -12,7 +12,6 @@ module Aleph
 
       @user_id = "#{config.bor_prefix}-#{user.cas_username}"
       z303, z304, z305, z308 = information_from_user_object(user)
-      bor_new('I', z303, z304, z305, z308)
       if aleph_full_lookup(z308)
         if config.create_aleph_borrowers
           if @aleph_pid.blank?
