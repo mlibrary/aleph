@@ -215,7 +215,7 @@ module Aleph
       end
       request = builder.to_xml(:indent => 0).gsub("\n", '')
       response = @@connection.x_request('update-bor',
-        'update_flag' => 'N',
+        'update_flag' => 'Y',
         'library' => @adm_library,
         'xml_full_req' => request
       ).document
