@@ -57,9 +57,6 @@ module Aleph
       @z303 = parse(document.xpath('//z303'))[0]
       @z304 = parse(document.xpath('//z304'))[0]
       @z305 = parse(document.xpath('//z305'))[0]
-      @loans = parse_group_objects( document.xpath("//item-l") )
-      @holds = parse_group_objects( document.xpath("//item-h") )
-      @cash = parse_group_objects( document.xpath("//fine") )
       document
     end
 
