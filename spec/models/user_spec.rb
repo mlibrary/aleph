@@ -46,12 +46,6 @@ describe User do
       :first_name => nil, :last_name => nil)).to be_valid
   end
 
-  it "Lastname is not filled for library user" do
-    user_type = UserType.find_by_code('library')
-    expect(FactoryGirl.build(:user, :user_type => user_type,
-      :first_name => "Library", :last_name => nil)).to be_valid
-  end
-
   describe "omniauth" do
     before :each do
       @type = UserType.find_by_code('private')

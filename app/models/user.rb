@@ -4,26 +4,33 @@ require 'dtubase'
 require 'devise'
 
 class User < ActiveRecord::Base
+  include Concerns::AlephUser
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable,
          :cas_server, :lockable, :omniauthable,
          :omniauth_providers => [:facebook, :linkedin, :google_oauth2],
-         :authentication_keys => [:email]
+         :authentication_keys => [:email],
+         :reset_password_keys => [:email],
+         :unlock_keys => [:email]
 
+  
   belongs_to :user_type
   belongs_to :user_sub_type
+  belongs_to :address, :dependent => :destroy
   has_many :identities, :dependent => :destroy
   has_many :dk_nemid_users, :dependent => :destroy
-  belongs_to :address, :dependent => :destroy
 
   accepts_nested_attributes_for :address
+  accepts_nested_attributes_for :identities
 
   attr_accessible :email, :password, :password_confirmation, :remember_me,
     :user_type_id, :authenticator, :first_name, :last_name, :user_sub_type_id,
-    :librarycard, :address_attributes
+    :librarycard, :address_attributes, :dtu_base_data
   attr_reader :direct_login
+  serialize :dtu_base_data, JSON
 
   # Devise does validation for email and password
   validates :user_type, :presence => true
@@ -98,10 +105,6 @@ class User < ActiveRecord::Base
     self.user_type.code == 'anon'
   end
 
-  def library?
-    self.user_type.code == 'library'
-  end
-
   def dtu_affiliate?
     case self.user_type.code
     when "dtu_empl", "student"
@@ -160,21 +163,6 @@ class User < ActiveRecord::Base
     true
   end
 
-  def aleph_borrower
-    if show_feature?(:aleph)
-      begin
-        @aleph ||= Aleph::Borrower.new(self) if may_lend_printed?
-      rescue
-        logger.error "Could not update Aleph for user #{self.inspect}"
-      end
-    end
-  end
-  
-  def aleph_bor_status_type
-    expand
-    return [aleph_bor_status, aleph_bor_type]
-  end
-
   def birth_day
     expand 
     return '' if @cpr.nil?
@@ -206,47 +194,8 @@ class User < ActiveRecord::Base
     ((@cpr[9, 1].to_i % 2) == 1) ? 'M' : 'F'
   end
 
-  def aleph_ids
-    expand
-    # Create additional ids
-    ids = Array.new
-
-    ids << { 'type' => '03',
-      'id' => "DTU#{@cpr}",
-      'pin'  => nil,
-    } if self.user_type.code == 'dtu_empl'
-
-    ids << { 'type' => '03',
-      'id' => "STUD#{@cpr}",
-      'pin'  => nil,
-    } if self.user_type.code == 'student'
-
-    ids << { 'type' => '03',
-      'id' => @expanded[:dtu]['initials'].upcase,
-      'pin'  => nil,
-    } if @expanded[:dtu] && !@expanded[:dtu]['initials'].blank?
-
-    ids << { 'type' => '03',
-      'id' => "CWIS#{@expanded[:dtu]['matrikel_id']}",
-      'pin'  => nil,
-    } if @expanded[:dtu] && !@expanded[:dtu]['matrikel_id'].blank?
-
-    ids << { 'type' => '03',
-      'id' => @cpr,
-      'pin'  => nil,
-    } if self.user_type.code == 'private'
-
-    ids << { 'type' => '01',
-      'id' => librarycard,
-      'pin' => nil,
-    } unless librarycard.blank?
-
-    ids
-  end
-
-  def address_lines
-    expand
-    @expanded[:address] ? @expanded[:address].to_a : Array.new
+  def cas_username
+    id
   end
 
   private
@@ -283,22 +232,12 @@ class User < ActiveRecord::Base
     nil
   end
 
-  def aleph_bor_status
-    (user_sub_type.nil? ? nil : user_sub_type.aleph_bor_status) ||
-      user_type.aleph_bor_status
-  end
-
-  def aleph_bor_type
-    (user_sub_type.nil? ? nil : user_sub_type.aleph_bor_type) ||
-      user_type.aleph_bor_type
-  end
-
   def require_first_name?
     !anon?
   end
 
   def require_last_name?
-    !(anon? || library?)
+    !(anon?)
   end
 
 end

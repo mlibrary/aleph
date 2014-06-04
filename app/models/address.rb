@@ -43,4 +43,10 @@ class Address < ActiveRecord::Base
     end
   end
 
+  def self.delete_orphaned
+    Address.where([
+        
+      ])
+  end
+
 end

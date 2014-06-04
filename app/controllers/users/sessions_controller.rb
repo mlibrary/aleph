@@ -4,6 +4,8 @@ require 'dtubase'
 class Users::SessionsController < Devise::SessionsController
   include Devise::CasServer::SessionsControllerBehaviour
 
+  before_filter :dispatch_to_ill_user, :only => [:new, :validate, :proxyValidate, :serviceValidate]
+
   def new
     session[:template] = params[:template] if params[:template]
     session[:template] ||= 'local_user'
@@ -45,12 +47,9 @@ class Users::SessionsController < Devise::SessionsController
     st = CASClient::ServiceTicket.new(ticket, url_for(:only_path => false))
     cas_client.validate_service_ticket(st)
     if st.is_valid?
-      if session[:fake_login]
-        info, adr = DtuBase.lookup(:cwis => session[:fake_login])
-      else
-        info, adr = DtuBase.lookup(:username => st.user)
-      end
-      return nil if info.nil?
+      info, adr = DtuBase.lookup(:username => st.user)
+      return nil unless info
+
       user = User.create_from_dtubase_info(info)
       flash[:error] = I18n.t('riyosha.error.dtubase') if user.nil?
       user
@@ -63,6 +62,14 @@ class Users::SessionsController < Devise::SessionsController
     sign_out_all_scopes
     super
     flash.clear
+  end
+
+  def dispatch_to_ill_user
+    if request.env['warden'].user(:ill_user)
+      logger.info 'Ill User already logged in. Dispatching to :ill_user scope for #{params}'
+      sign_out(:user) if request.env['warden'].user(:user)
+      redirect_to params.merge(:controller => 'ill_users/sessions') and return
+    end
   end
 
 end

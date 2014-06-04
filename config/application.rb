@@ -117,6 +117,11 @@ module Riyosha
       :create_users => false,
     }
 
+    config.vip_base = {
+      :url           => 'http://webservice.vip.dbc.dk/',
+      :earliest      => '1900-01-01',
+    }
+
     config.sendit_url  = 'http://localhost'
     config.sendit_from = 'from@local.host'
 

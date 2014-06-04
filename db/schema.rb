@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140117071815) do
+ActiveRecord::Schema.define(:version => 20140604060656) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -73,6 +73,35 @@ ActiveRecord::Schema.define(:version => 20140117071815) do
 
   add_index "identities", ["uid"], :name => "index_identities_on_uid"
   add_index "identities", ["user_id"], :name => "index_identities_on_user_id"
+
+  create_table "ill_users", :force => true do |t|
+    t.string   "library_id",                             :null => false
+    t.string   "name",                                   :null => false
+    t.string   "email",                                  :null => false
+    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.integer  "failed_attempts",        :default => 0
+    t.string   "unlock_token"
+    t.datetime "locked_at"
+    t.integer  "user_type_id",                           :null => false
+    t.integer  "user_sub_type_id",                       :null => false
+    t.integer  "address_id"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+  end
+
+  add_index "ill_users", ["address_id"], :name => "index_ill_users_on_address_id"
+  add_index "ill_users", ["library_id"], :name => "index_ill_users_on_library_id", :unique => true
+  add_index "ill_users", ["reset_password_token"], :name => "index_ill_users_on_reset_password_token", :unique => true
+  add_index "ill_users", ["user_sub_type_id"], :name => "index_ill_users_on_user_sub_type_id"
+  add_index "ill_users", ["user_type_id"], :name => "index_ill_users_on_user_type_id"
 
   create_table "login_tickets", :force => true do |t|
     t.string   "ticket",          :null => false
@@ -158,9 +187,10 @@ ActiveRecord::Schema.define(:version => 20140117071815) do
     t.string   "authenticator"
     t.string   "first_name"
     t.string   "last_name"
-    t.integer  "address_id"
     t.integer  "user_sub_type_id"
+    t.integer  "address_id"
     t.string   "librarycard"
+    t.text     "dtu_base_data"
   end
 
   add_index "users", ["address_id"], :name => "index_users_on_address_id"

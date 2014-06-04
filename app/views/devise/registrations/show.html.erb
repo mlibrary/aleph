@@ -1,8 +1,8 @@
 <%= case
-when @user.dtu_affiliate?
+when @ill_user
+  render :partial => 'show_library_user'
+when @user && @user.dtu_affiliate?
   render :partial => 'show_dtu_user'
-when @user.library?
-  render :partial => 'show_library'
 else
   render :partial => 'show_normal_user'
 end

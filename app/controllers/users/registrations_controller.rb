@@ -12,6 +12,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def show
+    if request.env['warden'].user(:ill_user)
+      sign_out(:user) if request.env['warden'].user(:user)
+      redirect_to show_ill_user_registration_path and return
+    end
+    
     authenticate_scope!
     if session[:pending_after_sign_in_path] && resource.may_lend_printed?
       logger.info "Pending after_sign_in_path found in session and user may lend printed materials. Redirecting to pending path."
@@ -27,15 +32,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
       account_update_params.delete(:address)
     end
     super && result
-  end
-
-  def update_address
-    user = User.find(params[:id])
-    user.aleph_borrower
-    redirect_to edit_user_registration_path
-  end
-
-  def new_library
   end
 
   def after_inactive_sign_up_path_for(resource)

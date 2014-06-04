@@ -1,0 +1,33 @@
+<%= form_for(resource, :as => resource_name,
+      :url => session_path(resource_name)) do |f| %>
+  <div class="row">
+    <div class="span3">
+      <%= f.label :library_id %>
+      <%= f.text_field :library_id, :autofocus => true, :class => 'input-block-level' %>
+    </div>
+    <div class="span3">
+      <%= f.label :password %>
+      <%= f.password_field :password, :class => 'input-block-level' %>
+    </div>
+    <%= hidden_field_tag 'lt', session['lt'].ticket %>
+    <div class="span3">
+      <label>&nbsp;</label>
+      <%= f.submit I18n.t('riyosha.sign_in.submit'), :class => 'btn' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="offset3 span3">
+  <% if devise_mapping.rememberable? -%>
+      <label class="checkbox">
+        <%= f.check_box :remember_me %> <%= f.label :remember_me %>
+      </label>
+  <% end -%>
+    </div>
+    <div class="span6">
+  <%- if devise_mapping.recoverable? %>
+    <%= link_to t('riyosha.password.forgot.link'), new_password_path(resource_name) %>
+  <% end -%>
+    </div>
+  </div>
+<% end %>

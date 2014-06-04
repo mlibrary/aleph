@@ -58,15 +58,6 @@ describe Users::SessionsController do
       expect(response.header['Content-Type']).to include 'text/html'
     end
 
-    it "fakes validate ticket" do
-      session[:fake_login] = 1
-      stub_valid_ticket
-      stub_dtubase_orgunit('stud')
-      stub_dtubase_cwis_request('test')
-      get :new, :ticket => 'ST-valid-ticket'
-      expect(response.header['Content-Type']).to include 'text/html'
-    end
-
     it "update email on existing user" do
       ident = FactoryGirl.create(:identity, :provider => 'dtu', :uid => '1')
       stub_valid_ticket

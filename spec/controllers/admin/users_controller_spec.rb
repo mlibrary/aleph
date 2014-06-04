@@ -30,14 +30,6 @@ describe Admin::UsersController do
     end
   end
 
-  describe "GET #new" do
-    it "shows the new template" do
-      get :new
-      expect(response.status).to be(200)
-      expect(response).to render_template :new
-    end
-  end
-
   describe "GET #edit" do
     it "shows the edit template" do
       get :edit, id: FactoryGirl.create(:user)

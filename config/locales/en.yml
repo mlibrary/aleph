@@ -3,3 +3,7 @@
 
 en:
   hello: "Hello world"
+  helpers:
+    label:
+      ill_user:
+        library_id: 'Library Id'

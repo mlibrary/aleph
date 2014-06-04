@@ -1,20 +1,24 @@
-<div class="row">
-  <div class="span12">
-    <h4><%= t('riyosha.password.forgot.title') %></h4>
-  </div>
+<div class="span12">
+  <h4><%= t('riyosha.password.forgot.title') %></h4>
 </div>
 <%= form_for(resource, :as => resource_name,
-    :url => password_path(resource_name),
-    :html => { :method => :post }) do |f| %>
-<div class="row">
+                       :url => password_path(resource_name),
+                       :html => { :method => :post }) do |f| %>
   <div class="span3">
     <%= f.label :email %>
-    <%= f.email_field :email, :autofocus => true %>
+    <%= f.email_field :email, :autofocus => true, :required => true %>
   </div>
-  <div class="span9">
+
+  <% if resource.respond_to? :library_id %>
+    <div class="span3">
+      <%= f.label :library_id %>
+      <%= f.text_field :library_id, :required => true %>
+    </div>
+  <% end %>
+
+  <div class="span3">
     <label>&nbsp;</label>
     <%= f.submit t('riyosha.password.forgot.request'),
-        :class => 'btn btn-primary' %>
+                  :class => 'btn btn-primary' %>
   </div>
-</div>
 <% end %>

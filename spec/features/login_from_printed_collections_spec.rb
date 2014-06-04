@@ -11,6 +11,13 @@ feature 'When user requests login from printed collections', :js => true do
   end
 
   context 'and user is not logged in' do
+    context 'and user is library' do
+      scenario 'then the user should not be forced to do NemId validation after login' do
+        login_as_library
+        expect(current_url).to start_with(aleph_url + "?ticket=")
+      end
+    end
+
     context 'and user is private' do
       context 'and user does not have registered cpr' do
         scenario 'then the user should be forced to do NemId validation after login' do
@@ -43,6 +50,19 @@ feature 'When user requests login from printed collections', :js => true do
       response = validate_ticket(ticket)
       expect(response).to eq("yes #{Rails.application.config.aleph[:prefix]}-1")
     end
+  end
+
+  def login_as_library
+    library_id = 1
+    password = 'testtest'
+    u = IllUser.create(:library_id => library_id, :email => 'test@expamle.com', :name => 'Test Library',
+                       :password => password, :password_confirmation => password, 
+                       :user_type_id => UserType.find_by_code('library').id, :user_sub_type_id => UserSubType.first.id)
+
+    visit '/ill_users/login?' + {:service => aleph_url}.to_query
+    fill_in 'ill_user_library_id', :with => library_id
+    fill_in 'ill_user_password',   :with => password
+    click_on 'Login'
   end
 
   def login_with_google

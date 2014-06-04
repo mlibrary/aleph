@@ -1,30 +1,33 @@
-ActiveAdmin.register User do
-  menu :priority => 1
+ActiveAdmin.register IllUser do
+  menu :priority => 2
   actions :all, :except => [:new, :destroy]
 
   index do
-    column 'Email' do |user|
-      link_to user.email, edit_admin_user_path(user)
+    column 'Library Id' do |user|
+      link_to user.library_id, edit_admin_ill_user_path(user)
     end
+    column :name
+    column :email
     column :current_sign_in_at
     column :last_sign_in_at
     column :sign_in_count
   end
 
+  filter :library_id, :label => 'Library Id'
+  filter :name
   filter :email
 
   form do |f|
     f.inputs "Admin Details" do
-      f.input :email
-      f.input :first_name
-      f.input :last_name
+      f.input :name, :input_html => { :disabled => true }
+      f.input :email, :input_html => { :disabled => true }
       f.input :password
       f.input :password_confirmation
-      f.input :user_type
-      f.input :user_sub_type
+      f.input :user_type, :input_html => { :disabled => true }
+      f.input :user_sub_type, :input_html => { :disabled => true }
     end
     f.has_many :address, :new_record => false do |a|
-      a.inputs 'Address' do
+      a.inputs I18n.t('riyosha.admin.user.address') do
         a.input :line1, :input_html => { :disabled => true }
         a.input :line2, :input_html => { :disabled => true }
         a.input :line3, :input_html => { :disabled => true }
@@ -36,14 +39,6 @@ ActiveAdmin.register User do
         a.input :country, :as => :string, :input_html => { :disabled => true }
       end
     end
-    f.has_many :identities, :new_record => false do |i|
-      i.inputs 'Identity' do
-        i.input :id, :input_html => { :disabled => true }
-        i.input :provider, :input_html => { :disabled => true }
-        i.input :uid, :input_html => { :disabled => true }
-      end
-    end
-    
     f.actions
   end
 
@@ -59,7 +54,7 @@ ActiveAdmin.register User do
   #end
 
   member_action :update_aleph, :method => :get do
-    user = User.find(params[:id])
+    user = IllUser.find(params[:id])
     begin
       user.aleph_borrower
     rescue Aleph::Error

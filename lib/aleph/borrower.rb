@@ -10,8 +10,9 @@ module Aleph
         raise Aleph::Error, "ADM library must be specified in configuration" 
       end
 
-      @user_id = "#{config.bor_prefix}-#{user.id}"
+      @user_id = "#{config.bor_prefix}-#{user.cas_username}"
       z303, z304, z305, z308 = information_from_user_object(user)
+      bor_new('I', z303, z304, z305, z308)
       if aleph_full_lookup(z308)
         if config.create_aleph_borrowers
           if @aleph_pid.blank?
@@ -76,7 +77,7 @@ module Aleph
     end
 
 
-    protected
+    #protected
 
 
     def aleph_lookup(z308)
@@ -216,10 +217,11 @@ module Aleph
           end
         end
       end
+      request = builder.to_xml(:indent => 0).gsub("\n", '')
       response = @@connection.x_request('update-bor',
         'update_flag' => 'N',
         'library' => @adm_library,
-        'xml_full_req' => builder.to_xml(:indent => 0).gsub("\n", '')
+        'xml_full_req' => request
       ).document
       errors = Array.new
       response.xpath("//error").each do |e|
@@ -248,7 +250,7 @@ module Aleph
         'z304-telephone' => '',
       }
       if user.respond_to? :telephone
-        z303['z304-telephone'] = user.telephone
+        z304['z304-telephone'] = user.telephone
       end
       n = 0
       user.address_lines.each do |a|
@@ -268,7 +270,7 @@ module Aleph
       z308 = Array.new
       z308 << {
         'z308-key-type' => config.bor_type_id,
-        'z308-key-data' => "#{config.bor_prefix}-#{user.id}"
+        'z308-key-data' => "#{config.bor_prefix}-#{user.cas_username}"
       }
       if user.respond_to? :aleph_ids
         user.aleph_ids.each do |id|

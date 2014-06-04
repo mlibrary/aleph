@@ -80,6 +80,17 @@
 
   <div class="row dtu-very-large-spacing">
     <div class="span3">
+      <h4><%= t('riyosha.sign_in.Libraries') %></h4>
+    </div>
+    <div class="span9">
+      <%= link_to t('riyosha.sign_in.click_here'), params.merge(:controller => 'ill_users/sessions') %>
+      </a>
+      <br />
+    </div>
+  </div>
+
+  <div class="row dtu-very-large-spacing">
+    <div class="span3">
       <h4><%= t('riyosha.sign_in.problem') %></h4>
     </div>
     <div class="span9">

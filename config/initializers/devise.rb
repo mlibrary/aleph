@@ -40,13 +40,11 @@ Devise.setup do |config|
 
   # ==> :lockable
   config.lock_strategy = :failed_attempts
-  config.unlock_keys = [ :email ]
   config.unlock_strategy = :both
   config.maximum_attempts = 10
   config.unlock_in = 1.hour
 
   # ==> :recoverable
-  config.reset_password_keys = [ :email ]
   config.reset_password_within = 6.hours
 
   # ==> scopes
@@ -64,7 +62,7 @@ Devise.setup do |config|
                                   {access_type: 'online', approval_prompt: ''}
 
   # ==> CAS
-  config.cas_base_url = Rails.application.config.cas[:url]
+  config.cas_base_url = Rails.application.config.cas[:base_url]
   config.cas_create_user = false
   config.cas_server_maximum_session_lifetime = 120
   config.cas_server_maximum_unused_service_ticket_lifetime = 120
@@ -82,7 +80,7 @@ Devise.setup do |config|
     if Rails.application.config.nemid[:stub]
       config.dk_nemid_test_mode = true
       config.dk_nemid_test_pid = '1234'
-      config.dk_nemid_test_cpr = '123456780123'
+      config.dk_nemid_test_cpr = '1234560123'
     end
 
   end

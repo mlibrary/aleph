@@ -12,12 +12,22 @@ Riyosha::Application.routes.draw do
     :path => '/users',
     :path_names => {:sign_in => 'login', :sign_out => 'logout'}
   devise_scope :user do
-    get 'profile',                  :to => 'users/registrations#show',           :as => 'show_user_registration'
-    get 'users/:id/update_address', :to => 'users/registrations#update_address', :as => 'user_update_address'
-    get 'users/library',            :to => 'users/registrations#new_library',    :as => 'user_new_library'
+    get 'users/profile',            :to => 'users/registrations#show',           :as => 'show_user_registration'
     get 'users/mail',               :to => 'users/confirmations#wait_mail',      :as => 'user_wait_mail'
     get 'users/confirmed',          :to => 'users/confirmations#confirmed',      :as => 'user_confirmed'
   end
+
+  devise_for :ill_users,
+    :controllers => {
+    :sessions => "ill_users/sessions",
+    },
+    :path => '/ill_users',
+    :path_names => {:sign_in => 'login', :sign_out => 'logout'}
+  devise_scope :ill_user do
+    get 'ill_users/profile',         :to => 'ill_users/registrations#show',       :as => 'show_ill_user_registration'
+  end
+    
+
 
   devise_for :dk_nemid_users,
     :scope => 'dk_nemid',
