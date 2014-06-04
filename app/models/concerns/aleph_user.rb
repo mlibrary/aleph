@@ -1,3 +1,5 @@
+require 'utility'
+
 module Concerns
   module AlephUser
     extend ActiveSupport::Concern
@@ -6,8 +8,8 @@ module Concerns
       if show_feature?(:aleph)
         begin
           @aleph ||= Aleph::Borrower.new(self) if may_lend_printed?
-        rescue
-          logger.error "Could not update Aleph for user #{self.inspect}"
+        rescue => e
+          Utility.log_exception e, :info => "Could not update Aleph for user #{self.inspect}"
         end
       end
     end
