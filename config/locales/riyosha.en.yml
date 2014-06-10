@@ -41,7 +41,7 @@ en:
         confirm: "Are you sure?"
       basic_information: "Basic information"
       lending_information: "DTU Library printed collection"
-      enable_lending_printed: "Your account is <strong>not</strong> registered to order and borrow books from DTU Library printed collection. To borrow books from the printed collection you must accepting our payment terms and lending policy and log on with NemID. You will only need to do this once."
+      enable_lending_printed: "Your account is <strong>not</strong> registered to order and borrow books from DTU Library printed collection. To borrow books from the printed collection you must accept our payment terms and lending policy and log on with NemID. You will only need to do this once."
       payment_terms: 'I accept the <a href="http://www.dtic.dtu.dk/english/servicemenu/find/borrow/payment"> payment terms</a>'
       printed_terms: 'I accept the <a href="http://www.dtic.dtu.dk/english/servicemenu/find/borrow">lending policy</a>'
       allow_lending_printed: "Your account is registered to order and borrow books from DTU Library printed books collection."
