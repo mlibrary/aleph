@@ -66,12 +66,23 @@ class DtuBase
       end
     end
 
+    case @user_type
+    when 'dtu_empl'
+      create_employee_address org_unit, profile
+    else 
+      create_student_or_guest_address org_unit, profile
+    end
+
+    logger.info "Lookup complete"
+  end
+
+  def create_employee_address(org_unit, profile)
     # Create organization address.
     adr = org_unit.xpath("address_dk[@is_primary_address = '1']") or
-          org_unit.xpath("address_uk[@is_primary_address = '1']")
+      org_unit.xpath("address_uk[@is_primary_address = '1']")
     org_address = extract_address (adr)
     org_address['name'] = org_unit.xpath('@name_dk').text or
-                          org_unit.xpath('@name_uk').text
+      org_unit.xpath('@name_uk').text
 
     # Find the primary address
     adr = profile.xpath("address[@is_primary_address = '1']")
@@ -87,9 +98,14 @@ class DtuBase
 
     # Create address entry
     user_address['name'] = org_address['name']
-    @address = create_address(user_address)
+    @address = create_address(user_address)    
+  end
 
-    logger.info "Lookup complete"
+  def create_student_or_guest_address(org_unit, profile)
+    adr = profile.xpath("address[@is_primary_address = '1']")
+    adr = profile.xpath("address[position() = 1]") if adr.nil? || adr.empty?
+    user_address = extract_address (adr)
+    @address = create_address(user_address)
   end
 
 #  def success
@@ -219,8 +235,12 @@ class DtuBase
 
   def create_address(fields)
     address = Address.new
-    address << fields['name']
-    address << "Att: #{@firstname} #{@lastname}"
+    if fields['name']
+      address << fields['name']
+      address << "Att: #{@firstname} #{@lastname}"
+    else
+      address << "#{@firstname} #{@lastname}"
+    end
     if !fields['building'].blank? or !fields['room'].blank?
       line = ''
       sep = ''

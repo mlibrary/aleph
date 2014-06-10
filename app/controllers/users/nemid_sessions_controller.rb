@@ -37,6 +37,9 @@ class Users::NemidSessionsController < Devise::DkNemidSessionsController
 
       # Add user address based on cpr.
       user.aleph_borrower
+    else
+      logger.error "DkNemIdUser #{resource.inspect} already assgned to user #{user.inspect}."
+      flash[:error] << I18n.t('riyosha.edit.cpr_already_assigned')
     end
     show_user_registration_path
   end

@@ -19,7 +19,6 @@ class IllUsers::SessionsController < Devise::SessionsController
 
   def show
     authenticate_ill_user!
-    debugger
     render :text => 'Hello'
   end
 

@@ -19,15 +19,13 @@ Riyosha::Application.routes.draw do
 
   devise_for :ill_users,
     :controllers => {
-    :sessions => "ill_users/sessions",
+      :sessions => "ill_users/sessions",
     },
     :path => '/ill_users',
     :path_names => {:sign_in => 'login', :sign_out => 'logout'}
   devise_scope :ill_user do
-    get 'ill_users/profile',         :to => 'ill_users/registrations#show',       :as => 'show_ill_user_registration'
-  end
-    
-
+    get 'ill_users/profile',        :to => 'ill_users/registrations#show',       :as => 'show_ill_user_registration'
+  end    
 
   devise_for :dk_nemid_users,
     :scope => 'dk_nemid',
