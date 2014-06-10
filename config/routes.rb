@@ -41,4 +41,7 @@ Riyosha::Application.routes.draw do
     get 'create_dtu/:id' => 'users#dtu', :as => 'create_dtu'
   end
 
+  namespace :aleph do
+    get 'session/new'        => 'sessions#new', :as => 'new_session'
+  end
 end

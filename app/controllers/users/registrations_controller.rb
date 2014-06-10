@@ -37,4 +37,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def after_inactive_sign_up_path_for(resource)
     user_wait_mail_path
   end
+
+
 end

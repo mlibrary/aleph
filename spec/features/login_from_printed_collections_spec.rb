@@ -73,7 +73,7 @@ feature 'When user requests login from printed collections', :js => true do
   def validate_nemid
     check('accept_payment_terms')
     check('accept_printed_terms')
-    click_on('I wish to enable book lending')
+    click_on('Log on with NemID')
     click_on('Validate NemID')
   end
 

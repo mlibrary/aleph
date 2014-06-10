@@ -1,3 +1,10 @@
+<div class="row">
+  <div class="span9">
+    <p>Danish public libraries and danish research libraries can login
+    to DTU Library printed collection with library id and a
+    self-chosen password. If your library does not have a password for DTU Library Login, please create a new password using the link below the login form.</p>
+  </div>
+</div>
 <%= form_for(resource, :as => resource_name,
       :url => session_path(resource_name)) do |f| %>
   <div class="row">
@@ -26,7 +33,7 @@
     </div>
     <div class="span6">
   <%- if devise_mapping.recoverable? %>
-    <%= link_to t('riyosha.password.forgot.link'), new_password_path(resource_name) %>
+    <%= link_to 'Create new password', new_password_path(resource_name) %>
   <% end -%>
     </div>
   </div>

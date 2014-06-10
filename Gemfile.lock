@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/dtulibrary/devise_dk_nemid
-  revision: c1cb1483db7b2de1aa9c642113ec43bf2ead7771
+  revision: b0f69674f7255859bb683c9fc0ac50d828c27c0a
   specs:
     devise_dk_nemid (1.0.5)
       devise (~> 3.2)
