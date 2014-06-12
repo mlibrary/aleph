@@ -221,7 +221,7 @@ class User < ActiveRecord::Base
   end
 
   def expand_local
-    @expanded[:address] = nil
+    @expanded.delete :address
     @cpr = local_cpr
   end
 
