@@ -31,13 +31,13 @@ describe User do
       expect(FactoryGirl.build(:user, :last_name => nil)).not_to be_valid
     end
 
-    it "fails with @dtu.dk mail address" do
-      expect(FactoryGirl.build(:user, :email => 'no@dtu.dk')).not_to be_valid
-    end
+    #it "fails with @dtu.dk mail address" do
+    #  expect(FactoryGirl.build(:user, :email => 'no@dtu.dk')).not_to be_valid
+    #end
 
-    it "fails with .dtu.dk mail address" do
-      expect(FactoryGirl.build(:user, :email => 'no@x.dtu.dk')).not_to be_valid
-    end
+    #it "fails with .dtu.dk mail address" do
+    #  expect(FactoryGirl.build(:user, :email => 'no@x.dtu.dk')).not_to be_valid
+    #end
   end
 
   it "name is not filled for anon user" do

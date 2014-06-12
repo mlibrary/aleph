@@ -36,6 +36,10 @@ class DtuBase
     @org_units = Array.new
     logger.info "Matrikel id #{matrikel_id}"
 
+    if has_active_employee_or_student_profile(account)
+      @library_access = '1'
+    end
+
     profile = dtu_select_profile(account)
     if profile.nil?
       @reason ||= 'dtu_no_primary_profile'
@@ -137,6 +141,12 @@ class DtuBase
   end
 
   private
+
+  def has_active_employee_or_student_profile(account)
+    employee_profiles = account.xpath("profile_employee[@active = '1']")
+    student_profiles  = account.xpath("profile_student[@active = '1']")
+    !(employee_profiles.empty? && student_profiles.empty?)
+  end
 
   def dtu_select_profile(account)
     @user_type = nil

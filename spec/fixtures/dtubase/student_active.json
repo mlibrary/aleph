@@ -1,7 +1,7 @@
 {
   "reason":"dtu_no_primary_profile",
   "email":"student@test.domain",
-  "library_access":"0",
+  "library_access":"1",
   "firstname":"Test",
   "lastname":"Testsen",
   "initials":"",
