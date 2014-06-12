@@ -74,10 +74,13 @@ class Users::SessionsController < Devise::SessionsController
 
   helper_method :authenticating_aleph?
   def authenticating_aleph?
-    authenticating_url = session[:cas_server_service]
-    aleph_urls = [Rails.application.config.aleph[:url], Rails.application.config.aleph[:alternate_urls]].flatten
+    aleph_url? session[:cas_server_service]
+  end
 
-    authenticating_url && aleph_urls.any?{|url| authenticating_url.start_with?(url)}
+  helper_method :aleph_url?
+  def aleph_url? url
+    aleph_urls = [Rails.application.config.aleph[:url], Rails.application.config.aleph[:alternate_urls]].flatten
+    url && aleph_urls.any?{|aleph_url| url.start_with?(aleph_url)}
   end
   
 end

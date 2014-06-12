@@ -1,6 +1,6 @@
 <% if @response.status == 200 %>
 yes
-<% if @response.service_ticket.service.start_with?(Rails.application.config.aleph[:url]) %>
+<% if aleph_url? @response.service_ticket.service %>
 <%= Aleph.config.bor_prefix %>-<%= @response.service_ticket.ticket_granting_ticket.username.to_s %>
 <% else %>
 <%= @response.service_ticket.ticket_granting_ticket.username.to_s %>

@@ -3,7 +3,7 @@ xml.instruct! :xml, :version=>"1.0", :encoding=>"UTF-8"
 if @response.status == 200
   xml.tag!("cas:serviceResponse", 'xmlns:cas' => "http://www.yale.edu/tp/cas") do
     xml.tag!("cas:authenticationSuccess") do
-      if @response.service_ticket.service.start_with? Rails.application.config.aleph[:url]
+      if aleph_url? @response.service_ticket.service
         xml.tag!("cas:user", Aleph.config.bor_prefix + '-' + @response.service_ticket.ticket_granting_ticket.username.to_s)
       else
         xml.tag!("cas:user", @response.service_ticket.ticket_granting_ticket.username.to_s)
