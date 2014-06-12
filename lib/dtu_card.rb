@@ -47,7 +47,7 @@ module DtuCard
       return if record.nil?
       if record.librarycard != cardid
         if record.updated_at < @starttime
-          record.librarycard = cardid
+          record.librarycard = cardid.to_i.to_s(16).upcase
           record.save || @errors << "Can't update #{email} with #{cardid}"
         else
           @errors << "Duplicate entry for #{email}"
