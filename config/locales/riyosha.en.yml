@@ -24,6 +24,9 @@ en:
       social: "Sign in through social network"
       problem: "Problems?"
       help: "Need help to choose a login option?"
+      libraries: 
+        title: Libraries
+        here: Login with library number and password
     error:
       dtubase: "DTUBasen is unavailable at the moment - please try again later"
     edit:
