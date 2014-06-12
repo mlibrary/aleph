@@ -112,9 +112,10 @@ module Riyosha
     }
 
     config.aleph = {
-      :url          => '',
-      :prefix       => 'STAGING',
-      :create_users => false,
+      :url            => '',
+      :alternate_urls => [],
+      :prefix         => 'STAGING',
+      :create_users   => false,
     }
 
     config.vip_base = {

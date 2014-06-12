@@ -21,7 +21,7 @@ class Users::SessionsController < Devise::SessionsController
 
   def after_sign_in_path_for(resource) 
     resource.aleph_borrower
-    if session[:cas_server_service] && session[:cas_server_service].start_with?(Rails.application.config.aleph[:url]) && !resource.may_lend_printed? 
+    if authenticating_aleph? && !resource.may_lend_printed? 
       logger.info "Authentication request is from Aleph and user may not lend printed materials. Storing after_sign_in_path in session."
       session[:pending_after_sign_in_path] = super
       show_user_registration_path
@@ -72,5 +72,12 @@ class Users::SessionsController < Devise::SessionsController
     end
   end
 
+  helper_method :authenticating_aleph?
+  def authenticating_aleph?
+    authenticating_url = session[:cas_server_service]
+    aleph_urls = [Rails.application.config.aleph[:url], Rails.application.config.aleph[:alternate_urls]].flatten
 
+    authenticating_url && aleph_urls.any?{|url| authenticating_url.start_with?(url)}
+  end
+  
 end

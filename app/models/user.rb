@@ -221,7 +221,7 @@ class User < ActiveRecord::Base
   end
 
   def expand_local
-    @expanded[:address] = address unless address.nil?
+    @expanded[:address] = nil
     @cpr = local_cpr
   end
 

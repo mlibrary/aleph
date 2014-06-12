@@ -38,7 +38,7 @@ module Concerns
       ids << { 'type' => '03',
         'id' => @expanded[:dtu]['studentcode'].upcase,
         'pin'  => nil,
-      } if @expanded[:dtu] && !@expanded[:dtu]['stads_code'].blank?
+      } if @expanded[:dtu] && !@expanded[:dtu]['studentcode'].blank?
 
       ids << { 'type' => '03',
         'id' => library_id,
@@ -70,7 +70,7 @@ module Concerns
 
     def address_lines
       expand
-      @expanded[:address] ? @expanded[:address].to_a : Array.new
+      @expanded[:address] ? @expanded[:address].to_a : ['' ,'' ,'' ,'']
     end
 
     def aleph_bor_status
