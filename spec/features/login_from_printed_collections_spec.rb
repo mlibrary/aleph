@@ -62,7 +62,7 @@ feature 'When user requests login from printed collections', :js => true do
     visit '/ill_users/login?' + {:service => aleph_url}.to_query
     fill_in 'ill_user_library_id', :with => library_id
     fill_in 'ill_user_password',   :with => password
-    click_on 'Login'
+    click_on 'Log in'
   end
 
   def login_with_google
@@ -73,7 +73,7 @@ feature 'When user requests login from printed collections', :js => true do
   def validate_nemid
     check('accept_payment_terms')
     check('accept_printed_terms')
-    click_on('Log on with NemID')
+    click_on('Register using NemID')
     click_on('Validate NemID')
   end
 

@@ -1,32 +1,32 @@
 en:
   riyosha:
     sign_up:
-      non_dtu: "Sign up"
-      submit: "Sign up"
-      directly: "Sign up directly"
-      with_provider: "Sign up using your %{provider} account"
-      social: "Sign up through social network"
+      non_dtu: "Register"
+      submit: "Register"
+      directly: "Register directly"
+      with_provider: "Register using your %{provider} account"
+      social: "Register through social network"
       non_dtu_prefix: &non_dtu_prefix "For Non-DTU users"
-      library: "Sign up as library"
+      library: "Register as library"
     sign_in:
-      non_dtu: "Login as non-DTU user"
-      dtu_user: "Sign in as DTU user"
-      final_dtu_user: "Login with your DTU credentials"
-      directly: "Sign in directly"
+      non_dtu: "Log in as non-DTU user"
+      dtu_user: "Log in as DTU user"
+      final_dtu_user: "Log in with your DTU credentials"
+      directly: "Log in directly"
       from_dtu: "For DTU users (Staff and Student)"
       new_user: "New to DTU Findit?"
       dtu_affiliate: "You appear to be affiliated to DTU"
       dtu_max_use: "Choose this option to take full advantage of DTU Findit"
       dtu_remember: "Your browser will remember your choice"
-      submit: "Login"
+      submit: "Log in"
       with_provider: "%{provider}"
       non_dtu_prefix: *non_dtu_prefix
-      social: "Sign in through social network"
+      social: "Log in through social network"
       problem: "Problems?"
       help: "Need help to choose a login option?"
       libraries: 
         title: Libraries
-        here: Login with library number and password
+        here: Log in with library number and password
     error:
       dtubase: "DTUBasen is unavailable at the moment - please try again later"
     edit:
@@ -36,7 +36,7 @@ en:
       leave: "(leave blank for no change)"
       need_confirm: "(we need your current password to confirm your changes)"
       submit: "Update"
-      printed_signup: "Log on with NemID"
+      printed_signup: "Register using NemID"
       cancel:
         title: "Cancel my account"
         text: "Unhappy?"
@@ -44,7 +44,7 @@ en:
         confirm: "Are you sure?"
       basic_information: "Basic information"
       lending_information: "DTU Library printed collection"
-      enable_lending_printed: "Your account is <strong>not</strong> registered to order and borrow books from DTU Library printed collection. To borrow books from the printed collection you must accept our payment terms and lending policy and log on with NemID. You will only need to do this once."
+      enable_lending_printed: "Your account is <strong>not</strong> registered to order and borrow books from DTU Library printed collection. To borrow books from the printed collection you must accept our payment terms and lending policy and verify your CPR-number with NemID. You will only need to do this once."
       payment_terms: 'I accept the <a href="http://www.dtic.dtu.dk/english/servicemenu/find/borrow/payment"> payment terms</a>'
       printed_terms: 'I accept the <a href="http://www.dtic.dtu.dk/english/servicemenu/find/borrow">lending policy</a>'
       allow_lending_printed: "Your account is registered to order and borrow books from DTU Library printed books collection."
@@ -91,7 +91,7 @@ en:
     dtu:
       direct_login: "Send me directly to DTU login every time I need to login"
     user:
-      dtu_email: "may not be a DTU address when signing up as public user - choose 'Sign in as DTU user' on login page"
+      dtu_email: "may not be a DTU address when registering as public user - please choose 'Log in as DTU user' on login page"
     main_service_text: "Go to DTU Findit"
     provider:
       icons:
