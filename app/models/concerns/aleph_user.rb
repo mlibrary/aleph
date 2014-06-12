@@ -5,12 +5,10 @@ module Concerns
     extend ActiveSupport::Concern
 
     def aleph_borrower
-      if show_feature?(:aleph)
-        begin
-          @aleph ||= Aleph::Borrower.new(self) if may_lend_printed?
-        rescue => e
-          Utility.log_exception e, :info => "Could not update Aleph for user #{self.inspect}"
-        end
+      begin
+        @aleph ||= Aleph::Borrower.new(self) if may_lend_printed?
+      rescue => e
+        Utility.log_exception e, :info => "Could not update Aleph for user #{self.inspect}"
       end
     end
     

@@ -8,8 +8,6 @@ FeatureFlipper.features do
   end
 
   in_state :staging do
-    feature :nemid,   :description => "Nemid integration"
-    feature :aleph,   :description => "Aleph integration"
   end
 
   in_state :live do    
