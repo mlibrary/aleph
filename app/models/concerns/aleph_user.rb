@@ -31,9 +31,14 @@ module Concerns
       } if self.user_type.code == 'dtu_empl'
 
       ids << { 'type' => '03',
-        'id' => "STUD#{@cpr}",
+        'id' => @cpr,
         'pin'  => nil,
       } if self.user_type.code == 'student'
+
+      ids << { 'type' => '03',
+        'id' => @expanded[:dtu]['stads_code'].upcase,
+        'pin'  => nil,
+      } if @expanded[:dtu]['stads_code']
 
       ids << { 'type' => '03',
         'id' => library_id,

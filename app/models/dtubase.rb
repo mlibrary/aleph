@@ -3,7 +3,7 @@ require 'nokogiri'
 
 class DtuBase
   attr_reader :reason, :email, :firstname, :lastname, :initials,
-    :matrikel_id, :user_type, :library_access, :org_units, :address, :cpr
+    :matrikel_id, :user_type, :library_access, :org_units, :stads_code, :address, :cpr
 
   def self.lookup(attrs)
     dtubase = self.new
@@ -50,6 +50,7 @@ class DtuBase
     org_unit_id = profile.xpath('@fk_orgunit_id').text
     org_unit = get_org_unit(org_unit_id)
 
+
     # Org unit must be in the correct groping
     unless valid_dtu_org_unit(org_unit)
       @reason ||= 'not_dtu_org'
@@ -66,10 +67,15 @@ class DtuBase
       end
     end
 
+    # Find s-number for student profile
+    if @user_type == 'student'
+      @stads_code = profile.xpath('@stads_studentcode').text
+    end
+
     case @user_type
     when 'dtu_empl'
       create_employee_address org_unit, profile
-    else 
+    else
       create_student_or_guest_address org_unit, profile
     end
 
@@ -115,7 +121,7 @@ class DtuBase
   def to_hash
     values = Hash.new
     %w(reason email library_access firstname lastname initials matrikel_id
-       user_type org_units).each do |k|
+       user_type org_units stads_code).each do |k|
       values[k] = send(k)
     end
     values
