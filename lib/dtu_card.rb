@@ -4,11 +4,11 @@ require 'csv'
 module DtuCard
   class Base
     def employee_file_name
-      File.expand_path("files/employee.csv", Rails.root)
+      File.expand_path("tmp/employee.csv", Rails.root)
     end 
 
     def student_file_name
-      File.expand_path("files/student.csv", Rails.root)
+      File.expand_path("tmp/student.csv", Rails.root)
     end
   end
 
@@ -42,9 +42,10 @@ module DtuCard
     end
 
     def process(cardid, email)
-      cardid = format("%x", cardid)
+      #cardid = format("%x", cardid)
       record = User.where(:email => email.downcase).first
-      return if record.nil?
+      return if record.nil? 
+      return unless ['dtu_empl', 'student'].include?(record.user_type.code)
       if record.librarycard != cardid
         if record.updated_at < @starttime
           record.librarycard = cardid.to_i.to_s(16).upcase
