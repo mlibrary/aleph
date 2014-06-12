@@ -15,7 +15,8 @@ describe Rest::UsersController do
       :initials => 'empl',
       :matrikel_id => '1',
       :user_type => 'dtu_empl',
-      :org_units => ['58', '55']
+      :org_units => ['58', '55'],
+      :studentcode => nil
     }
     @address = {
       "line1" => "Danmarks Tekniske Informationscenter",

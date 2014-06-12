@@ -9,7 +9,7 @@ class Rest::UsersController < ApplicationController
       format.text { render :text => @user.id }
     end
   end
-0
+
   def dtu
     uid = params[:id]
     identity = Identity.where(:provider => 'dtu', :uid => uid).first

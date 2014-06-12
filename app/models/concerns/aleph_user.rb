@@ -36,7 +36,7 @@ module Concerns
       } if self.user_type.code == 'student'
 
       ids << { 'type' => '03',
-        'id' => @expanded[:dtu]['stads_code'].upcase,
+        'id' => @expanded[:dtu]['studentcode'].upcase,
         'pin'  => nil,
       } if @expanded[:dtu]['stads_code']
 

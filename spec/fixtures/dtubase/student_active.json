@@ -1,11 +1,12 @@
 {
- "reason":"dtu_no_primary_profile",
- "email":"student@test.domain",
- "library_access":"0",
- "firstname":"Test",
- "lastname":"Testsen",
- "initials":"",
- "matrikel_id":"1",
- "user_type":"student",
- "org_units":["stud"]
+  "reason":"dtu_no_primary_profile",
+  "email":"student@test.domain",
+  "library_access":"0",
+  "firstname":"Test",
+  "lastname":"Testsen",
+  "initials":"",
+  "matrikel_id":"1",
+  "user_type":"student",
+  "org_units":["stud"],
+  "studentcode":"X5"
 }

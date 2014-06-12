@@ -7,5 +7,6 @@
   "initials":"phd",
   "matrikel_id":"1",
   "user_type":"dtu_empl",
-  "org_units":["58"]
+  "org_units":["58"],
+  "studentcode":null
 }
