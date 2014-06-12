@@ -43,5 +43,6 @@ Riyosha::Application.routes.draw do
 
   namespace :aleph do
     get 'session/new'        => 'sessions#new', :as => 'new_session'
+    get 'errors/catch'       => 'errors#catch'
   end
 end
