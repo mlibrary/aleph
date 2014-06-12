@@ -6,7 +6,7 @@ class VipBase
     else      
       result = sru_request
     end
-    result.map { |r| Branch.new(r.elements['vip:metadata']) }.select{|b| ['H', 'f', 'DELETED'].include? b.record_type }
+    result.map { |r| Branch.new(r.elements['vip:metadata']) }.select{|b| ['H', 'f', 'P', 'DELETED'].include? b.record_type }
   end
 
   

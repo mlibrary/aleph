@@ -31,6 +31,8 @@ user_type_id = UserType.find_by_code('library').id
     :aleph_bor_status => '20', :aleph_bor_type => '01' },
   { :code => 'world_public', :user_type_id => user_type_id,
     :aleph_bor_status => '60', :aleph_bor_type => '01' },
+  { :code => 'company', :user_type_id => user_type_id,
+    :aleph_bor_status => '16', :aleph_bor_type => '09' },
 ].each do |subtype|
   ust = UserSubType.find_or_create_by_code(subtype)
   ust.update_attributes(subtype)

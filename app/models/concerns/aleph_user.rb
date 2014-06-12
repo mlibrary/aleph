@@ -38,7 +38,7 @@ module Concerns
       ids << { 'type' => '03',
         'id' => @expanded[:dtu]['studentcode'].upcase,
         'pin'  => nil,
-      } if @expanded[:dtu]['stads_code']
+      } if @expanded[:dtu] && !@expanded[:dtu]['stads_code'].blank?
 
       ids << { 'type' => '03',
         'id' => library_id,

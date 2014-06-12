@@ -17,21 +17,25 @@ class IllUser < ActiveRecord::Base
   validates :user_type,     :presence => true
   validates :user_sub_type, :presence => true
   validates :library_id,    :presence => true, :uniqueness => true
+  validates :name,          :presence => true
   validates :email,         :presence => true
 
   def self.create_or_update_from_vip_base(branch)
     if branch.deleted?
       #delete_from_vip_base(branch)
     else
-      logger.warn "Email is blank for library id #{branch.library_id}" and return if branch.email.blank?
-      logger.warn "Library type is blank for library id #{branch.type}" and return if branch.type.blank?
-
+      logger.info "Email is blank for library #{branch.library_id}, #{branch.name}. Not imported." and return if branch.email.blank?
+      logger.info "Library type is blank for library #{branch.library_id}, #{branch.name}. Not imported." and return if branch.type.blank?
+      logger.info "Address is blank for library #{branch.library_id}, #{branch.name}. Not imported." and return if branch.address.blank?
+      logger.info "Zip is blank for library #{branch.library_id}, #{branch.name}. Not imported." and return if branch.zip.blank?
+      logger.info "City is blank for library #{branch.library_id}, #{branch.name}. Not imported." and return if branch.city.blank?
+      
       user = IllUser.find_or_initialize_by_library_id(
-        :library_id        => branch.library_id,
-        :email             => branch.email,
-        :name              => branch.name,
-        :user_type_id      => UserType.find_by_code('library').id, 
-        :user_sub_type_id  => UserSubType.find_by_code(map_vip_type(branch.type)).id
+        :library_id          => branch.library_id,
+        :email               => branch.email,
+        :name                => branch.name,
+        :user_type_id        => UserType.find_by_code('library').id, 
+        :user_sub_type_id    => UserSubType.find_by_code(map_vip_type(branch.record_type, branch.type)).id
       )
       unless user.persisted?
         user.password = user.password_confirmation = SecureRandom.base64(12)
@@ -46,7 +50,12 @@ class IllUser < ActiveRecord::Base
       elsif user.address
         user.address.destroy
       end
-      user.save || logger.warn("Cannot create or update IllUser for library id: #{branch.library_id}")
+      if user.save 
+        user
+      else
+        logger.warn("Cannot create or update IllUser for library id: #{branch.library_id}. #{user.errors.inspect}")
+        nil
+      end
     end
   end
 
@@ -63,6 +72,10 @@ class IllUser < ActiveRecord::Base
     ''
   end
 
+  def may_lend_printed?
+    true
+  end
+
   def expand
     @expanded = {:address => address}
   end
@@ -77,11 +90,15 @@ class IllUser < ActiveRecord::Base
 
   private
 
-  def self.map_vip_type(vip_type)
-    {
-      'Forskningsbibliotek' => 'research_with',
-      'Folkebibliotek'      => 'public_dk',
-    }[vip_type]
+  def self.map_vip_type(record_type, vip_type)
+    case 
+    when record_type == 'P' && vip_type == 'Forskningsbibliotek'
+      'company'
+    when vip_type == 'Forskningsbibliotek'
+      'research_with'
+    when vip_type == 'Folkebibliotek'
+      'public_dk'
+    end
     
   end
 
