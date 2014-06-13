@@ -196,6 +196,14 @@ module Aleph
         end
       end
 
+      if @aleph_pid
+        z308 << {
+          'z308-key-type'     => '00',
+          'z308-key-data'     => @aleph_pid,
+          'z308-verification' => @aleph_pid,
+        }
+      end
+
       z308.each do |z|
         z['record-action'] ||= action
         z['z308-verification'] ||= random_pin
