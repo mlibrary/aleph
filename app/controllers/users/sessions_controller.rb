@@ -19,7 +19,13 @@ class Users::SessionsController < Devise::SessionsController
     end
   end
 
-  def after_sign_in_path_for(resource) 
+  def after_sign_in_path_for(resource)
+    params[:resource] = resource # this is an ugly hack
+    super
+  end
+
+  def create_service_url(tgt)
+    resource = params.delete(:resource)
     resource.aleph_borrower
     if authenticating_aleph? && !resource.may_lend_printed? 
       logger.info "Authentication request is from Aleph and user may not lend printed materials. Storing after_sign_in_path in session."
@@ -29,7 +35,7 @@ class Users::SessionsController < Devise::SessionsController
       super
     end
   end
-
+  
   def dtu_login_url
     cas_client.add_service_to_login_url url_for(:only_path => false)
   end
