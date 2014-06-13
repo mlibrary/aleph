@@ -23,6 +23,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
       resource.aleph_borrower
       redirect_to session.delete(:pending_after_sign_in_path) and return
     end
+
+    expires_now
   end
 
   def update_resource(resource, account_update_params)
