@@ -50,6 +50,6 @@ class Users::NemidSessionsController < Devise::DkNemidSessionsController
   end
 
   def auth_options
-    super.merge({:recall => "users/registration#edit"})
+    super.merge({:recall => "users/registrations#show"})
   end
 end
