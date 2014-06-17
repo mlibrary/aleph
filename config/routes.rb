@@ -13,6 +13,7 @@ Riyosha::Application.routes.draw do
     :path_names => {:sign_in => 'login', :sign_out => 'logout'}
   devise_scope :user do
     get 'users/profile',            :to => 'users/registrations#show',           :as => 'show_user_registration'
+    get 'users/register',           :to => 'users/registrations#dedicated',      :as => 'dedicated_user_registration'
     get 'users/mail',               :to => 'users/confirmations#wait_mail',      :as => 'user_wait_mail'
     get 'users/confirmed',          :to => 'users/confirmations#confirmed',      :as => 'user_confirmed'
   end

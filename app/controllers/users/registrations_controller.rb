@@ -27,6 +27,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
     expires_now
   end
 
+  def dedicated
+    
+  end
+
   def update_resource(resource, account_update_params)
     if account_update_params[:address]
       resource.address.update_attributes(account_update_params[:address])
