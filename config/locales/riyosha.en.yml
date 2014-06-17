@@ -102,3 +102,20 @@ en:
         'facebook': "Facebook"
         'linkedin': "LinkedIn"
         'google_oauth2': "Google"
+    footer:
+      about_dtu_library_html:
+        <h5>About DTU Library</h5>
+        <div class="about">
+        Technical Information Center of Denmark, DTU Library, is the university library of DTU and the national technical information center.
+        </div>
+        <div class="address">
+          <div class="name">DTU Library</div>
+          <div class="name">Technical Information Center of Denmark</div>
+          <div class="street">Anker Engelunds Vej 1</div>
+          <div class="building">Building 101D</div>
+          <div class="city">DK-2800 Kgs. Lyngby</div>
+          <div class="email">%{email}</div>
+          <div class="telephone">Tel. (+45) 45 25 72 00</div>
+        </div>
+        <div class="cvr-number">CVR-no. 30060946</div>
+        <div class="ean-number">EAN-no. 5798000430556</div>
