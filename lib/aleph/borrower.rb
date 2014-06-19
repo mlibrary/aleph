@@ -1,15 +1,17 @@
 module Aleph
   class Borrower < Base
-    # initialize(user)
-    #   Setup an aleph borrower from user object
-    #
-    def initialize(user)
+
+    def initialize
       @@connection = Aleph::Connection.instance
       @adm_library ||= config.adm_library
       if @adm_library.blank?
         raise Aleph::Error, "ADM library must be specified in configuration" 
       end
 
+    end
+
+    #   Update aleph user from riyosha user
+    def update_user(user)
       @user_id = "#{config.bor_prefix}-#{user.cas_username}"
       z303, z304, z305, z308 = information_from_user_object(user)
       if aleph_full_lookup(z308)
@@ -37,17 +39,45 @@ module Aleph
       end
     end
 
+    def lookup_all(user)
+      z303, z304, z305, z308s = information_from_user_object(user)
+      pids = {}
+      info = {}
+      logger.debug "Generated aleph keys: #{z308s}"
+      z308s.each do |z308|
+        logger.debug "bor_by_key for #{z308}"
+        pid = aleph_lookup(z308)
+        logger.debug "pid found: #{pid}"
+        pids[[z308['z308-key-type'],z308['z308-key-data']]] = pid
+        if !pid.blank? 
+          logger.debug "bor_info for pid #{pid}"
+          info[pid] = Hash.from_xml(bor_info(pid).to_xml)
+          info[pid] = abbrev_aleph_info(info[pid]) if info[pid]
+        end
+      end
+      return pids, info
+    end
+
+    def abbrev_aleph_info(info)
+      { 
+        'z303' => info['bor_info']['z303'].slice('z303_id', 'z303_open_date', 'z303_update_date', 'z303_update_date'),
+        'z304' => info['bor_info']['z304'].slice('z304_address_0', 'z304_address_1', 'z304_address_2', 'z304_address_3', 'z304_email_address', 'z304_update_date'),
+        'z305' => info['bor_info']['z305'].slice('z305_bor_type', 'z305_bor_status', 'z305_update_date'),
+      }
+    end
+    
+
     def valid_aleph_bor?
       !@aleph_pid.blank?
     end
 
-    def bor_info
-      raise Aleph::Error, "Borrower not set" if @aleph_pid.blank?
+    def bor_info(pid)
+      raise Aleph::Error, "Borrower not set" if pid.blank?
       raise Aleph::Error, "ADM library not set" if @adm_library.blank?
 
       document = @@connection.x_request('bor_info', {
         'library' => @adm_library,
-        'bor_id' => @aleph_pid,
+        'bor_id' => pid,
         'loans' => 'N',
         'cash' => 'N',
         'hold' => 'N',
@@ -101,7 +131,7 @@ module Aleph
     end
 
     def aleph_update(z303, z304, z305, z308)
-      bor_info
+      bor_info(@aleph_pid)
       if check_for_updates(z303, z304, z305, z308)
         bor_update('U', @z303, @z304, @z305, @z308) 
       end

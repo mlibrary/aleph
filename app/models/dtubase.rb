@@ -11,6 +11,17 @@ class DtuBase
     [ dtubase.to_hash, dtubase.address ]
   end
 
+  def self.cwis_for_studentcode(studentcode)
+    profile = lookup_student_profile(studentcode)
+    profile = profile && profile['root'] && profile['root']['profile_student']
+    profile = profile.first if profile.is_a? Array
+    profile['fk_matrikel_id'] if profile
+  end
+
+  def self.lookup_student_profile(attrs)
+    response = self.new.generic_request('/account/profile_student', attrs)
+  end
+
   def lookup_single(attrs)
     identifier = attrs[:cwis] || attrs[:username]
     attr = attrs[:cwis] ? "matrikel_id" : "username"
@@ -140,6 +151,24 @@ class DtuBase
     @cpr
   end
 
+  def generic_request(path, attrs)
+    conditions = attrs.map{|attr, value| "@#{attr}='#{value}'"}.join(' and ')
+    url = "#{config[:url]}?" +
+      URI.encode_www_form(
+      :XPathExpression => "#{path}[#{conditions}]",
+      :username => config[:username],
+      :password => config[:password],
+      :dbversion => 'dtubasen'
+      )
+    response = HTTParty.get(url)
+    unless response.success?
+      @reason = 'lookup_failed'
+      logger.warn "Could not get #{path} with #{conditions} from DTUbasen with request #{url}. Message: #{response.message}."
+    end
+    response
+    
+  end
+  
   private
 
   def has_active_employee_or_student_profile(account)

@@ -23,4 +23,9 @@ class Rest::UsersController < ApplicationController
     show
   end
 
+  def student
+    params[:id] = DtuBase.cwis_for_studentcode(:stads_studentcode => params[:id]) || not_found
+    dtu
+  end
+
 end

@@ -40,6 +40,7 @@ Riyosha::Application.routes.draw do
   namespace :rest do
     resources :users, :only => [ :show ]
     get 'create_dtu/:id' => 'users#dtu', :as => 'create_dtu'
+    get 'student/:id'    => 'users#student'
   end
 
   namespace :aleph do

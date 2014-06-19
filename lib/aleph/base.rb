@@ -2,6 +2,10 @@ require 'nokogiri'
 
 module Aleph
   class Base
+    def self.config
+      Aleph::config
+    end
+
     def config
       Aleph::config
     end
