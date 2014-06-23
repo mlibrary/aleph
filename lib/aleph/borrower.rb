@@ -304,7 +304,7 @@ module Aleph
       z308 = Array.new
       z308 << {
         'z308-key-type' => config.bor_type_id,
-        'z308-key-data' => "#{config.bor_prefix}-#{user.cas_username}"
+        'z308-key-data' => "#{config.bor_prefix}-#{user.cas_username}X"
       }
       if user.respond_to? :aleph_ids
         user.aleph_ids.each do |id|

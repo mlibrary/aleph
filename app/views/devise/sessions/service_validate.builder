@@ -4,7 +4,7 @@ if @response.status == 200
   xml.tag!("cas:serviceResponse", 'xmlns:cas' => "http://www.yale.edu/tp/cas") do
     xml.tag!("cas:authenticationSuccess") do
       if aleph_url? @response.service_ticket.service
-        xml.tag!("cas:user", Aleph.config.bor_prefix + '-' + @response.service_ticket.ticket_granting_ticket.username.to_s)
+        xml.tag!("cas:user", Aleph.config.bor_prefix + '-' + @response.service_ticket.ticket_granting_ticket.username.to_s + 'X')
       else
         xml.tag!("cas:user", @response.service_ticket.ticket_granting_ticket.username.to_s)
       end

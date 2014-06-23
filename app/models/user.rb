@@ -195,7 +195,7 @@ class User < ActiveRecord::Base
   end
 
   def cas_username
-    id
+    "#{id}"
   end
 
   private

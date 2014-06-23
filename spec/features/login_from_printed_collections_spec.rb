@@ -48,7 +48,7 @@ feature 'When user requests login from printed collections', :js => true do
 
       ticket = Rack::Utils.parse_nested_query(URI(current_url).query)['ticket']
       response = validate_ticket(ticket)
-      expect(response).to eq("yes #{Rails.application.config.aleph[:prefix]}-1")
+      expect(response).to eq("yes #{Rails.application.config.aleph[:prefix]}-1X")
     end
   end
 
