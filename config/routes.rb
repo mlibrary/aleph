@@ -33,6 +33,9 @@ Riyosha::Application.routes.draw do
     :controllers => { :dk_nemid_sessions => "users/nemid_sessions" },
     :path => '/nemid',
     :path_names => {:sign_in => 'login', :sign_out => 'logout'}
+  devise_scope :dk_nemid_user do
+    get 'nemid/already_assigned',   :to => 'users/nemid_sessions#already_assigned',    :as => 'nemid_already_assigned'
+  end
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

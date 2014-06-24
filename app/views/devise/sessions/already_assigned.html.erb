@@ -1,0 +1,7 @@
+<div class="span12">
+  <div class="alert alert-block">
+    <h4>Error!</h4>
+    You're logged in with email <%= @user.email %>.  The cpr-number <strong><%= @other_user.dk_nemid_users.first.cpr.insert(6, '-') %></strong> is already registered to a user with email <strong><%= @other_user.email %></strong>. Please use that account to login.
+  </div>
+  <%= link_to 'Login again', destroy_user_session_path , :class => 'btn btn-primary' %>
+</div>
