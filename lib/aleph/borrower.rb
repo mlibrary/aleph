@@ -141,9 +141,13 @@ module Aleph
       update = update_bor_part(@z303, z303)
       # We only get one z304 record (current address)
       # Either update it or removed it if not type 01
+      debugger
       if @z304['z304-address-type'] == '01'
         update = update_bor_part(@z304, z304) || update
-      else
+      elsif @z304['z304-id'].blank?
+        update = update_bor_part(@z304, z304) || update
+        @z304['record-action'] = 'I'
+      else 
         @z304['record-action'] = 'D'
         update = true
       end
