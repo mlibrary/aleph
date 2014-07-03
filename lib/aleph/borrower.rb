@@ -32,9 +32,8 @@ module Aleph
       else
         @aleph_pid = nil
         msg = "Non matching ALEPH ids"
-        z308.each do |z|
-          msg += " #{z['z308-key-type']} - #{z['z308-key-data']}."
-        end
+        msg += "\n" + Aleph::Borrower.new.lookup_all(user).ai(:plain => true)
+        msg += "\n" + user.ai(:plain => true)
         logger.error msg
       end
     end
