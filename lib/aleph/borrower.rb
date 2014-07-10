@@ -54,7 +54,7 @@ module Aleph
           info[pid] = abbrev_aleph_info(info[pid]) if info[pid]
         end
       end
-      return pids, info
+      return {:pids => pids, :info => info }
     end
 
     def abbrev_aleph_info(info)
