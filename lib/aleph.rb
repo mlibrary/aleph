@@ -91,6 +91,7 @@ module Aleph
   end
 end
 
+require 'aleph/error.rb'
 require 'aleph/base.rb'
 require 'aleph/connection.rb'
 require 'aleph/borrower.rb'

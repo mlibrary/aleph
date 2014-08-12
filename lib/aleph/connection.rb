@@ -31,8 +31,8 @@ module Aleph
         @error = "X request failed"
       end
       @document = Nokogiri.XML(response.body, nil, 'UTF-8')
+      @error    = parse_x_response_errors(@document)
       logger.info "Response: #{@document}"
-      @error = @document.xpath('//error').text
       self
     end
 
@@ -58,6 +58,10 @@ module Aleph
     def report(text)
       logger.error text
       raise Aleph::Error
+    end
+
+    def parse_x_response_errors(document)
+      document.xpath('//error').map{|e| e.text}.reject{|e| e.starts_with? 'Succeeded'}.join(' ')      
     end
   end
 end

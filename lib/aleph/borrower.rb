@@ -29,6 +29,17 @@ module Aleph
           end
           logger.info "PID #{@aleph_pid}"
         end
+      elsif try_to_fix_non_matching_aleph_ids(user)
+        z303, z304, z305, z308 = information_from_user_object(user)
+        if aleph_full_lookup(z308)
+          aleph_update(z303, z304, z305, z308)
+          logger.info "PID #{@aleph_pid}"
+        else
+          msg = "Still non matching ALEPH ids after trying to fix"
+          msg += "\n" + Aleph::Borrower.new.lookup_all(user).ai(:plain => true)
+          msg += "\n" + user.ai(:plain => true)
+          logger.error msg
+        end
       else
         @aleph_pid = nil
         msg = "Non matching ALEPH ids"
@@ -36,6 +47,32 @@ module Aleph
         msg += "\n" + user.ai(:plain => true)
         logger.error msg
       end
+    end
+
+    def try_to_fix_non_matching_aleph_ids(user)
+      aleph_data = lookup_all(user)
+      
+      if library_card_is_the_only_key_on_wrong_account(user, aleph_data)
+        return reset_library_card_on_wrong_account(user, aleph_data)
+      end
+      
+      return false
+    end
+
+    def library_card_is_the_only_key_on_wrong_account(user, aleph_data)
+      library_card_pid = aleph_data[:pids][['01', user.librarycard]]
+      return !library_card_pid.blank? && aleph_data[:pids].values.count(library_card_pid) == 1
+    end
+
+    def reset_library_card_on_wrong_account(user, aleph_data)
+      library_card_pid = aleph_data[:pids][['01', user.librarycard]]
+      new_barcode = "ri#{SecureRandom.hex(4)}"
+      logger.warn "Trying to fix non-matching ALEPH ids by resetting code 01 id '#{user.librarycard}' from #{library_card_pid}"
+      xml = %{<?xml version="1.0"?><p-file-20><patron-record><z303><record-action>X</record-action><match-id-type>00</match-id-type><match-id>#{library_card_pid}</match-id></z303><z308><z308-key-type>01</z308-key-type><z308-key-data>#{new_barcode}</z308-key-data><record-action>I</record-action></z308></patron-record></p-file-20>}
+
+      return @@connection.x_request('update_bor', {
+          :update_flag => 'Y', :library => 'DTV50', :xml_full_req => xml
+        }).success
     end
 
     def lookup_all(user)
@@ -140,7 +177,6 @@ module Aleph
       update = update_bor_part(@z303, z303)
       # We only get one z304 record (current address)
       # Either update it or removed it if not type 01
-      debugger
       if @z304['z304-address-type'] == '01'
         update = update_bor_part(@z304, z304) || update
       elsif @z304['z304-id'].blank?
@@ -259,14 +295,7 @@ module Aleph
         'update_flag' => 'Y',
         'library' => @adm_library,
         'xml_full_req' => request
-      ).document
-      errors = Array.new
-      response.xpath("//error").each do |e|
-        errors << e.text unless e.text =~ /^Succeeded /
-      end
-      if errors.size > 0
-        logger.error "Aleph update_bor failed with: #{errors.inspect}"
-      end
+      ).success
     end
 
     def information_from_user_object(user)
