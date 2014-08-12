@@ -61,6 +61,7 @@ class DtuBase
     end
     logger.info "User type #{@user_type}"
 
+
     # Get organization unit
     org_unit_id = profile.xpath('@fk_orgunit_id').text
     org_unit = get_org_unit(org_unit_id)
@@ -177,6 +178,15 @@ class DtuBase
     !(employee_profiles.empty? && student_profiles.empty?)
   end
 
+  def has_active_employee_profile(account)
+    employee_profiles = account.xpath("profile_employee[@active = '1']")
+    !employee_profiles.empty?
+  end
+
+  def is_phd_student_profile(profile)
+    !profile.xpath("@phd='1'").empty?
+  end
+
   def dtu_select_profile(account)
     @user_type = nil
     primary_id = account.xpath("@primary_profile_id").text
@@ -189,9 +199,17 @@ class DtuBase
       profile = account.xpath(
         "profile_student[@fk_profile_id = #{primary_id} and @active = '1']")
       if !profile.empty?
-        phd = profile.xpath('@phd').text
-        @reason ||= "dtu_catch_student_active" if phd == '1'
         @user_type = 'student'
+        phd = profile.xpath('@phd').text
+        if phd == '1'
+          @reason ||= "dtu_catch_student_active"
+          employee_profile = account.xpath("profile_employee[@active = '1']")
+          if !employee_profile.empty?
+            @reason = "dtu_phd_catch_student_primary"
+            profile = employee_profile
+            @user_type = 'dtu_empl'
+          end
+        end
       else
         profile = account.xpath(
           "profile_guest[@fk_profile_id = #{primary_id} and @active = '1']")

@@ -32,7 +32,6 @@ describe DtuBase do
 EOF
       d = DtuBase.new
       d.parse_account(entry.xpath('//account'))
-      puts [d.to_hash, d.address].inspect
     end
   end
 
@@ -64,6 +63,11 @@ EOF
 
     it "lookups student phd active" do
       lookup("student_phd_active", 'stud')
+    end
+
+    it "lookups phd student primary" do
+      stub_dtubase_orgunit('58')
+      lookup("student_phd_student_primary", 'stud')
     end
 
     it "lookups guest primary" do
