@@ -47,7 +47,9 @@ module Aleph
   }
 
   mattr_accessor :z305_defaults
-  @@z305_defaults = {}
+  @@z305_defaults = {
+    'z305_loan_check' => 'Y',
+  }
 
   mattr_accessor :z308_defaults
   @@z308_defaults = {
