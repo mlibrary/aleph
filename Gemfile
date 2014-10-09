@@ -15,7 +15,6 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-linkedin-oauth2'
 gem 'omniauth-google-oauth2'
-gem 'omniauth-linkedin-oauth2'
 
 gem 'capistrano', '~> 2.15'
 gem 'bootstrap-sass', '~> 2.3.0'
@@ -63,7 +62,6 @@ group :test do
 end
 
 group :development do
-  gem 'quiet_assets'
   gem 'rails_best_practices'
 end
 
