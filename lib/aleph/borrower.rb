@@ -331,7 +331,7 @@ module Aleph
         'z305-sub-library' => @adm_library,
         'z305-bor-status' => format("%02d", aleph_types[0].to_i),
         'z305-bor-type' => format("%02d", aleph_types[1].to_i),
-        'z305_loan_check' => 'Y',
+        'z305-loan-check' => 'Y',
       }
       # Create z308s
       z308 = Array.new
