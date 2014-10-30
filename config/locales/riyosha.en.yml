@@ -24,7 +24,7 @@ en:
       social: "Log in through social network"
       problem: "Problems?"
       help: "Need help to choose a login option?"
-      libraries: 
+      libraries:
         title: Libraries
         here: Log in with library number and password
     error:
@@ -63,6 +63,7 @@ en:
       library_number: "Danish library number"
       country: "Country code (only foreign libraries)"
       aleph: "Push user to Aleph"
+      remove_nemid: "Remove NemID/CPR"
       cpr_already_assigned: "The CPR number is already assigned to another user. Please contact DTU Library."
     confirmation:
       link: "Didn't receive confirmation instructions?"

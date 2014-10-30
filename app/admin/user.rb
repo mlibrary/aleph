@@ -72,9 +72,19 @@ ActiveAdmin.register User do
     redirect_to admin_user_path
   end
 
-  action_item :only => [:show] do
-    link_to I18n.t('riyosha.edit.aleph'),
-      update_aleph_admin_user_path
+  action_item :only => [:show], :if => proc { user.may_lend_printed? } do
+    link_to I18n.t('riyosha.edit.aleph'), update_aleph_admin_user_path
+  end
+
+  member_action :remove_nemid, :method => :get do
+    user = User.find(params[:id])
+    user.dk_nemid_users = []
+    user.save
+    redirect_to admin_user_path
+  end
+
+  action_item :only => :show, :if => proc { !user.dk_nemid_users.blank? } do
+    link_to I18n.t('riyosha.edit.remove_nemid'), remove_nemid_admin_user_path, :confirm => 'Are you sure?'
   end
 
 end
