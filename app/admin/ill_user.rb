@@ -4,7 +4,7 @@ ActiveAdmin.register IllUser do
 
   index do
     column 'Library Id' do |user|
-      link_to user.library_id, edit_admin_ill_user_path(user)
+      link_to user.library_id, admin_ill_user_path(user)
     end
     column :name
     column :email
@@ -17,6 +17,19 @@ ActiveAdmin.register IllUser do
   filter :name
   filter :email
 
+  show do |ill_user|
+    default_main_content
+
+    panel "Address" do
+      ill_user.address_lines
+    end
+
+    panel "Aleph data" do
+      formatted_aleph_data(ill_user).html_safe
+    end
+
+  end
+
   form do |f|
     f.inputs "Admin Details" do
       f.input :name, :input_html => { :disabled => true }
@@ -26,19 +39,7 @@ ActiveAdmin.register IllUser do
       f.input :user_type, :input_html => { :disabled => true }
       f.input :user_sub_type, :input_html => { :disabled => true }
     end
-    f.has_many :address, :new_record => false do |a|
-      a.inputs I18n.t('riyosha.admin.user.address') do
-        a.input :line1, :input_html => { :disabled => true }
-        a.input :line2, :input_html => { :disabled => true }
-        a.input :line3, :input_html => { :disabled => true }
-        a.input :line4, :input_html => { :disabled => true }
-        a.input :line5, :input_html => { :disabled => true }
-        a.input :line6, :input_html => { :disabled => true }
-        a.input :zipcode, :input_html => { :disabled => true }
-        a.input :cityname, :input_html => { :disabled => true }
-        a.input :country, :as => :string, :input_html => { :disabled => true }
-      end
-    end
+
     f.actions
   end
 

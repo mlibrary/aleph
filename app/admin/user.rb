@@ -31,37 +31,6 @@ ActiveAdmin.register User do
       user.dk_nemid_users
     end
 
-    # f.has_many :address, :new_record => false, :heading => false do |a|
-    #   a.inputs 'Address' do
-    #     a.input :line1, :input_html => { :disabled => true }
-    #     a.input :line2, :input_html => { :disabled => true }
-    #     a.input :line3, :input_html => { :disabled => true }
-    #     a.input :line4, :input_html => { :disabled => true }
-    #     a.input :line5, :input_html => { :disabled => true }
-    #     a.input :line6, :input_html => { :disabled => true }
-    #     a.input :zipcode, :input_html => { :disabled => true }
-    #     a.input :cityname, :input_html => { :disabled => true }
-    #     a.input :country, :as => :string, :input_html => { :disabled => true }
-    #   end
-    # end
-    # f.has_many :identities, :new_record => false, :heading => false do |i|
-    #   i.inputs 'Identity' do
-    #     i.input :id, :input_html => { :disabled => true }
-    #     i.input :provider, :input_html => { :disabled => true }
-    #     i.input :uid, :input_html => { :disabled => true }
-    #   end
-    # end
-    # f.has_many :dk_nemid_users, :new_record => false, :heading => false do |i|
-    #   i.inputs 'DkNemidUser' do
-    #     i.input :id, :input_html => { :disabled => true }
-    #     i.input :identifier, :input_html => { :disabled => true }
-    #     i.input :cpr, :input_html => { :disabled => true }
-    #     i.input :created_at, :input_html => { :disabled => true }
-    #     i.input :updated_at, :input_html => { :disabled => true }
-    #   end
-    # end
-
-
     panel "Aleph data" do
       formatted_aleph_data(user).html_safe
     end
