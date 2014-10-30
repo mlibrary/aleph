@@ -23,6 +23,7 @@ gem 'httparty'
 gem 'nokogiri'
 gem 'feature_flipper', '~> 1.3'
 gem 'awesome_print'
+gem 'coderay'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'
@@ -68,5 +69,3 @@ end
 group :production do
   gem 'pg'
 end
-
-

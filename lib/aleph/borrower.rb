@@ -5,7 +5,7 @@ module Aleph
       @@connection = Aleph::Connection.instance
       @adm_library ||= config.adm_library
       if @adm_library.blank?
-        raise Aleph::Error, "ADM library must be specified in configuration" 
+        raise Aleph::Error, "ADM library must be specified in configuration"
       end
 
     end
@@ -51,11 +51,11 @@ module Aleph
 
     def try_to_fix_non_matching_aleph_ids(user)
       aleph_data = lookup_all(user)
-      
+
       if library_card_is_the_only_key_on_wrong_account(user, aleph_data)
         return reset_library_card_on_wrong_account(user, aleph_data)
       end
-      
+
       return false
     end
 
@@ -85,7 +85,7 @@ module Aleph
         pid = aleph_lookup(z308)
         logger.debug "pid found: #{pid}"
         pids[[z308['z308-key-type'],z308['z308-key-data']]] = pid
-        if !pid.blank? 
+        if !pid.blank?
           logger.debug "bor_info for pid #{pid}"
           info[pid] = Hash.from_xml(bor_info(pid).to_xml)
           info[pid] = abbrev_aleph_info(info[pid]) if info[pid]
@@ -95,13 +95,13 @@ module Aleph
     end
 
     def abbrev_aleph_info(info)
-      { 
+      {
         'z303' => info['bor_info']['z303'].slice('z303_id', 'z303_open_date', 'z303_update_date', 'z303_update_date'),
         'z304' => info['bor_info']['z304'].slice('z304_address_0', 'z304_address_1', 'z304_address_2', 'z304_address_3', 'z304_email_address', 'z304_update_date'),
         'z305' => info['bor_info']['z305'].slice('z305_bor_type', 'z305_bor_status', 'z305_update_date'),
       }
     end
-    
+
 
     def valid_aleph_bor?
       !@aleph_pid.blank?
@@ -148,7 +148,7 @@ module Aleph
         'bor_type_id' => z308['z308-key-type'],
         'bor_id' => z308['z308-key-data'],
       }).document
-      result.xpath('//internal-id').text
+      result.xpath('//internal-id').text if result
     end
 
     def aleph_full_lookup(z308s)
@@ -169,7 +169,7 @@ module Aleph
     def aleph_update(z303, z304, z305, z308)
       bor_info(@aleph_pid)
       if check_for_updates(z303, z304, z305, z308)
-        bor_update('U', @z303, @z304, @z305, @z308) 
+        bor_update('U', @z303, @z304, @z305, @z308)
       end
     end
 
@@ -182,7 +182,7 @@ module Aleph
       elsif @z304['z304-id'].blank?
         update = update_bor_part(@z304, z304) || update
         @z304['record-action'] = 'I'
-      else 
+      else
         @z304['record-action'] = 'D'
         update = true
       end

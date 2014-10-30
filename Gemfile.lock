@@ -421,6 +421,7 @@ DEPENDENCIES
   capistrano (~> 2.15)
   capybara
   capybara-mechanize
+  coderay
   coffee-rails (~> 3.2.1)
   debugger
   devise

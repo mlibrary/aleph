@@ -3,12 +3,18 @@ require 'nokogiri'
 
 class DtuBase
   attr_reader :reason, :email, :firstname, :lastname, :initials,
-    :matrikel_id, :user_type, :library_access, :org_units, :studentcode, :address, :cpr
+    :matrikel_id, :user_type, :library_access, :org_units, :studentcode, :address, :account, :cpr
 
   def self.lookup(attrs)
     dtubase = self.new
     dtubase.lookup_single(attrs)
     [ dtubase.to_hash, dtubase.address ]
+  end
+
+  def self.lookup_xml(attrs)
+    dtubase = self.new
+    dtubase.lookup_single(attrs)
+    dtubase.account.to_xml
   end
 
   def self.cwis_for_studentcode(studentcode)
@@ -31,7 +37,8 @@ class DtuBase
     end
 
     entry = Nokogiri.XML(response.body, nil, 'UTF-8')
-    parse_account(entry.xpath('//account'))
+    @account = entry.xpath('//account')
+    parse_account(@account)
   end
 
   def parse_account(account)
@@ -83,7 +90,7 @@ class DtuBase
       end
     end
 
-  
+
     # Find s-number for student profile
     if @user_type == 'student' && !profile.xpath('@stads_studentcode').blank?
       @studentcode = profile.xpath('@stads_studentcode').text
@@ -121,7 +128,7 @@ class DtuBase
 
     # Create address entry
     user_address['name'] = org_address['name']
-    @address = create_address(user_address)    
+    @address = create_address(user_address)
   end
 
   def create_student_or_guest_address(org_unit, profile)
@@ -167,9 +174,9 @@ class DtuBase
       logger.warn "Could not get #{path} with #{conditions} from DTUbasen with request #{url}. Message: #{response.message}."
     end
     response
-    
+
   end
-  
+
   private
 
   def has_active_employee_or_student_profile(account)
