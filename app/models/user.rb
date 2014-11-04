@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
          :reset_password_keys => [:email],
          :unlock_keys => [:email]
 
-  
+
   belongs_to :user_type
   belongs_to :user_sub_type
   belongs_to :address, :dependent => :destroy
@@ -28,9 +28,13 @@ class User < ActiveRecord::Base
 
   attr_accessible :email, :password, :password_confirmation, :remember_me,
     :user_type_id, :authenticator, :first_name, :last_name, :user_sub_type_id,
-    :librarycard, :address_attributes, :dtu_base_data
+    :librarycard, :address_attributes, :dtu_base_data, :applications_and_roles,
+    :applications_and_roles_json
+
   attr_reader :direct_login
+
   serialize :dtu_base_data, JSON
+  serialize :applications_and_roles, JSON
 
   # Devise does validation for email and password
   validates :user_type, :presence => true
@@ -164,7 +168,7 @@ class User < ActiveRecord::Base
   end
 
   def birth_day
-    expand 
+    expand
     return '' if @cpr.nil?
     day = @cpr[0, 2].to_i
     month = @cpr[2, 2].to_i
@@ -196,6 +200,15 @@ class User < ActiveRecord::Base
 
   def cas_username
     "#{id}"
+  end
+
+  def applications_and_roles_json
+    JSON.pretty_generate(applications_and_roles) unless applications_and_roles.nil?
+  end
+
+  def applications_and_roles_json=(json)
+    self.applications_and_roles = JSON.parse(json) unless json.blank?
+    save
   end
 
   private
@@ -239,5 +252,6 @@ class User < ActiveRecord::Base
   def require_last_name?
     !(anon?)
   end
+
 
 end

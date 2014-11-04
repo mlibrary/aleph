@@ -48,6 +48,7 @@ ActiveAdmin.register User do
       f.input :password_confirmation
       f.input :user_type
       f.input :user_sub_type
+      f.input :applications_and_roles_json, :as => :text
     end
     f.actions
   end

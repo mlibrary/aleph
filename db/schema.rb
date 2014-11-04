@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140604060656) do
+ActiveRecord::Schema.define(:version => 20141104093336) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -191,6 +191,7 @@ ActiveRecord::Schema.define(:version => 20140604060656) do
     t.integer  "address_id"
     t.string   "librarycard"
     t.text     "dtu_base_data"
+    t.text     "applications_and_roles"
   end
 
   add_index "users", ["address_id"], :name => "index_users_on_address_id"
