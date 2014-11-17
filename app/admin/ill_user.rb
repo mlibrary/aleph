@@ -50,12 +50,12 @@ ActiveAdmin.register IllUser do
     rescue Aleph::Error
       flash[:error] = e.message
     end
-    redirect_to admin_user_path
+    redirect_to admin_ill_user_path
   end
 
   action_item :only => :show do
     link_to I18n.t('riyosha.edit.aleph'),
-      update_aleph_admin_user_path
+      update_aleph_admin_ill_user_path
   end
 
 end
