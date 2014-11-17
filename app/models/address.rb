@@ -1,4 +1,3 @@
-
 class Address < ActiveRecord::Base
   SKIP_COUNTRY_VALUES = [ 'DK', 'DANMARK' ]
 
@@ -32,7 +31,7 @@ class Address < ActiveRecord::Base
   end
 
   def to_a
-    line7 = SKIP_COUNTRY_VALUES.include?(country) ? "" : "#{country}-"
+    line7 = (country.blank? || SKIP_COUNTRY_VALUES.include?(country)) ? "" : "#{country}-"
     line7 << "#{zipcode} #{cityname}"
     [line1, line2, line3, line4, line5, line6, line7].compact
   end
@@ -45,7 +44,7 @@ class Address < ActiveRecord::Base
 
   def self.delete_orphaned
     Address.where([
-        
+
       ])
   end
 
