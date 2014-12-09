@@ -14,9 +14,9 @@ GIT
 
 GIT
   remote: https://github.com/dtulibrary/devise_dk_nemid
-  revision: b0f69674f7255859bb683c9fc0ac50d828c27c0a
+  revision: 435799b783a44fd39e21b58b5856a09b6f984288
   specs:
-    devise_dk_nemid (1.0.5)
+    devise_dk_nemid (1.0.6)
       devise (~> 3.2)
       jquery-cookie-rails (~> 1.3)
       savon (~> 2.3)
@@ -78,7 +78,7 @@ GEM
       activesupport (>= 3.0.0)
     arel (3.0.3)
     awesome_print (1.2.0)
-    bcrypt (3.1.7)
+    bcrypt (3.1.9)
     bcrypt-ruby (3.0.1)
     bootstrap-sass (2.3.2.2)
       sass (~> 3.2)
@@ -133,10 +133,11 @@ GEM
       debugger-ruby_core_source (~> 1.3.1)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.3.1)
-    devise (3.2.4)
+    devise (3.4.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
+      responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     devise_cas_authenticatable (1.3.4)
@@ -174,10 +175,10 @@ GEM
     httparty (0.12.0)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
-    httpi (2.1.0)
+    httpi (2.1.1)
       rack
       rubyntlm (~> 0.3.2)
-    i18n (0.6.9)
+    i18n (0.6.11)
     inherited_resources (1.4.1)
       has_scope (~> 0.6.0.rc)
       responders (~> 1.0.0.rc)
@@ -217,7 +218,7 @@ GEM
     metaclass (0.0.2)
     method_source (0.8.2)
     mime-types (1.25.1)
-    mini_portile (0.6.0)
+    mini_portile (0.6.1)
     mocha (1.0.0)
       metaclass (~> 0.0.1)
     multi_json (1.10.1)
@@ -232,8 +233,8 @@ GEM
     net-ssh (2.7.0)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
-    nokogiri (1.6.2.1)
-      mini_portile (= 0.6.0)
+    nokogiri (1.6.5)
+      mini_portile (~> 0.6.0)
     nori (2.4.0)
     ntlm-http (0.1.1)
     oauth2 (0.9.3)
@@ -275,6 +276,8 @@ GEM
       slop (~> 3.4)
     pry-rails (0.3.2)
       pry (>= 0.9.10)
+    puma (2.9.0)
+      rack (>= 1.1, < 2.0)
     quiet_assets (1.0.2)
       railties (>= 3.1, < 5.0)
     rack (1.4.5)
@@ -308,7 +311,7 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
-    rake (10.3.2)
+    rake (10.4.2)
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.5)
@@ -363,7 +366,7 @@ GEM
       temple (~> 0.6.3)
       tilt (~> 1.3, >= 1.3.3)
     slop (3.5.0)
-    sprockets (2.2.2)
+    sprockets (2.2.3)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
@@ -397,9 +400,8 @@ GEM
       macaddr (~> 1.0)
     warden (1.2.3)
       rack (>= 1.0)
-    wasabi (3.3.0)
+    wasabi (3.3.1)
       httpi (~> 2.0)
-      mime-types (< 2.0.0)
       nokogiri (>= 1.4.0)
     webmock (1.17.1)
       addressable (>= 2.2.7)
@@ -444,12 +446,14 @@ DEPENDENCIES
   phantomjs
   poltergeist
   pry-rails
+  puma
   quiet_assets
   rails (~> 3.2.19)
   rails_best_practices
   rspec-rails
   rubycas-client
   sass-rails
+  savon (~> 2.5.1)
   simplecov
   simplecov-html
   simplecov-rcov

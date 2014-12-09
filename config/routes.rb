@@ -1,16 +1,20 @@
 Riyosha::Application.routes.draw do
-  get "home/index"
+  get 'home/index'
   root :to => 'home#index'
 
   devise_for :users,
-    :controllers => {
-      :omniauth_callbacks => "users/omniauth_callbacks",
-      :sessions => "users/sessions",
-      :registrations => "users/registrations",
-      :confirmations => "users/confirmations",
-    },
-    :path => '/users',
-    :path_names => {:sign_in => 'login', :sign_out => 'logout'}
+             :controllers => {
+               :omniauth_callbacks => 'users/omniauth_callbacks',
+               :sessions => 'users/sessions',
+               :registrations => 'users/registrations',
+               :confirmations => 'users/confirmations',
+             },
+             :path => '/users',
+             :path_names => {
+               :sign_in => 'login',
+               :sign_out => 'logout',
+             }
+
   devise_scope :user do
     get 'users/profile',            :to => 'users/registrations#show',           :as => 'show_user_registration'
     get 'users/register',           :to => 'users/registrations#dedicated',      :as => 'dedicated_user_registration'
@@ -19,20 +23,22 @@ Riyosha::Application.routes.draw do
   end
 
   devise_for :ill_users,
-    :controllers => {
-      :sessions => "ill_users/sessions",
-    },
-    :path => '/ill_users',
-    :path_names => {:sign_in => 'login', :sign_out => 'logout'}
+             :controllers => {
+               :sessions => 'ill_users/sessions',
+             },
+             :path => '/ill_users',
+             :path_names => { :sign_in => 'login', :sign_out => 'logout' }
+
   devise_scope :ill_user do
     get 'ill_users/profile',        :to => 'ill_users/registrations#show',       :as => 'show_ill_user_registration'
-  end    
+  end
 
   devise_for :dk_nemid_users,
-    :scope => 'dk_nemid',
-    :controllers => { :dk_nemid_sessions => "users/nemid_sessions" },
-    :path => '/nemid',
-    :path_names => {:sign_in => 'login', :sign_out => 'logout'}
+             :scope => 'dk_nemid',
+             :controllers => { :dk_nemid_sessions => 'users/nemid_sessions' },
+             :path => '/nemid',
+             :path_names => { :sign_in => 'login', :sign_out => 'logout' }
+
   devise_scope :dk_nemid_user do
     get 'nemid/already_assigned',   :to => 'users/nemid_sessions#already_assigned',    :as => 'nemid_already_assigned'
   end
@@ -41,7 +47,7 @@ Riyosha::Application.routes.draw do
   ActiveAdmin.routes(self)
 
   namespace :rest do
-    resources :users, :only => [ :show ]
+    resources :users, :only => [:show]
     get 'create_dtu/:id' => 'users#dtu', :as => 'create_dtu'
     get 'student/:id'    => 'users#student'
   end

@@ -53,12 +53,12 @@ Devise.setup do |config|
   config.sign_out_via = :get
 
   # ==> OmniAuth
-  config.omniauth :facebook,      Rails.application.config.omniauth[:facebook][:id], 
+  config.omniauth :facebook,      Rails.application.config.omniauth[:facebook][:id],
                                   Rails.application.config.omniauth[:facebook][:secret]
-  config.omniauth :linkedin,      Rails.application.config.omniauth[:linkedin][:id], 
+  config.omniauth :linkedin,      Rails.application.config.omniauth[:linkedin][:id],
                                   Rails.application.config.omniauth[:linkedin][:secret]
-  config.omniauth :google_oauth2, Rails.application.config.omniauth[:google_oauth2][:id], 
-                                  Rails.application.config.omniauth[:google_oauth2][:secret], 
+  config.omniauth :google_oauth2, Rails.application.config.omniauth[:google_oauth2][:id],
+                                  Rails.application.config.omniauth[:google_oauth2][:secret],
                                   {access_type: 'online', approval_prompt: ''}
 
   # ==> CAS
@@ -75,6 +75,7 @@ Devise.setup do |config|
     config.dk_nemid_allowed = Rails.application.config.nemid[:allowed]
     config.dk_nemid_cpr_service = Rails.application.config.nemid[:cpr_service]
     config.dk_nemid_cpr_pid_spid = Rails.application.config.nemid[:cpr_pid_spid]
+    config.dk_nemid_request_issuer_id = Rails.application.config.nemid[:request_issuer_id]
     config.dk_nemid_proxy = Rails.application.config.nemid[:proxy]
 
     if Rails.application.config.nemid[:stub]
