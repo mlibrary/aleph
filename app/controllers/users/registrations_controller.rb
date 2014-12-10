@@ -19,7 +19,8 @@ module Users
 
       expires_now
     rescue ArgumentError => e
-      flash[:error] = 'Nemid validation failed. Please try again later. If the error persists, please contact DTU Library' if e.message.include?(':warden')
+      flash[:error] = 'Nemid validation failed. Please try again later. '\
+                      'If the error persists, please contact DTU Library' if e.message.include?(':warden')
       redirect_to show_user_registration_path
     end
 
