@@ -18,6 +18,9 @@ module Users
       return if pending_redirect_to_printed_collection
 
       expires_now
+    rescue ArgumentError => e
+      flash[:error] = 'Nemid validation failed. Please try again later. If the error persists, please contact DTU Library' if e.message.include?(':warden')
+      redirect_to show_user_registration_path
     end
 
     def redirect_to_ill_user
