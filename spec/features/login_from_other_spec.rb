@@ -1,14 +1,14 @@
 require 'spec_helper'
 
 feature 'When user requests login from a generic service', :js => true do
-  let!(:aleph_url) { 
-    Rails.application.config.aleph[:url] = 'http://localhost/mock_aleph' 
+  let!(:aleph_url) {
+    Rails.application.config.aleph[:url] = 'http://localhost/mock_aleph'
   }
 
   let!(:service_url) {
-    'http://localhost/mock_service' 
+    'http://localhost/mock_service'
   }
-  
+
   before(:each) do
     WebMock.disable_net_connect!(:allow_localhost => true)
   end
@@ -23,6 +23,13 @@ feature 'When user requests login from a generic service', :js => true do
       end
     end
 
+    context 'and the user is library' do
+      scenario 'then the user should stay on the registration page' do
+        login_as_library
+        expect(current_path).to eq(show_ill_user_registration_path)
+      end
+    end
+
     scenario 'the validate api should return the non-prefixed user id' do
       login_with_google
       expect(current_url).to start_with(service_url + "?ticket=")
@@ -34,7 +41,20 @@ feature 'When user requests login from a generic service', :js => true do
     end
 
   end
-  
+
+  def login_as_library
+    library_id = 1
+    password = 'testtest'
+    u = IllUser.create(:library_id => library_id, :email => 'test@expamle.com', :name => 'Test Library',
+                       :password => password, :password_confirmation => password,
+                       :user_type_id => UserType.find_by_code('library').id, :user_sub_type_id => UserSubType.first.id)
+
+    visit '/ill_users/login?' + {:service => service_url}.to_query
+    fill_in 'ill_user_library_id', :with => library_id
+    fill_in 'ill_user_password',   :with => password
+    click_on 'Log in'
+  end
+
   def login_with_google
     visit '/users/login?' + {:service => service_url}.to_query
     click_link 'Google'
