@@ -5,70 +5,93 @@ module Concerns
     extend ActiveSupport::Concern
 
     def aleph_borrower
-      begin                  
+      begin
         @aleph ||= Aleph::Borrower.new.update_user(self) if may_lend_printed?
       rescue => e
         Utility.log_exception e, :info => "Could not update Aleph for user #{self.inspect}"
       end
     end
-    
+
     def aleph_bor_status_type
       expand
       return [aleph_bor_status, aleph_bor_type]
     end
 
-
     def aleph_ids
       expand
       # Create additional ids
-      ids = Array.new
+      ids = []
 
-      ids << { 'type' => '03',
-        'id' => "DTU#{@cpr}",
+      ids << {
+        'type' => '03',
+        'id'   => "DTU#{@cpr}",
         'pin'  => nil,
-      } if self.user_type.code == 'dtu_empl'
+      } if user_type.code == 'dtu_empl'
 
-      ids << { 'type' => '03',
-        'id' => @cpr,
+      ids << {
+        'type' => '03',
+        'id'   => @cpr,
         'pin'  => nil,
-      } if self.user_type.code == 'student'
+      } if user_type.code == 'student'
 
-      ids << { 'type' => '03',
-        'id' => @expanded[:dtu]['studentcode'].upcase,
+      ids << {
+        'type' => '03',
+        'id'   => @expanded[:dtu]['studentcode'].upcase,
         'pin'  => nil,
       } if @expanded[:dtu] && !@expanded[:dtu]['studentcode'].blank?
 
-      ids << { 'type' => '03',
-        'id' => library_id,
+      ids << {
+        'type' => '03',
+        'id'   => library_id,
         'pin'  => nil,
-      } if self.user_type.code == 'library'
+      } if user_type.code == 'library'
 
-      ids << { 'type' => '03',
-        'id' => @cpr,
+      ids << {
+        'type' => '03',
+        'id'   => @cpr,
         'pin'  => nil,
-      } if self.user_type.code == 'private'
+      } if user_type.code == 'private'
 
-      ids << { 'type' => '03',
-        'id' => @expanded[:dtu]['initials'].upcase,
+      ids << {
+        'type' => '03',
+        'id'   => @expanded[:dtu]['initials'].upcase,
         'pin'  => nil,
       } if @expanded[:dtu] && !@expanded[:dtu]['initials'].blank?
 
-      ids << { 'type' => '03',
-        'id' => "CWIS#{@expanded[:dtu]['matrikel_id']}",
+      ids << {
+        'type' => '03',
+        'id'   => "CWIS#{@expanded[:dtu]['matrikel_id']}",
         'pin'  => nil,
       } if @expanded[:dtu] && !@expanded[:dtu]['matrikel_id'].blank?
 
-      ids << { 'type' => '01',
-        'id' => librarycard,
-        'pin' => nil,
+      ids << {
+        'type' => '01',
+        'id'   => librarycard,
+        'pin'  => nil,
       } unless librarycard.blank?
 
       ids
     end
 
+    def aleph_home_library
+      case user_type.code
+      when 'dtu_empl'
+        'DTVHO'
+      when 'student'
+        'DTV'
+      when 'private'
+        'DTV'
+      when 'library'
+        'DTVHO'
+      else
+        logger.warn "aleph_home_library: Unhandled user type #{user_type.code}"
+        'DTV'
+      end
+    end
+
     def address_lines
       expand
-      @expanded[:address] ? @expanded[:address].to_a : ['' ,'' ,'' ,'']
+      @expanded[:address] ? @expanded[:address].to_a : ['', '', '', '']
     end
 
     def aleph_bor_status
@@ -80,7 +103,5 @@ module Concerns
       (user_sub_type.nil? ? nil : user_sub_type.aleph_bor_type) ||
         user_type.aleph_bor_type
     end
-
-
   end
 end

@@ -138,10 +138,6 @@ module Aleph
       @z305
     end
 
-
-    #protected
-
-
     def aleph_lookup(z308)
       result = @@connection.x_request('bor_by_key', {
         'library' => @adm_library,
@@ -174,6 +170,9 @@ module Aleph
     end
 
     def check_for_updates(z303, z304, z305, z308)
+      # only set home-library on user creation, never on update
+      z303.except! 'z303-home-library'
+
       update = update_bor_part(@z303, z303)
       # We only get one z304 record (current address)
       # Either update it or removed it if not type 01
