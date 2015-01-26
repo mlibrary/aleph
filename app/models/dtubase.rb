@@ -331,9 +331,15 @@ class DtuBase
     address
   end
 
+  def valid_dtu_org_units
+    [
+      'stud', # Students
+      '6',    # IPU
+    ]
+  end
+
   def valid_dtu_org_unit(org_unit)
-    # Valid if stud org unit
-    return true if org_unit.xpath('@orgunit_id').text == 'stud'
+    return true if valid_dtu_org_units.include? org_unit.xpath('@orgunit_id').text
 
     # Valid if parent is instgrp or admgrp
     flag = org_unit.xpath('@fk_parentunit_id').text
