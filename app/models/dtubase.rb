@@ -334,7 +334,6 @@ class DtuBase
   def valid_dtu_org_units
     [
       'stud', # Students
-      '6',    # IPU
     ]
   end
 
