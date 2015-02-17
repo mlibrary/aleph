@@ -88,6 +88,24 @@ class User < ActiveRecord::Base
   end
 
   def self.create_from_dtubase_info(info)
+    user = User.where(:email => info['email']).first
+
+    if user && !user.dtu_affiliate?
+      # Upgrade private users with DTU email to DTU users
+      user.authenticator = 'dtu'
+      user.user_type     = UserType.find_by_code(info['user_type']).first
+
+      identity = Identity.where(:user_id => user.id, :provider => 'dtu').first
+      if identity
+        identity.uid = info['matrikel_id']
+        identity.save!
+      else
+        Identity.create!(:user_id => user.id, :provider => 'dtu', :uid => info['matrikel_id'])
+      end
+
+      user.save!
+    end
+
     return nil if info['reason'] == 'lookup_failed'
     self.login_from_omniauth(OmniAuth::AuthHash.new(
       'provider' => 'dtu',
