@@ -104,6 +104,7 @@ class User < ActiveRecord::Base
       end
 
       user.save!
+      logger.info "Upgraded #{user.first_name} #{user.last_name} (Riyosha id: #{user.id}) from private user to DTU user."
     end
 
     return nil if info['reason'] == 'lookup_failed'
