@@ -91,7 +91,8 @@ class User < ActiveRecord::Base
     user = User.where(:email => info['email']).first
 
     # TODO: Fix logic and enable
-    if false && user && !user.dtu_affiliate?
+=begin
+    if user && !user.dtu_affiliate?
       # Upgrade private users with DTU email to DTU users
       user.authenticator = 'dtu'
       user.user_type     = UserType.find_by_code(info['user_type'])
@@ -107,6 +108,7 @@ class User < ActiveRecord::Base
       user.save!
       logger.info "Upgraded #{user.first_name} #{user.last_name} (Riyosha id: #{user.id}) from private user to DTU user."
     end
+=end
 
     return nil if info['reason'] == 'lookup_failed'
     self.login_from_omniauth(OmniAuth::AuthHash.new(
