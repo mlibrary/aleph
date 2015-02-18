@@ -93,7 +93,7 @@ class User < ActiveRecord::Base
     if user && !user.dtu_affiliate?
       # Upgrade private users with DTU email to DTU users
       user.authenticator = 'dtu'
-      user.user_type     = UserType.find_by_code(info['user_type']).first
+      user.user_type     = UserType.find_by_code(info['user_type'])
 
       identity = Identity.where(:user_id => user.id, :provider => 'dtu').first
       if identity
