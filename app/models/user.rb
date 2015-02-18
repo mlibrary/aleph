@@ -90,7 +90,8 @@ class User < ActiveRecord::Base
   def self.create_from_dtubase_info(info)
     user = User.where(:email => info['email']).first
 
-    if user && !user.dtu_affiliate?
+    # TODO: Fix logic and enable
+    if false && user && !user.dtu_affiliate?
       # Upgrade private users with DTU email to DTU users
       user.authenticator = 'dtu'
       user.user_type     = UserType.find_by_code(info['user_type'])
