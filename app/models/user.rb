@@ -90,8 +90,10 @@ class User < ActiveRecord::Base
     confirm!
   end
 
-  # Intercept and switch authenticator to 'dtu' for users with non-dtu authenticator but having a DTU email address
-  def fix_authenticator(info)
+  def self.create_from_dtubase_info(info)
+    return nil if info['reason'] == 'lookup_failed'
+
+    # Intercept and switch authenticator to 'dtu' for users with non-dtu authenticator but having a DTU email address
     user = User.where(:email => info['email']).where.not(:authenticator => 'dtu').first
 
     if user
@@ -109,12 +111,6 @@ class User < ActiveRecord::Base
       user.save!
       logger.info "Switched to DTU authenticator for #{user.first_name} #{user.last_name} (Riyosha ID: #{user.id}, CWIS: #{info['matrikel_id']}"
     end
-  end
-
-  def self.create_from_dtubase_info(info)
-    return nil if info['reason'] == 'lookup_failed'
-
-    fix_authenticator(info)
 
     self.login_from_omniauth(OmniAuth::AuthHash.new(
       'provider' => 'dtu',
