@@ -48,22 +48,25 @@ class User < ActiveRecord::Base
 
   def self.login_from_omniauth(auth)
     identity = Identity.find_with_omniauth(auth)
-    type_id = UserType.where(:code => (auth.info.user_type ||
-        'private')).first.id
+    type_id  = UserType.where(:code => (auth.info.user_type || 'private')).first.id
 
     if identity.nil?
-      user = self.where(:email => auth.info.email.downcase, :user_type_id =>
-        type_id).first unless auth.info.email.blank?
-      user = self.create_from_omniauth(auth, type_id) unless user
+      user = self.where( :email        => auth.info.email.downcase,
+                         :user_type_id => type_id ).first unless auth.info.email.blank?
+
+      user ||= self.create_from_omniauth(auth, type_id)
+
       return nil if user.nil?
 
-      identity = Identity.create!(:uid => auth.uid, :provider => auth.provider,
-        :user_id => user.id)
+      identity = Identity.create!(:uid      => auth.uid,
+                                  :provider => auth.provider,
+                                  :user_id  => user.id)
     else
       user = identity.user
       user.update_from_omniauth(auth)
       user.user_type_id = type_id
     end
+
     user.authenticator = auth.provider
     user.save!
     user
@@ -87,13 +90,11 @@ class User < ActiveRecord::Base
     confirm!
   end
 
-  def self.create_from_dtubase_info(info)
-    user = User.where(:email => info['email']).first
+  # Intercept and switch authenticator to 'dtu' for users with non-dtu authenticator but having a DTU email address
+  def fix_authenticator(info)
+    user = User.where(:email => info['email']).where.not(:authenticator => 'dtu').first
 
-    # TODO: Fix logic and enable
-=begin
-    if user && !user.dtu_affiliate?
-      # Upgrade private users with DTU email to DTU users
+    if user
       user.authenticator = 'dtu'
       user.user_type     = UserType.find_by_code(info['user_type'])
 
@@ -106,11 +107,15 @@ class User < ActiveRecord::Base
       end
 
       user.save!
-      logger.info "Upgraded #{user.first_name} #{user.last_name} (Riyosha id: #{user.id}) from private user to DTU user."
+      logger.info "Switched to DTU authenticator for #{user.first_name} #{user.last_name} (Riyosha ID: #{user.id}, CWIS: #{info['matrikel_id']}"
     end
-=end
+  end
 
+  def self.create_from_dtubase_info(info)
     return nil if info['reason'] == 'lookup_failed'
+
+    fix_authenticator(info)
+
     self.login_from_omniauth(OmniAuth::AuthHash.new(
       'provider' => 'dtu',
       'uid' => info['matrikel_id'],
