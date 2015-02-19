@@ -109,7 +109,7 @@ class User < ActiveRecord::Base
       end
 
       user.save!
-      logger.info "Switched to DTU authenticator for #{user.first_name} #{user.last_name} (Riyosha ID: #{user.id}, CWIS: #{info['matrikel_id']}"
+      logger.info "Switched to DTU authenticator for #{user.first_name} #{user.last_name} (Riyosha ID: #{user.id}, CWIS: #{info['matrikel_id']})"
     end
 
     self.login_from_omniauth(OmniAuth::AuthHash.new(
