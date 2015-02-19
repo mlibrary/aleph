@@ -94,7 +94,7 @@ class User < ActiveRecord::Base
     return nil if info['reason'] == 'lookup_failed'
 
     # Intercept and switch authenticator to 'dtu' for users with non-dtu authenticator but having a DTU email address
-    user = User.where(:email => info['email']).where.not(:authenticator => 'dtu').first
+    user = User.where(:email => info['email']).where("authenticator != 'dtu'").first
 
     if user
       user.authenticator = 'dtu'
