@@ -23,6 +23,7 @@ module Users
     def after_sign_in_path_for(resource)
       if resource.user.nil?
         # Map to the current user in user scope
+        logger.info "Warden info: #{env['warden']}"
         user = env['warden'].user(:user)
         if user.nil?
           # The user logged into the session has expired
