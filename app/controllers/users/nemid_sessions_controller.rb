@@ -29,6 +29,7 @@ module Users
           # The user logged into the session has expired
           # We need to relogin to complete the process.
           # TODO: Make sure proper message is displayed.
+          logger.error "User is nil"
           throw(:warden)
         end
 
