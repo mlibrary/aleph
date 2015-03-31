@@ -36,6 +36,10 @@ class DtuBase
       return
     end
 
+    # Intercept DTUBasen errors that still return an HTTP 200
+    md = /^<\?xml .*?>\s*<Error>(.*)<\/Error>$/m.match(response.body)
+    raise "DTUBasen error: #{md[1]}" if md
+
     entry = Nokogiri.XML(response.body, nil, 'UTF-8')
     @account = entry.xpath('//account')
     parse_account(@account)

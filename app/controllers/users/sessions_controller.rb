@@ -54,7 +54,13 @@ class Users::SessionsController < Devise::SessionsController
     st = CASClient::ServiceTicket.new(ticket, url_for(:only_path => false))
     cas_client.validate_service_ticket(st)
     if st.is_valid?
-      info, adr = DtuBase.lookup(:username => st.user)
+      info, adr = begin
+                    DtuBase.lookup(:username => st.user)
+                  rescue => e
+                    logger.error(e.message)
+                    [nil, nil]
+                  end
+
       return nil unless info
 
       user = User.create_from_dtubase_info(info)
