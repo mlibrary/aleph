@@ -58,6 +58,7 @@ class Users::SessionsController < Devise::SessionsController
                     DtuBase.lookup(:username => st.user)
                   rescue => e
                     logger.error(e.message)
+                    flash[:error] = I18n.t('riyosha.error.dtubase')
                     [nil, nil]
                   end
 
