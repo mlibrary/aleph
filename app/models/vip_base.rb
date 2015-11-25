@@ -47,9 +47,23 @@ class VipBase
 
   def self.sru_request
     client = SRU::Client.new(config[:url])
-    empty_result = client.search_retrieve "dc.type = (*) and dc.date >= (#{config[:earliest]})", {:maximumRecords => 0, :startRecord => 1, :recordSchema => 'vip'}
+    empty_result = client.search_retrieve(
+      "dc.type = (*) and dc.date >= (#{config[:earliest]})",
+      :maximumRecords => 0,
+      :startRecord    => 1,
+      :recordSchema   => 'vip',
+      :recordPacking  => 'string',
+      :stylesheet     => 'default.xsl')
+
     number_of_records = empty_result.number_of_records
-    result = client.search_retrieve "dc.type = (*) and dc.date >= (#{config[:earliest]})", {:maximumRecords => number_of_records, :startRecord => 1, :recordSchema => 'vip'}
+
+    result = client.search_retrieve(
+      "dc.type = (*) and dc.date >= (#{config[:earliest]})",
+      :maximumRecords => number_of_records,
+      :startRecord    => 1,
+      :recordSchema   => 'vip',
+      :recordPacking  => 'string',
+      :stylesheet     => 'default.xsl')
   end
 
   def self.stubbed_request
