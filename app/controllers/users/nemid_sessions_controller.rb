@@ -2,31 +2,19 @@ require 'dtubase'
 module Users
   #
   class NemidSessionsController < Devise::DkNemidSessionsController
-    #def new
-    def create
+    def new
       flash[:error] = []
-      flash[:error] << I18n.t('riyosha.edit.must_accept_terms') unless terms_accepted?
-      flash[:error] << I18n.t('riyosha.edit.cprs_dont_match') unless cprs_match?
-      flash[:error] << I18n.t('riyosha.edit.cpr_invalid_format') unless cprs_valid?
-
-      if flash[:error].empty?
+      if terms_accepted?
         sign_out(:dk_nemid)
-        super #redirect_to create_dk_nemid_user_session_path(cpr: params['cpr'])
+        super
       else
-        redirect_to show_user_registration_path params.except([:controller, :action])
+        flash[:error] << I18n.t('riyosha.edit.must_accept_terms')
+        redirect_to show_user_registration_path
       end
     end
 
     def terms_accepted?
       %w(payment_terms printed_terms).map { |t| params["accept_#{t}"] == '1' }.all?
-    end
-
-    def cprs_valid?
-      ['cpr1', 'cpr2'].all? { |p| params[p] && params[p].match(/^\d{6}-?\d{4}$/) }
-    end
-
-    def cprs_match?
-      params['cpr1'] == params['cpr2']
     end
 
     # Devise doen't return in create function, so can't add code after
