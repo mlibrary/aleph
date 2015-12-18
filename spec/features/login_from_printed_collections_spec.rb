@@ -12,7 +12,7 @@ feature 'When user requests login from printed collections', :js => true do
 
   context 'and user is not logged in' do
     context 'and user is library' do
-      scenario 'then the user should not be forced to do NemId validation after login' do
+      scenario 'then the user should not be forced to do CPR validation after login' do
         login_as_library
         expect(current_url).to start_with(aleph_url + "?ticket=")
       end
@@ -20,19 +20,22 @@ feature 'When user requests login from printed collections', :js => true do
 
     context 'and user is private' do
       context 'and user does not have registered cpr' do
-        scenario 'then the user should be forced to do NemId validation after login' do
+        scenario 'then the user should be forced to do CPR validation after login' do
           login_with_google
           expect(current_path).to eq(show_user_registration_path)
 
-          validate_nemid
+          #validate_nemid
+          register_cpr
+
           expect(current_url).to start_with(aleph_url + "?ticket=")
         end
       end
       
       context 'and user already has registered cpr' do
-        scenario 'then the user should not forced to do NemId validation after login' do
+        scenario 'then the user should not forced to do CPR validation after login' do
           login_with_google
-          validate_nemid
+          #validate_nemid
+          register_cpr
           logout
           
           login_with_google
@@ -43,7 +46,8 @@ feature 'When user requests login from printed collections', :js => true do
     
     scenario 'the validate api should return the prefixed user id' do
       login_with_google
-      validate_nemid
+      #validate_nemid
+      register_cpr
       expect(current_url).to start_with(aleph_url + "?ticket=")
 
       ticket = Rack::Utils.parse_nested_query(URI(current_url).query)['ticket']
@@ -75,6 +79,14 @@ feature 'When user requests login from printed collections', :js => true do
     check('accept_printed_terms')
     click_on('Register using NemID')
     click_on('Validate NemID')
+  end
+
+  def register_cpr
+    check 'accept_payment_terms'
+    check 'accept_printed_terms'
+    fill_in 'cpr1', :with => '010101-1234'
+    fill_in 'cpr2', :with => '010101-1234'
+    click_on 'Register'
   end
 
   def validate_ticket(ticket)
