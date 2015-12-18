@@ -32,20 +32,24 @@
     <p><%= link_to 'Access printed collection', aleph_new_session_path(:func => 'bor-info'), :class => 'btn btn-primary' %></p>
   </div>
 <% else %>
-  <%= form_tag(new_dk_nemid_user_session_path, :method => :get ) do %>
+  <%= form_tag(create_dk_nemid_user_session_path, :method => :post ) do %>
     <div class="span6">
       <p><%= I18n.t('riyosha.edit.enable_lending_printed').html_safe %></p>
     </div>
     <div class="span3">
       <p>
-        <%= check_box_tag :accept_payment_terms  %>
+        <%= check_box_tag :accept_payment_terms, '1', params[:accept_payment_terms]  %>
         <%= t('riyosha.edit.payment_terms').html_safe %><br/>
-        <%= check_box_tag :accept_printed_terms %>
+        <%= check_box_tag :accept_printed_terms, '1', params[:accept_printed_terms] %>
         <%= t('riyosha.edit.printed_terms').html_safe %>
       </p>
     </div>
     <div class="span3">
       <p>
+        <%= label_tag :cpr1, t('riyosha.edit.cpr1') %>
+        <%= text_field_tag :cpr1, params[:cpr1], :class => 'input-block-level' %>
+        <%= label_tag :cpr2, t('riyosha.edit.cpr2') %>
+        <%= text_field_tag :cpr2, params[:cpr2], :class => 'input-block-level' %>
         <button type="submit" class="btn btn-primary">
           <%= I18n.t('riyosha.edit.printed_signup') %>
         </button>
