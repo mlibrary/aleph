@@ -19,3 +19,4 @@ AdminUsers are authenticated through a cas server.
 The CAS server may be based on Riyosha it self, but this is not a requirement.
 Ordinary users are authenticated from the database in Riyosha or from a configured 
 external authentication providers.
+
