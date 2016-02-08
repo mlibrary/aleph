@@ -5,7 +5,7 @@ development: &default
   pool: 5
   username: postgres
   password:
-  host: authdb
+  host: db
 
 test:
   adapter: sqlite3
