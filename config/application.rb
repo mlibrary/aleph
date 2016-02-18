@@ -134,5 +134,6 @@ module Riyosha
       :password => '',
     }
     
+    config.secret_token = 'ChangeThisToAtLeast-30-characters-ok'
   end
 end
