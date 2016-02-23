@@ -1,5 +1,5 @@
 findit-auth (riyosha)
-=======
+========
 
 Findit-auth is a central user registry application.
 
