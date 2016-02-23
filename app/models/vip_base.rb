@@ -49,6 +49,7 @@ class VipBase
     client = SRU::Client.new(config[:url])
     empty_result = client.search_retrieve(
       "dc.type = (*) and dc.date >= (#{config[:earliest]})",
+      :version        => '1.1',
       :maximumRecords => 0,
       :startRecord    => 1,
       :recordSchema   => 'vip',
@@ -59,6 +60,7 @@ class VipBase
 
     result = client.search_retrieve(
       "dc.type = (*) and dc.date >= (#{config[:earliest]})",
+      :version        => '1.1',
       :maximumRecords => number_of_records,
       :startRecord    => 1,
       :recordSchema   => 'vip',
