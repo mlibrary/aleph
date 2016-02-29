@@ -1,11 +1,12 @@
 development: &default
   adapter: postgresql
   encoding: unicode
-  database: postgres
+  database: auth
   pool: 5
-  username: postgres
-  password:
-  host: auth-db
+  username: db
+  password: db
+  host: db
+
 
 test:
   adapter: sqlite3
