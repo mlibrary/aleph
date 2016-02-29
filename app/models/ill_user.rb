@@ -30,13 +30,27 @@ class IllUser < ActiveRecord::Base
       logger.info "Zip is blank for library #{branch.library_id}, #{branch.name}. Not imported." and return if branch.zip.blank?
       logger.info "City is blank for library #{branch.library_id}, #{branch.name}. Not imported." and return if branch.city.blank?
       
-      user = IllUser.find_or_initialize_by_library_id(
-        :library_id          => branch.library_id,
-        :email               => branch.email,
-        :name                => branch.name,
-        :user_type_id        => UserType.find_by_code('library').id, 
-        :user_sub_type_id    => UserSubType.find_by_code(map_vip_type(branch.record_type, branch.type)).id
-      )
+      begin
+        user = IllUser.find_or_initialize_by_library_id(branch.library_id)
+
+        user.email            = branch.email
+        user.name             = branch.name
+        user.user_type_id     = UserType.find_by_code('library').id
+        user.user_sub_type_id = UserSubType.find_by_code(map_vip_type(branch.record_type, branch.type)).id
+      rescue => e
+        logger.warn  %{
+          Error when processing
+          library_id:  #{branch.library_id}
+          email:       #{branch.email}
+          name:        #{branch.name}
+          record_type: #{branch.record_type}
+          type:        #{branch.type}
+
+          Message: #{e.message}
+        }
+        return
+      end
+
       unless user.persisted?
         user.password = user.password_confirmation = SecureRandom.base64(12)
       end

@@ -52,7 +52,7 @@ class VipBase
       :maximumRecords => 0,
       :startRecord    => 1,
       :recordSchema   => 'vip',
-      :recordPacking  => 'string',
+      :recordPacking  => 'xml',
       :stylesheet     => 'default.xsl')
 
     number_of_records = empty_result.number_of_records
@@ -62,7 +62,7 @@ class VipBase
       :maximumRecords => number_of_records,
       :startRecord    => 1,
       :recordSchema   => 'vip',
-      :recordPacking  => 'string',
+      :recordPacking  => 'xml',
       :stylesheet     => 'default.xsl')
   end
 
