@@ -53,7 +53,7 @@ module DtuCard
     end
 
     def process_card_file
-      CSV.parse(File.read(filename), :col_sep => ';') do |row|
+      CSV.parse(File.read(filename, :encoding => 'iso-8859-1'), :col_sep => ';') do |row|
         process(row[3], row[4]) unless row[4].blank?
       end
     end
