@@ -3,28 +3,25 @@ require 'csv'
 
 module DtuCard
   class Base
-    def employee_file_name
-      File.expand_path("tmp/employee.csv", Rails.root)
+    def filename
+      File.expand_path("tmp/library_card_ids.csv", Rails.root)
     end 
-
-    def student_file_name
-      File.expand_path("tmp/student.csv", Rails.root)
-    end
   end
 
   class Fetch < Base
+    REMOTE_FILE = 'Sagio/Samlet-ADK.csv'
+
     attr_reader :errors
 
     def initialize
-      @errors = Array.new
+      @errors = []
     end
 
-    def fetch_card_files
-      ftp = Net::FTP.open(config[:server], config[:user], config[:password])
-      dir = File.dirname(employee_file_name)
+    def fetch_card_file
+      dir = File.dirname(filename)
       Dir.mkdir(dir) unless File.directory? dir
-      ftp.getbinaryfile('Card8000-ansatte.csv', employee_file_name)
-      ftp.getbinaryfile('card8000.csv', student_file_name)
+      ftp = Net::FTP.open(config[:server], config[:user], config[:password])
+      ftp.getbinaryfile(REMOTE_FILE, filename)
       ftp.close
     end
 
@@ -37,43 +34,28 @@ module DtuCard
     attr_reader :errors
 
     def initialize
-      @errors = Array.new
+      @errors = []
       @starttime = Time.new
     end
 
     def process(cardid, email)
-      #cardid = format("%x", cardid)
-      record = User.where(:email => email.downcase).first
-      return if record.nil? 
-      return unless ['dtu_empl', 'student'].include?(record.user_type.code)
-      if record.librarycard != cardid
-        if record.updated_at < @starttime
-          record.librarycard = cardid.to_i.to_s(16).upcase
-          record.save || @errors << "Can't update #{email} with #{cardid}"
+      user = User.where(:email => email.downcase).first
+      return if user.nil? 
+      return unless ['dtu_empl', 'student'].include?(user.user_type.code)
+      if user.librarycard != cardid
+        if user.updated_at < @starttime
+          user.librarycard = cardid.to_i.to_s(16).upcase
+          user.save || @errors << "Can't update #{email} with #{cardid}"
         else
           @errors << "Duplicate entry for #{email}"
         end
       end
     end
 
-    def process_employee
-      # Row format: Firstname, Lastname, Initials, Cardid, Email
-      CSV.parse(File.read(employee_file_name), :col_sep => ';') do |row|
-        process(row[3], row[4]) unless row[4].blank?
+    def process_card_file
+      CSV.parse(File.read(filename, :encoding => 'iso-8859-1'), :col_sep => ';') do |row|
+        process(row[5], row[4]) unless row[4].blank?
       end
     end
-
-    def process_student
-      # Row format: Firstname, Lastname, Student ID/Initials, Cardid, CPR, Email
-      CSV.parse(File.read(student_file_name), :col_sep => ';') do |row|
-        process(row[3], row[5]) unless row[5].blank?
-      end
-    end
-
-    def process_files
-      process_employee
-      process_student
-    end
-
   end
 end

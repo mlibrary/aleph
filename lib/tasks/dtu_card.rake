@@ -4,7 +4,7 @@ namespace :dtu_card do
   desc "Fetch chip-card data from card database"
   task :fetch => :environment do
     fetcher = DtuCard::Fetch.new
-    fetcher.fetch_card_files
+    fetcher.fetch_card_file
     fetcher.errors.each do |error|
       puts error
     end
@@ -13,7 +13,7 @@ namespace :dtu_card do
   desc "Update chip-card data from fetched files"
   task :update => :environment do
     process = DtuCard::Process.new 
-    process.process_files
+    process.process_card_file
     process.errors.each do |error|
       puts error
     end
