@@ -45,7 +45,7 @@ module DtuCard
       return unless ['dtu_empl', 'student'].include?(user.user_type.code)
 
       cardid_hex = cardid.to_i.to_s(16).upcase
-      cardid_hex = "0#{cardid_hex}" if cardid.size.odd?
+      cardid_hex = "0#{cardid_hex}" if cardid_hex.size.odd?
 
       unless cardid_hex == user.librarycard
         if @emails_seen.include?(email)
