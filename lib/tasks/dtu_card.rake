@@ -22,7 +22,7 @@ namespace :dtu_card do
   desc 'Fix card ids with odd number of characters'
   task :fix_cardids => :environment do
     User.all.each do |u|
-      if u.librarycode && u.librarycode.size.odd?
+      if u.librarycard && u.librarycard.size.odd?
         u.librarycard = "0#{u.librarycard}"
         u.save
       end
