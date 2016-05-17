@@ -43,7 +43,7 @@ module DtuCard
       return if user.nil? 
       return unless ['dtu_empl', 'student'].include?(user.user_type.code)
       if user.librarycard != cardid
-        if user.updated_at < @starttime
+        if user.updated_at < @starttime || user.librarycard.size.odd?
           raw_id = cardid.to_i.to_s(16).upcase
           user.librarycard = (raw_id.size.odd?) ? "0#{raw_id}" : raw_id
           user.save || @errors << "Can't update #{email} with #{cardid}"
