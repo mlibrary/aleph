@@ -48,7 +48,7 @@ module DtuCard
       cardid_hex = "0#{cardid_hex}" if cardid.size.odd?
 
       unless cardid_hex == user.librarycard
-        if emails_seen.include?(email)
+        if @emails_seen.include?(email)
           @errors << "Duplicate entry for #{email}"
         else
           user.librarycard = cardid_hex
