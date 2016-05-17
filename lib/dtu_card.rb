@@ -1,5 +1,6 @@
 require 'net/ftp'
 require 'csv'
+require 'set'
 
 module DtuCard
   class Base
@@ -35,22 +36,27 @@ module DtuCard
 
     def initialize
       @errors = []
-      @starttime = Time.new
+      @emails_seen = Set.new
     end
 
     def process(cardid, email)
       user = User.where(:email => email.downcase).first
       return if user.nil? 
       return unless ['dtu_empl', 'student'].include?(user.user_type.code)
-      if user.librarycard != cardid
-        if user.updated_at < @starttime || user.librarycard.size.odd?
-          raw_id = cardid.to_i.to_s(16).upcase
-          user.librarycard = (raw_id.size.odd?) ? "0#{raw_id}" : raw_id
-          user.save || @errors << "Can't update #{email} with #{cardid}"
-        else
+
+      cardid_hex = cardid.to_i.to_s(16).upcase
+      cardid_hex = "0#{cardid_hex}" if cardid.size.odd?
+
+      unless cardid_hex == user.librarycard
+        if emails_seen.include?(email)
           @errors << "Duplicate entry for #{email}"
+        else
+          user.librarycard = cardid_hex
+          @errors << "Can't update #{email} with #{cardid}" unless user.save
         end
       end
+
+      @emails_seen << email
     end
 
     def process_card_file
