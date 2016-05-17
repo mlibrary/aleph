@@ -9,7 +9,7 @@ module DtuCard
   end
 
   class Fetch < Base
-    REMOTE_FILE = 'Sagio/Samlet-ADK.csv'
+    REMOTE_FILE = 'Samlet-ADK.csv'
 
     attr_reader :errors
 
