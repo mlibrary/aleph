@@ -86,7 +86,7 @@ module Riyosha
     }
 
     config.cas = {
-      :base_url => 'https://auth.dtu.dk/dtu'
+      :base_url => 'http://localhost'
     }
 
     config.omniauth = {
@@ -123,10 +123,10 @@ module Riyosha
       :earliest      => '1900-01-01',
     }
 
-    config.sendit_url  = 'http://localhost:3004'
+    config.sendit_url  = 'http://localhost'
     config.sendit_from = 'from@local.host'
 
-    config.main_service_url = 'http://localhost:3000'
+    config.main_service_url = ''
 
     config.dtu_card = {
       :server   => '',
@@ -134,6 +134,5 @@ module Riyosha
       :password => '',
     }
     
-    config.secret_token = 'ChangeThisToAtLeast-30-characters-ok'
   end
 end

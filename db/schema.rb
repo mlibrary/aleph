@@ -136,12 +136,12 @@ ActiveRecord::Schema.define(:version => 20141104093336) do
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "ticket_granting_tickets", :force => true do |t|
-    t.string   "ticket",           :null => false
-    t.string   "client_hostname",  :null => false
-    t.string   "username",         :null => false
-    t.text     "extra_attributes"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.string   "ticket",                           :null => false
+    t.string   "client_hostname",                  :null => false
+    t.string   "username",                         :null => false
+    t.text     "extra_attributes", :limit => 2048
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
   end
 
   add_index "ticket_granting_tickets", ["ticket"], :name => "index_ticket_granting_tickets_on_ticket"
