@@ -16,9 +16,6 @@ RUN apt-get update -qq && apt-get install -y \
   bundler \
   curl
 
-# for nokogiri
-ENV NOKOGIRI_USE_SYSTEM_LIBRARIES 1
-
 RUN mkdir /myapp
 WORKDIR /myapp
 ADD Gemfile /myapp/Gemfile
