@@ -13,7 +13,8 @@ RUN apt-get update -qq && apt-get install -y \
   libxml2-dev \
   libxslt1-dev \
   libsqlite3-dev \
-  bundler
+  bundler \
+  curl
 
 # for nokogiri
 ENV NOKOGIRI_USE_SYSTEM_LIBRARIES 1
