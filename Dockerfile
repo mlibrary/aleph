@@ -14,7 +14,11 @@ RUN apt-get update -qq && apt-get install -y \
   libxslt1-dev \
   libsqlite3-dev \
   bundler \
-  curl
+  curl \
+  libfreetype6 \
+  libfreetype6-dev \
+  libfontconfig1 \
+  libfontconfig1-dev
 
 RUN mkdir /myapp
 WORKDIR /myapp
