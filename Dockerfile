@@ -25,4 +25,6 @@ WORKDIR /myapp
 ADD Gemfile /myapp/Gemfile
 ADD Gemfile.lock /myapp/Gemfile.lock
 RUN bundle install
+ADD install_phantomjs_if_missing.rb /myapp/install_phantomjs_if_missing.rb
+RUN ruby install_phantomjs_if_missing.rb
 ADD . /myapp
