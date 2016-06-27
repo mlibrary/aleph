@@ -86,7 +86,8 @@ module Riyosha
     }
 
     config.cas = {
-      :base_url => 'https://auth.dtu.dk/dtu'
+      #:base_url => 'https://auth.dtu.dk/dtu'
+      :base_url => 'http://localhost'
     }
 
     config.omniauth = {
