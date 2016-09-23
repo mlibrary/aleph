@@ -1,6 +1,6 @@
 
   <div class="row">
-    <div class="span12">
+    <div class="col-md-12">
       <h4>
         <%= t('riyosha.sign_up.library') %>
       </h4>
@@ -10,16 +10,16 @@
 <%= form_for(resource, :as => resource_name,
     :url => registration_path(resource_name)) do |f| %>
   <div class="row">
-    <div class="span6">
+    <div class="col-md-6">
       <%= f.label :first_name, I18n.t('riyosha.edit.library_name') %>
       <%= f.text_field :first_name, :autofocus => true, :tabindex => '1',
-            :class => 'span6' %>
+            :class => 'col-md-6' %>
     </div>
-    <div class="span3">
+    <div class="col-md-3">
       <%= f.label :email %>
       <%= f.email_field :email, :tabindex => '10' %>
     </div>
-    <div class="span3">
+    <div class="col-md-3">
       <label>&nbsp;</label>
       <button type="submit" class="btn btn-primary" tabindex="16">
         <%= I18n.t('riyosha.sign_up.submit') %>
@@ -29,33 +29,33 @@
 
   <%= fields_for :address do |a| %>
   <div class="row">
-    <div class="span6">
+    <div class="col-md-6">
       <%= a.label :line2, I18n.t('riyosha.edit.address2') %>
-      <%= a.text_field :line2, :tabindex => '3', :class => 'span6' %>
+      <%= a.text_field :line2, :tabindex => '3', :class => 'col-md-6' %>
     </div>
-    <div class="span3">
+    <div class="col-md-3">
       <%= f.label :password %>
       <%= f.password_field :password, :tabindex => '11' %>
     </div>
   </div>
 
   <div class="row">
-    <div class="span6">
+    <div class="col-md-6">
       <%= a.label :line3, I18n.t('riyosha.edit.address3') %>
-      <%= a.text_field :line3, :tabindex => '4', :class => 'span6' %>
+      <%= a.text_field :line3, :tabindex => '4', :class => 'col-md-6' %>
     </div>
-    <div class="span3">
+    <div class="col-md-3">
       <%= f.label :password_confirmation %>
       <%= f.password_field :password_confirmation, :tabindex => '12' %>
     </div>
   </div>
 
   <div class="row">
-    <div class="span6">
+    <div class="col-md-6">
       <%= a.label :line4, I18n.t('riyosha.edit.address4') %>
-      <%= a.text_field :line4, :tabindex => '5', :class => 'span6' %>
+      <%= a.text_field :line4, :tabindex => '5', :class => 'col-md-6' %>
     </div>
-    <div class="span6">
+    <div class="col-md-6">
       <% library_type = UserType.find_by_code('library').id %>
       <%= f.hidden_field :user_type_id, :value => library_type %>
       <%= f.label :user_sub_type_id, I18n.t('riyosha.edit.library_type') %>
@@ -65,29 +65,29 @@
   </div>
 
   <div class="row">
-    <div class="span6">
+    <div class="col-md-6">
       <%= a.label :line5, I18n.t('riyosha.edit.address5') %>
-      <%= a.text_field :line5, :tabindex => '6', :class => 'span6' %>
+      <%= a.text_field :line5, :tabindex => '6', :class => 'col-md-6' %>
     </div>
-    <div class="span6">
+    <div class="col-md-6">
       <%= f.label :librarycard, I18n.t('riyosha.edit.library_number') %>
       <%= f.text_field :librarycard, :tabindex => '14' %>
     </div>
   </div>
 
   <div class="row">
-    <div class="span3">
+    <div class="col-md-3">
       <%= a.label :zipcode %>
       <%= a.text_field :zipcode, :tabindex => '7' %>
     </div>
-    <div class="span3">
+    <div class="col-md-3">
       <%= a.label :cityname %>
       <%= a.text_field :cityname, :tabindex => '8' %>
     </div>
   </div>
 
   <div class="row">
-    <div class="span6">
+    <div class="col-md-6">
       <%= a.label :country, I18n.t('riyosha.edit.country') %>
       <%= a.text_field :country, :tabindex => '9' %>
     </div>

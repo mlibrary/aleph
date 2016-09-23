@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="span12">
+  <div class="col-md-12">
     <h5><%= I18n.t('riyosha.edit.basic_information') %></h5>
   </div>
 </div>
@@ -9,20 +9,20 @@
       :html => { :method => :put }) do |f| %>
 
   <div class="row">
-    <div class="span3">
+    <div class="col-md-3">
       <%= f.label :first_name %>
       <%= f.text_field :first_name, :autofocus => true, :tabindex => '1' %>
     </div>
-    <div class="span3">
+    <div class="col-md-3">
       <%= f.label :email %>
       <%= f.email_field :email, :tabindex => '3' %>
     </div>
-    <div class="span3">
+    <div class="col-md-3">
       <%= f.label :current_password %>
       <%= f.password_field :current_password, :class => 'no-margin',
           :tabindex => '4' %>
     </div>
-    <div class="span3">
+    <div class="col-md-3">
       <label>&nbsp;</label>
       <button type="submit" class="btn btn-primary", :tabindex="7">
         <%= I18n.t('riyosha.edit.submit') %>
@@ -31,19 +31,19 @@
   </div>
 
   <div class="row">
-    <div class="span3">
+    <div class="col-md-3">
       <%= f.label :last_name %>
       <%= f.text_field :last_name, :tabindex => '2' %>
     </div>
-    <div class="span3">
+    <div class="col-md-3">
     </div>
-    <div class="span3">
+    <div class="col-md-3">
       <%= f.label :password, t('riyosha.edit.new_password') %>
       <%= f.password_field :password, :autocomplete => "off",
           :class => 'no-margin', :tabindex => '5' %>
-      <span class="help-block"><%= t('riyosha.edit.leave') %></span>
+      <col-md- class="help-block"><%= t('riyosha.edit.leave') %></col-md->
     </div>
-    <div class="span3">
+    <div class="col-md-3">
       <a href="<%= config.main_service_url %>">
         <button class="btn">
           <%= t('riyosha.main_service_text') %>
@@ -53,11 +53,11 @@
   </div>
 
   <div class="row">
-    <div class="span3">
+    <div class="col-md-3">
     </div>
-    <div class="span3">
+    <div class="col-md-3">
     </div>
-    <div class="span3">
+    <div class="col-md-3">
       <%= f.label :password_confirmation %>
       <%= f.password_field :password_confirmation, :tabindex => '6' %>
     </div>
@@ -66,39 +66,39 @@
 <% end %>
 
 <div class="row">
-  <div class="span12">
+  <div class="col-md-12">
     <hr/>
   </div>
 </div>
 
 <div class="row">
-  <div class="span12">
+  <div class="col-md-12">
     <h5><%= I18n.t('riyosha.edit.lending_information') %></h5>
   </div>
 </div>
 
 <% if @user.may_lend_printed? %>
 <div class="row">
-  <div class="span9">
+  <div class="col-md-9">
     <%= I18n.t('riyosha.edit.allow_lending_printed') %>
   </div>
-  <div class="span3">
+  <div class="col-md-3">
     <!-- Disable action -->
   </div>
 </div>
 <% else %>
 <%= form_tag(new_dk_nemid_user_session_path, :method => :get ) do %>
 <div class="row">
-  <div class="span6">
+  <div class="col-md-6">
     <%= I18n.t('riyosha.edit.enable_lending_printed') %>
   </div>
-  <div class="span3">
+  <div class="col-md-3">
     <%= check_box_tag :accept_payment_terms  %>
     <%= t('riyosha.edit.payment_terms').html_safe %><br/>
     <%= check_box_tag :accept_printed_terms %>
     <%= t('riyosha.edit.printed_terms').html_safe %>
   </div>
-  <div class="span3">
+  <div class="col-md-3">
     <button type="submit" class="btn">
       <%= I18n.t('riyosha.edit.printed_signup') %>
     </button>
@@ -111,16 +111,16 @@
 <% end %>
 <!--
 <div class="row">
-  <div class="span12">
+  <div class="col-md-12">
     <h4><%= t('riyosha.edit.cancel.title') %></h4>
   </div>
 </div>
 
 <div class="row">
-  <div class="span3">
+  <div class="col-md-3">
     <%= t('riyosha.edit.cancel.text') %>
   </div>
-  <div class="span9">
+  <div class="col-md-9">
     <%= button_to t('riyosha.edit.cancel.submit'),
           registration_path(resource_name),
           :data => { :confirm => t('riyosha.edit.cancel.confirm') },

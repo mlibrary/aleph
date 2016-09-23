@@ -1,11 +1,9 @@
   <%- if devise_mapping.omniauthable? %>
-    <% offset="offset3" -%>
     <%- resource_class.omniauth_providers.each do |provider| %>
-      <div class="span3 <%= offset %>">
+      <div class="col-md-3 mt-20">
       <%= link_to ('<i class="'+t(provider, :scope => 'riyosha.provider.icons')+
             '"></i> '+ t(provider, :scope => 'riyosha.provider.text')).html_safe,
         omniauth_authorize_path(resource_name, provider) %><br />
-        <% offset = "" -%>
       </div>
     <% end -%>
   <% end -%>

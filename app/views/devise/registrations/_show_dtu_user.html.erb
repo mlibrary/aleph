@@ -1,26 +1,26 @@
 
-<div class="span12">
+<div class="col-md-12">
   <h4><i class="icon-user"> </i> Your account</h4>
 </div>
 
-<div class="span3">
+<div class="col-md-3">
   <h5><%= @user.first_name %> <%= @user.last_name%></h5>
   <%= @user.email %>
 </div>
 
-<div class="span3">
+<div class="col-md-3">
   <h5><%= I18n.t('riyosha.edit.user_address') %></h5>
   <% @user.address_lines.each do |line| %>
     <%= line %><br/>
   <% end %>
 </div>
 
-<div class="span3">
+<div class="col-md-3">
   <h5><%= I18n.t('riyosha.edit.edit_account') %></h5>
   <%= I18n.t('riyosha.edit.dtu_base_reference') %>
 </div>
 
-<div class="span3">
+<div class="col-md-3">
   <h5>&nbsp;</h5>
   <a href="https://www.dtubasen.dtu.dk/admin">
     <button type="submit" class="btn btn-primary">
@@ -29,26 +29,26 @@
   </a>
 </div>
 
-<div class="span12">
+<div class="col-md-12">
   <hr/>
 </div>
 
 
-<div class="span12">
+<div class="col-md-12">
   <h4><i class="icon-book"></i> <%= I18n.t('riyosha.edit.lending_information') %></h4>
 </div>
 
 <% if @user.may_lend_printed? %>
-  <div class="span9">
+  <div class="col-md-9">
     <p><%= I18n.t('riyosha.edit.allow_lending_printed') %></p>
   </div>
-  <div class="span3">
+  <div class="col-md-3">
     <p><%= link_to 'Access printed collection', aleph_new_session_path(:func => 'bor-info'), :class => 'btn btn-primary' %></p>
   </div>
 <% else %>
 <% end %>
 
-<div class="span12">
+<div class="col-md-12">
   <hr/>
 </div>
 
