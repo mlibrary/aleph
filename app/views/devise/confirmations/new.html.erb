@@ -8,13 +8,12 @@
 <%= form_for(resource, :as => resource_name,
       :url => confirmation_path(resource_name),
       :html => { :method => :post }) do |f| %>
-<div class="row">
-  <div class="col-md-3">
+<div class="row mt-20">
+  <div class="col-md-4">
     <%= f.label :email %>
-    <%= f.email_field :email, :autofocus => true %>
+    <%= f.email_field :email, :autofocus => true, :class => 'form-control' %>
   </div>
-  <div class="col-md-9">
-    <label>&nbsp;</label>
+  <div class="col-md-12 mt-20">
     <%= f.submit t('riyosha.confirmation.request'),
         :class => 'btn btn-primary' %>
   </div>
