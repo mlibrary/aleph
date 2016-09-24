@@ -1,6 +1,6 @@
 
 <% if !@user.may_lend_printed? && session[:pending_after_sign_in_path] %>
-<div class="col-md-11 alert alert-block alert-error">
+<div class="col-md-11 alert alert-block alert-danger">
   <h4>Notice</h4>
   You're about to log in to DTU Library printed collection but your
   account is not registered to order and borrow
@@ -47,9 +47,9 @@
     <div class="col-md-3">
       <p>
         <%= label_tag :cpr1, t('riyosha.edit.cpr1') %>
-        <%= text_field_tag :cpr1, params[:cpr1], :class => 'input-block-level' %>
+        <%= text_field_tag :cpr1, params[:cpr1], :class => 'form-control' %>
         <%= label_tag :cpr2, t('riyosha.edit.cpr2') %>
-        <%= text_field_tag :cpr2, params[:cpr2], :class => 'input-block-level' %>
+        <%= text_field_tag :cpr2, params[:cpr2], :class => 'form-control' %>
         <button type="submit" class="btn btn-primary">
           <%= I18n.t('riyosha.edit.printed_signup') %>
         </button>

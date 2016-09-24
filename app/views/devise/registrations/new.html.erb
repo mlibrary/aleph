@@ -21,15 +21,15 @@
     <div class="row">
       <div class="col-md-3">
         <%= f.label :first_name %>
-        <%= f.text_field :first_name, :autofocus => true, :tabindex => '1', :class => 'input-block-level' %>
+        <%= f.text_field :first_name, :autofocus => true, :tabindex => '1', :class => 'form-control' %>
       </div>
       <div class="col-md-3">
         <%= f.label :email %>
-        <%= f.email_field :email, :tabindex => '3', :class => 'input-block-level' %>
+        <%= f.email_field :email, :tabindex => '3', :class => 'form-control' %>
       </div>
       <div class="col-md-3">
         <%= f.label :password %>
-        <%= f.password_field :password, :tabindex => '4', :class => 'input-block-level' %>
+        <%= f.password_field :password, :tabindex => '4', :class => 'form-control' %>
       </div>
       <div class="col-md-3">
         <label>&nbsp;</label>
@@ -41,14 +41,14 @@
     <div class="row">
       <div class="col-md-3">
         <%= f.label :last_name %>
-        <%= f.text_field :last_name, :tabindex => '2', :class => 'input-block-level' %>
+        <%= f.text_field :last_name, :tabindex => '2', :class => 'form-control' %>
       </div>
       <div class="col-md-3">
         <%= f.hidden_field :user_type_id, :value => UserType.find_by_code('private').id %>
       </div>
       <div class="col-md-3">
         <%= f.label :password_confirmation %>
-        <%= f.password_field :password_confirmation, :tabindex => '5', :class => 'input-block-level' %>
+        <%= f.password_field :password_confirmation, :tabindex => '5', :class => 'form-control' %>
       </div>
     </div>
   </div>
