@@ -1,5 +1,5 @@
 
-<div class="span12">
+<div class="col-md-12">
   <h4>
     <%= t('riyosha.sign_up.social') %>
   </h4>
@@ -7,31 +7,31 @@
 
 <%= render 'devise/shared/logins' %>
 
-<div class="span12">
+<div class="col-md-12">
   <hr />
 </div>
 
-<div class="span12">
+<div class="col-md-12">
   <h4><%= t('riyosha.sign_up.directly') %></h4>
 </div>
 
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= hidden_field_tag :service, params[:service] %>
-  <div class="span12">
+  <div class="col-md-12">
     <div class="row">
-      <div class="span3">
+      <div class="col-md-3">
         <%= f.label :first_name %>
-        <%= f.text_field :first_name, :autofocus => true, :tabindex => '1', :class => 'input-block-level' %>
+        <%= f.text_field :first_name, :autofocus => true, :tabindex => '1', :class => 'form-control' %>
       </div>
-      <div class="span3">
+      <div class="col-md-3">
         <%= f.label :email %>
-        <%= f.email_field :email, :tabindex => '3', :class => 'input-block-level' %>
+        <%= f.email_field :email, :tabindex => '3', :class => 'form-control' %>
       </div>
-      <div class="span3">
+      <div class="col-md-3">
         <%= f.label :password %>
-        <%= f.password_field :password, :tabindex => '4', :class => 'input-block-level' %>
+        <%= f.password_field :password, :tabindex => '4', :class => 'form-control' %>
       </div>
-      <div class="span3">
+      <div class="col-md-3">
         <label>&nbsp;</label>
         <button type="submit" class="btn btn-primary btn-block" tabindex="6">
           <%= I18n.t('riyosha.sign_up.submit') %>
@@ -39,16 +39,16 @@
       </div>
     </div>
     <div class="row">
-      <div class="span3">
+      <div class="col-md-3">
         <%= f.label :last_name %>
-        <%= f.text_field :last_name, :tabindex => '2', :class => 'input-block-level' %>
+        <%= f.text_field :last_name, :tabindex => '2', :class => 'form-control' %>
       </div>
-      <div class="span3">
+      <div class="col-md-3">
         <%= f.hidden_field :user_type_id, :value => UserType.find_by_code('private').id %>
       </div>
-      <div class="span3">
+      <div class="col-md-3">
         <%= f.label :password_confirmation %>
-        <%= f.password_field :password_confirmation, :tabindex => '5', :class => 'input-block-level' %>
+        <%= f.password_field :password_confirmation, :tabindex => '5', :class => 'form-control' %>
       </div>
     </div>
   </div>

@@ -18,7 +18,7 @@ gem 'omniauth-linkedin-oauth2'
 gem 'omniauth-google-oauth2'
 
 gem 'capistrano', '~> 2.15'
-gem 'bootstrap-sass', '~> 2.3.0'
+gem 'bootstrap-sass', '~> 3.1.1'
 gem 'rubycas-client'
 gem 'httparty'
 gem 'nokogiri'

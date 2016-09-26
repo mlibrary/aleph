@@ -1,4 +1,4 @@
-<div class="span12">
+<div class="col-md-12">
   <h4><%= t('riyosha.password.title') %></h4>
 </div>
 
@@ -7,16 +7,16 @@
     :html => { :method => :put }) do |f| %>
   <%= f.hidden_field :reset_password_token %>
   
-  <div class="span3">
+  <div class="col-md-3">
     <%= f.label :password, t('riyosha.password.new') %>
     <%= f.password_field :password %>
   </div>
-  <div class="span3">
+  <div class="col-md-3">
     <%= f.hidden_field :reset_password_token %>
     <%= f.label :password_confirmation, t('riyosha.password.confirm') %>
     <%= f.password_field :password_confirmation %>
   </div>
-  <div class="span3">
+  <div class="col-md-3">
     <label>&nbsp;</label>
     <button type="submit" class="btn btn-primary">
       <%= I18n.t('riyosha.password.change') %>
