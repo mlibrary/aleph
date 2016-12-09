@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141104093336) do
+ActiveRecord::Schema.define(:version => 20161213134718) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -62,6 +62,12 @@ ActiveRecord::Schema.define(:version => 20141104093336) do
 
   add_index "dk_nemid_users", ["identifier"], :name => "index_dk_nemid_users_on_identifier", :unique => true
   add_index "dk_nemid_users", ["user_id"], :name => "index_dk_nemid_users_on_user_id"
+
+  create_table "dtubase_removed_account_events", :force => true do |t|
+    t.string "removed_matrikel_id"
+    t.string "new_matrikel_id"
+    t.string "date_removed"
+  end
 
   create_table "identities", :force => true do |t|
     t.string   "provider",   :null => false

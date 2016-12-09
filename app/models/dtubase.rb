@@ -181,6 +181,22 @@ class DtuBase
 
   end
 
+  def request_removed_accounts
+    url = "#{config[:url]}?" +
+      URI.encode_www_form(
+        :XPathExpression => "/removed_account",
+        :username => config[:username],
+        :password => config[:password],
+        :dbversion => 'dtubasen'
+      )
+    response = HTTParty.get(url)
+    unless response.success?
+      @reason = 'lookup_failed'
+      logger.warn "Could not get /removed_account from DTUbasen with request #{url}. Message: #{response.message}."
+    end
+    (((response || {})["root"] || {})["removed_account"] || []).sort_by { |removed_account| (removed_account["date_removed"] || "") }
+  end
+
   private
 
   def has_active_employee_or_student_profile(account)
