@@ -42,6 +42,8 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
   config.mock_with :mocha
 
+  config.mock_framework = :rspec
+
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
