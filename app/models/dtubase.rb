@@ -194,7 +194,9 @@ class DtuBase
       @reason = 'lookup_failed'
       logger.warn "Could not get /removed_account from DTUbasen with request #{url}. Message: #{response.message}."
     end
-    (((response || {})["root"] || {})["removed_account"] || []).sort_by { |removed_account| (removed_account["date_removed"] || "") }
+    removed_accounts = (((response || {})["root"] || {})["removed_account"] || [])
+    removed_accounts = [removed_accounts] if removed_accounts.class <= Hash
+    removed_accounts.sort_by { |removed_account| (removed_account["date_removed"] || "") }
   end
 
   private

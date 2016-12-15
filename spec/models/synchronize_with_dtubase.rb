@@ -80,7 +80,6 @@ describe SynchronizeWithDtubase do
 
     body = '<?xml version="1.0" encoding="utf-8"?>'\
            '<root>'\
-           '<removed_account removed_matrikel_id="329580" new_matrikel_id="94022" />'\
            '<removed_account removed_matrikel_id="113623" new_matrikel_id="17085" date_removed="2016-10-13T12:32:48.470" />'\
            '<removed_account removed_matrikel_id="182281" new_matrikel_id="44588" date_removed="2011-08-11T15:40:12.200" />'\
            '</root>'
@@ -88,14 +87,12 @@ describe SynchronizeWithDtubase do
      to_return(:status => 200, :body => body, :headers => {"Content-Type" => "text/xml; charset=utf-8"})
 
     synchronize_with_dtubase = SynchronizeWithDtubase.new
-    synchronize_with_dtubase.should_receive(:update_account).with("329580", "94022")
     synchronize_with_dtubase.should_receive(:update_account).with("113623", "17085")
     synchronize_with_dtubase.should_receive(:update_account).with("182281", "44588")
     synchronize_with_dtubase.call
 
     body = '<?xml version="1.0" encoding="utf-8"?>'\
            '<root>'\
-           '<removed_account removed_matrikel_id="329580" new_matrikel_id="94022" />'\
            '<removed_account removed_matrikel_id="113623" new_matrikel_id="17085" date_removed="2016-10-13T12:32:48.470" />'\
            '<removed_account removed_matrikel_id="182281" new_matrikel_id="44588" date_removed="2011-08-11T15:40:12.200" />'\
            '<removed_account removed_matrikel_id="1" new_matrikel_id="2" date_removed="2016-12-11T15:40:12.200" />'\
@@ -104,10 +101,59 @@ describe SynchronizeWithDtubase do
      to_return(:status => 200, :body => body, :headers => {"Content-Type" => "text/xml; charset=utf-8"})
 
     another_synchronize_with_dtubase = SynchronizeWithDtubase.new
-    another_synchronize_with_dtubase.should_not_receive(:update_account).with("329580", "94022")
     another_synchronize_with_dtubase.should_not_receive(:update_account).with("113623", "17085")
     another_synchronize_with_dtubase.should_not_receive(:update_account).with("182281", "44588")
     another_synchronize_with_dtubase.should_receive(:update_account).with("1", "2")
     another_synchronize_with_dtubase.call
+  end
+
+  it "ignores events with no date_removed" do
+    user = FactoryGirl.create(:user, :id => 1)
+    user.save!
+    identity = FactoryGirl.create(:identity, :id => 1, :uid => "182281", :provider => "dtu", :user => user)
+    identity.save!
+
+    body = '<?xml version="1.0" encoding="utf-8"?>'\
+           '<root>'\
+           '<removed_account removed_matrikel_id="182281" new_matrikel_id="44588" />'\
+           '</root>'
+    stub_request(:get, @dtubase_stub_url).
+     to_return(:status => 200, :body => body, :headers => {"Content-Type" => "text/xml; charset=utf-8"})
+
+    SynchronizeWithDtubase.new.call
+
+    identity_after_update = Identity.where(:id => 1).first
+    expect(identity_after_update).not_to be_nil
+    expect(identity_after_update.uid).to eq("182281")
+  end
+
+  it "handles a Dtubase response with a single entry" do
+    user = FactoryGirl.create(:user, :id => 1)
+    user.save!
+    identity = FactoryGirl.create(:identity, :id => 1, :uid => "182281", :provider => "dtu", :user => user)
+    identity.save!
+
+    body = '<?xml version="1.0" encoding="utf-8"?>'\
+           '<root>'\
+           '<removed_account removed_matrikel_id="182281" new_matrikel_id="44588" date_removed="2011-08-11T15:40:12.200" />'\
+           '</root>'
+    stub_request(:get, @dtubase_stub_url).
+     to_return(:status => 200, :body => body, :headers => {"Content-Type" => "text/xml; charset=utf-8"})
+
+    SynchronizeWithDtubase.new.call
+
+    identity_after_update = Identity.where(:id => 1).first
+    expect(identity_after_update).not_to be_nil
+    expect(identity_after_update.uid).to eq("44588")
+  end
+
+  it "handles an empty Dtubase response" do
+    body = '<?xml version="1.0" encoding="utf-8"?>'\
+           '<root>'\
+           '</root>'
+    stub_request(:get, @dtubase_stub_url).
+     to_return(:status => 200, :body => body, :headers => {"Content-Type" => "text/xml; charset=utf-8"})
+
+    SynchronizeWithDtubase.new.call
   end
 end
