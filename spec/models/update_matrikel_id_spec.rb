@@ -42,13 +42,6 @@ describe UpdateMatrikelId do
     identity_2 = FactoryGirl.create(:identity, :id => 2, :uid => "102", :provider => "dtu", :user => user_2)
     identity_2.save!
 
-    exception_thrown = false
-    begin
-      UpdateMatrikelId.new("101", "102").call
-    rescue => e
-      exception_thrown = true
-    end
-
-    expect(exception_thrown).to eq(true)
+    expect { UpdateMatrikelId.new("101", "102").call }.to raise_exception
   end
 end
