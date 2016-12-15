@@ -49,7 +49,6 @@ group :development, :test do
   gem 'poltergeist'
   gem 'phantomjs', require: 'phantomjs/poltergeist'
   gem 'capybara-mechanize'
-  gem 'byebug'
   gem 'brakeman'
   gem 'quiet_assets'
   gem 'puma'
