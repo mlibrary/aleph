@@ -21,6 +21,9 @@ class SynchronizeWithDtubase
   end
 
   def update_account(removed_matrikel_id, new_matrikel_id)
-    UpdateMatrikelId.new(removed_matrikel_id, new_matrikel_id, Rails.logger).call
+    begin
+      UpdateMatrikelId.new(removed_matrikel_id, new_matrikel_id, Rails.logger).call
+    rescue => e
+    end
   end
 end
