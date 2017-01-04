@@ -13,6 +13,10 @@ feature 'When user requests login from a generic service', :js => true do
     WebMock.disable_net_connect!(:allow_localhost => true)
   end
 
+  before(:all) do
+    add_mock_service_rails_route
+  end
+
   context 'and user is not logged in' do
     context 'and user is private' do
       context 'and user does not have registered cpr' do
@@ -65,4 +69,16 @@ feature 'When user requests login from a generic service', :js => true do
     return Nokogiri::XML(body).remove_namespaces!
   end
 
+  def add_mock_service_rails_route
+    ApplicationController.class_eval do
+      define_method(:mock_service, lambda do
+        render text: 'mock_service called'
+      end)
+    end
+
+    test_routes = Proc.new do
+      get '/mock_service' => 'application#mock_service'
+    end
+    Rails.application.routes.eval_block(test_routes)
+  end
 end
