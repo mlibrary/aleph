@@ -10,6 +10,10 @@ feature 'When user requests login from printed collections', :js => true do
     WebMock.disable_net_connect!(:allow_localhost => true)
   end
 
+  before(:all) do
+    add_mock_alpeh_rails_route
+  end
+
   context 'and user is not logged in' do
     context 'and user is library' do
       scenario 'then the user should not be forced to do CPR validation after login' do
@@ -99,5 +103,16 @@ feature 'When user requests login from printed collections', :js => true do
     visit '/users/logout'
   end
 
+  def add_mock_alpeh_rails_route
+    ApplicationController.class_eval do
+      define_method(:mock_aleph, lambda do
+        render text: 'mock_aleph called'
+      end)
+    end
 
+    test_routes = Proc.new do
+      get '/mock_aleph' => 'application#mock_aleph'
+    end
+    Rails.application.routes.eval_block(test_routes)
+  end
 end
