@@ -2,8 +2,7 @@ require 'spec_helper'
 
 feature 'When user requests login from printed collections', :js => true do
   let(:aleph_url) { 
-    Rails.application.config.aleph[:url] = 'http://localhost/mock_aleph' 
-    Rails.application.config.aleph[:url] = 'http://localhost/mock_aleph' 
+    Rails.application.config.aleph[:url] = 'http://localhost:1080/mock_aleph'
   }
 
   before(:each) do

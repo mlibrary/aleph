@@ -2,11 +2,11 @@ require 'spec_helper'
 
 feature 'When user requests login from a generic service', :js => true do
   let!(:aleph_url) {
-    Rails.application.config.aleph[:url] = 'http://localhost/mock_aleph'
+    Rails.application.config.aleph[:url] = 'http://localhost:1080/mock_aleph'
   }
 
   let!(:service_url) {
-    'http://localhost/mock_service'
+    'http://localhost:1080/mock_service'
   }
 
   before(:each) do

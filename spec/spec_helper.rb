@@ -55,9 +55,9 @@ Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, {:debug => false, :phantomjs => Phantomjs.path})
 end
 Capybara.javascript_driver = :poltergeist
-Capybara.app_host = "http://127.0.0.1:80"
+Capybara.app_host = "http://127.0.0.1:1080"
 Capybara.server_host = "0.0.0.0"
-Capybara.server_port = "80"
+Capybara.server_port = "1080"
 
 
 # Forces all threads to share the same connection. This works on
