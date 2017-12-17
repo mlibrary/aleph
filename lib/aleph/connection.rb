@@ -1,5 +1,6 @@
 require 'httparty'
 require 'nokogiri'
+require 'singleton'
 
 module Aleph
   class Connection < Base
@@ -19,11 +20,9 @@ module Aleph
       end
 
       if config.test_mode
-        logger.info "X Request (test mode) #{url}"
         return self
       end
 
-      logger.info "X Request #{url}"
       response = HTTParty.get(url)
       unless response.success?
         report "Aleph X request failed: #{func} with #{params.inspect} "+
@@ -32,7 +31,6 @@ module Aleph
       end
       @document = Nokogiri.XML(response.body, nil, 'UTF-8')
       @error    = parse_x_response_errors(@document)
-      logger.info "Response: #{@document}"
       self
     end
 
@@ -56,7 +54,6 @@ module Aleph
     end
 
     def report(text)
-      logger.error text
       raise Aleph::Error
     end
 

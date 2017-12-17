@@ -4,7 +4,7 @@ module Aleph
     def initialize
       @@connection = Aleph::Connection.instance
       @adm_library ||= config.adm_library
-      if @adm_library.blank?
+      if @adm_library.nil? || @adm_library.empty?
         raise Aleph::Error, "ADM library must be specified in configuration"
       end
 
@@ -16,36 +16,31 @@ module Aleph
       z303, z304, z305, z308 = information_from_user_object(user)
       if aleph_full_lookup(z308)
         if config.create_aleph_borrowers
-          if @aleph_pid.blank?
+          if @aleph_pid.nil? || @aleph_pid.empty?
             bor_new('I', z303, z304, z305, z308)
 
             @aleph_pid = aleph_lookup(z308[0])
-            if @aleph_pid.blank?
-              logger.error "No aleph id returned for #{@user_id}"
+            if @aleph_pid.nil? || @aleph_pid.empty?
               raise Aleph::Error, "Borrower could not be created in ALEPH"
             end
           else
             aleph_update(z303, z304, z305, z308)
           end
-          logger.info "PID #{@aleph_pid}"
         end
       elsif try_to_fix_non_matching_aleph_ids(user)
         z303, z304, z305, z308 = information_from_user_object(user)
         if aleph_full_lookup(z308)
           aleph_update(z303, z304, z305, z308)
-          logger.info "PID #{@aleph_pid}"
         else
           msg = "Still non matching ALEPH ids after trying to fix"
           msg += "\n" + Aleph::Borrower.new.lookup_all(user).ai(:plain => true)
           msg += "\n" + user.ai(:plain => true)
-          logger.error msg
         end
       else
         @aleph_pid = nil
         msg = "Non matching ALEPH ids"
         msg += "\n" + Aleph::Borrower.new.lookup_all(user).ai(:plain => true)
         msg += "\n" + user.ai(:plain => true)
-        logger.error msg
       end
     end
 
@@ -61,13 +56,12 @@ module Aleph
 
     def library_card_is_the_only_key_on_wrong_account(user, aleph_data)
       library_card_pid = aleph_data[:pids][['01', user.librarycard]]
-      return !library_card_pid.blank? && aleph_data[:pids].values.count(library_card_pid) == 1
+      return !library_card_pid.nil? && !library_card_pid.empty? && aleph_data[:pids].values.count(library_card_pid) == 1
     end
 
     def reset_library_card_on_wrong_account(user, aleph_data)
       library_card_pid = aleph_data[:pids][['01', user.librarycard]]
       new_barcode = "ri#{SecureRandom.hex(4)}"
-      logger.warn "Trying to fix non-matching ALEPH ids by resetting code 01 id '#{user.librarycard}' from #{library_card_pid}"
       xml = %{<?xml version="1.0"?><p-file-20><patron-record><z303><record-action>X</record-action><match-id-type>00</match-id-type><match-id>#{library_card_pid}</match-id></z303><z308><z308-key-type>01</z308-key-type><z308-key-data>#{new_barcode}</z308-key-data><record-action>I</record-action></z308></patron-record></p-file-20>}
 
       return @@connection.x_request('update_bor', {
@@ -79,14 +73,10 @@ module Aleph
       z303, z304, z305, z308s = information_from_user_object(user)
       pids = {}
       info = {}
-      logger.debug "Generated aleph keys: #{z308s}"
       z308s.each do |z308|
-        logger.debug "bor_by_key for #{z308}"
         pid = aleph_lookup(z308)
-        logger.debug "pid found: #{pid}"
         pids[[z308['z308-key-type'],z308['z308-key-data']]] = pid
-        if !pid.blank?
-          logger.debug "bor_info for pid #{pid}"
+        if !pid.nil? && !pid.empty?
           info[pid] = Hash.from_xml(bor_info(pid).to_xml)
           info[pid] = abbrev_aleph_info(info[pid]) if info[pid]
         end
@@ -104,12 +94,12 @@ module Aleph
 
 
     def valid_aleph_bor?
-      !@aleph_pid.blank?
+      !@aleph_pid.nil? && !@aleph_pid.empty?
     end
 
     def bor_info(pid)
-      raise Aleph::Error, "Borrower not set" if pid.blank?
-      raise Aleph::Error, "ADM library not set" if @adm_library.blank?
+      raise Aleph::Error, "Borrower not set" if pid.nil? || pid.empty?
+      raise Aleph::Error, "ADM library not set" if @adm_library.nil? || @adm_library.empty?
 
       document = @@connection.x_request('bor_info', {
         'library' => @adm_library,
@@ -152,7 +142,7 @@ module Aleph
       identical = true
       z308s.each do |z|
         pid = aleph_lookup(z)
-        if pid.blank?
+        if pid.nil? || pid.empty?
           z['empty'] = true
         else
           @aleph_pid ||= pid
@@ -178,7 +168,7 @@ module Aleph
       # Either update it or removed it if not type 01
       if @z304['z304-address-type'] == '01'
         update = update_bor_part(@z304, z304) || update
-      elsif @z304['z304-id'].blank?
+      elsif @z304['z304-id'].nil? || @z304['z304-id'].empty?
         update = update_bor_part(@z304, z304) || update
         @z304['record-action'] = 'I'
       else
@@ -236,7 +226,7 @@ module Aleph
       today = Time.new.strftime("%Y%m%d")
 
       z303['record-action'] ||= action
-      if @aleph_pid.blank?
+      if @aleph_pid.nil? || @aleph_pid.empty?
         z303['match-id-type'] = config.bor_type_id
         z303['match-id'] = @user_id
       else
