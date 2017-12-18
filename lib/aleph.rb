@@ -32,5 +32,5 @@ require 'aleph/borrower'
 require 'aleph/version'
 
 if defined?(Rails)
-  require 'aleph/rails/railtie'
+  require 'aleph/railtie'
 end
