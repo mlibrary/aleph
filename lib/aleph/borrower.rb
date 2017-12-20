@@ -340,6 +340,22 @@ module Aleph
       [z303, z304, z305, z308]
     end
 
+    def type
+      local['z305-bor-type']
+    end
+
+    def status
+      local['z305-bor-status']
+    end
+
+    def expired?
+      local['z305-expiry-date'] < Date.today.strftime('%Y%m%d')
+    end
+
+    def profile_id
+      global['z303-profile-id']
+    end
+
     def fill_defaults(object, defaults)
       defaults.each do |k, v|
         if object[k] == nil
