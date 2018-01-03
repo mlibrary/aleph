@@ -352,6 +352,10 @@ module Aleph
       local['z305-expiry-date'] < Date.today.strftime('%Y%m%d')
     end
 
+    def active?
+      !expired?
+    end
+
     def profile_id
       global['z303-profile-id']
     end
