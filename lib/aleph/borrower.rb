@@ -356,6 +356,10 @@ module Aleph
       !expired?
     end
 
+    def empty?
+      global.nil? || address.nil? || local.nil?
+    end
+
     def profile_id
       global['z303-profile-id']
     end
