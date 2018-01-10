@@ -93,6 +93,14 @@ module Aleph
     end
 
 
+    def id
+      global['z303-id']
+    end
+
+    def name
+      global['z303-name']
+    end
+
     def valid_aleph_bor?
       !@aleph_pid.nil? && !@aleph_pid.empty?
     end
@@ -100,6 +108,8 @@ module Aleph
     def bor_info(pid)
       raise Aleph::Error, "Borrower not set" if pid.nil? || pid.empty?
       raise Aleph::Error, "ADM library not set" if @adm_library.nil? || @adm_library.empty?
+
+      @pid = pid
 
       document = @@connection.x_request('bor_info', {
         'library' => @adm_library,
