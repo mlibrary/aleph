@@ -98,7 +98,11 @@ module Aleph
     end
 
     def name
-      global['z303-name']
+      @name ||= last_name_first_name.split(/, /).reverse.join(' ')
+    end
+
+    def last_name_first_name
+      global['z303-name'] || ''
     end
 
     def valid_aleph_bor?
