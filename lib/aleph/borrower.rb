@@ -92,7 +92,6 @@ module Aleph
       }
     end
 
-
     def id
       global['z303-id']
     end
@@ -388,6 +387,23 @@ module Aleph
 
     def random_pin
       SecureRandom.base64(8)
+    end
+
+    def method_missing(symbol, *args)
+      return super unless symbol.to_s =~ /^can_(.+)\?$/ &&
+        Aleph.services &&
+        Aleph.services['borrower'] &&
+        Aleph.services['borrower'][$1]
+
+      Aleph.services['borrower'][$1].include?(status + type)
+    end
+
+    def respond_to?(symbol, include_private = false)
+      return super unless symbol.to_s =~ /^can_(.+)\?$/ &&
+        Aleph.services &&
+        Aleph.services['borrower'] &&
+        Aleph.services['borrower'][$1]
+      true
     end
   end
 end
