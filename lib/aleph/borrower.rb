@@ -141,6 +141,10 @@ module Aleph
       @z305
     end
 
+    def email
+      address['z304-email-address']
+    end
+
     def aleph_lookup(z308)
       result = @@connection.x_request('bor_by_key', {
         'library' => @adm_library,
