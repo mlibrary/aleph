@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../spec_helper'
 
 describe Aleph::Borrower do
@@ -30,10 +32,9 @@ describe Aleph::Borrower do
   end
 
   describe '#profile_id' do
-    it "Returns the campus" do
+    it 'Returns the campus' do
       subject.bor_info('bertrama')
       expect(subject.profile_id).to eq('UMAA')
     end
   end
-
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails'
 module Aleph
   class Railtie < Rails::Railtie

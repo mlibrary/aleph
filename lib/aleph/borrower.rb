@@ -1,13 +1,13 @@
+# frozen_string_literal: true
+
 module Aleph
   class Borrower < Base
-
     def initialize
       @@connection = Aleph::Connection.instance
       @adm_library ||= config.adm_library
       if @adm_library.nil? || @adm_library.empty?
-        raise Aleph::Error, "ADM library must be specified in configuration"
+        raise Aleph::Error, 'ADM library must be specified in configuration'
       end
-
     end
 
     #   Update aleph user from riyosha user
@@ -21,7 +21,7 @@ module Aleph
 
             @aleph_pid = aleph_lookup(z308[0])
             if @aleph_pid.nil? || @aleph_pid.empty?
-              raise Aleph::Error, "Borrower could not be created in ALEPH"
+              raise Aleph::Error, 'Borrower could not be created in ALEPH'
             end
           else
             aleph_update(z303, z304, z305, z308)
@@ -32,15 +32,15 @@ module Aleph
         if aleph_full_lookup(z308)
           aleph_update(z303, z304, z305, z308)
         else
-          msg = "Still non matching ALEPH ids after trying to fix"
-          msg += "\n" + Aleph::Borrower.new.lookup_all(user).ai(:plain => true)
-          msg += "\n" + user.ai(:plain => true)
+          msg = 'Still non matching ALEPH ids after trying to fix'
+          msg += "\n" + Aleph::Borrower.new.lookup_all(user).ai(plain: true)
+          msg += "\n" + user.ai(plain: true)
         end
       else
         @aleph_pid = nil
-        msg = "Non matching ALEPH ids"
-        msg += "\n" + Aleph::Borrower.new.lookup_all(user).ai(:plain => true)
-        msg += "\n" + user.ai(:plain => true)
+        msg = 'Non matching ALEPH ids'
+        msg += "\n" + Aleph::Borrower.new.lookup_all(user).ai(plain: true)
+        msg += "\n" + user.ai(plain: true)
       end
     end
 
@@ -51,22 +51,21 @@ module Aleph
         return reset_library_card_on_wrong_account(user, aleph_data)
       end
 
-      return false
+      false
     end
 
     def library_card_is_the_only_key_on_wrong_account(user, aleph_data)
       library_card_pid = aleph_data[:pids][['01', user.librarycard]]
-      return !library_card_pid.nil? && !library_card_pid.empty? && aleph_data[:pids].values.count(library_card_pid) == 1
+      !library_card_pid.nil? && !library_card_pid.empty? && aleph_data[:pids].values.count(library_card_pid) == 1
     end
 
     def reset_library_card_on_wrong_account(user, aleph_data)
       library_card_pid = aleph_data[:pids][['01', user.librarycard]]
       new_barcode = "ri#{SecureRandom.hex(4)}"
-      xml = %{<?xml version="1.0"?><p-file-20><patron-record><z303><record-action>X</record-action><match-id-type>00</match-id-type><match-id>#{library_card_pid}</match-id></z303><z308><z308-key-type>01</z308-key-type><z308-key-data>#{new_barcode}</z308-key-data><record-action>I</record-action></z308></patron-record></p-file-20>}
+      xml = %(<?xml version="1.0"?><p-file-20><patron-record><z303><record-action>X</record-action><match-id-type>00</match-id-type><match-id>#{library_card_pid}</match-id></z303><z308><z308-key-type>01</z308-key-type><z308-key-data>#{new_barcode}</z308-key-data><record-action>I</record-action></z308></patron-record></p-file-20>)
 
-      return @@connection.x_request('update_bor', {
-          :update_flag => 'Y', :library => 'DTV50', :xml_full_req => xml
-        }).success
+      @@connection.x_request('update_bor',
+                             update_flag: 'Y', library: 'DTV50', xml_full_req: xml).success
     end
 
     def lookup_all(user)
@@ -75,20 +74,20 @@ module Aleph
       info = {}
       z308s.each do |z308|
         pid = aleph_lookup(z308)
-        pids[[z308['z308-key-type'],z308['z308-key-data']]] = pid
+        pids[[z308['z308-key-type'], z308['z308-key-data']]] = pid
         if !pid.nil? && !pid.empty?
           info[pid] = Hash.from_xml(bor_info(pid).to_xml)
           info[pid] = abbrev_aleph_info(info[pid]) if info[pid]
         end
       end
-      return {:pids => pids, :info => info }
+      { pids: pids, info: info }
     end
 
     def abbrev_aleph_info(info)
       {
         'z303' => info['bor_info']['z303'].slice('z303_id', 'z303_open_date', 'z303_update_date', 'z303_update_date'),
         'z304' => info['bor_info']['z304'].slice('z304_address_0', 'z304_address_1', 'z304_address_2', 'z304_address_3', 'z304_email_address', 'z304_update_date'),
-        'z305' => info['bor_info']['z305'].slice('z305_bor_type', 'z305_bor_status', 'z305_update_date'),
+        'z305' => info['bor_info']['z305'].slice('z305_bor_type', 'z305_bor_status', 'z305_update_date')
       }
     end
 
@@ -113,19 +112,18 @@ module Aleph
     end
 
     def bor_info(pid)
-      raise Aleph::Error, "Borrower not set" if pid.nil? || pid.empty?
-      raise Aleph::Error, "ADM library not set" if @adm_library.nil? || @adm_library.empty?
+      raise Aleph::Error, 'Borrower not set' if pid.nil? || pid.empty?
+      raise Aleph::Error, 'ADM library not set' if @adm_library.nil? || @adm_library.empty?
 
       @pid = pid
 
-      document = @@connection.x_request('bor_info', {
-        'library' => @adm_library,
-        'bor_id' => pid,
-        'loans' => 'N',
-        'cash' => 'N',
-        'hold' => 'N',
-        'translate' => 'N',
-      }).success
+      document = @@connection.x_request('bor_info',
+                                        'library' => @adm_library,
+                                        'bor_id' => pid,
+                                        'loans' => 'N',
+                                        'cash' => 'N',
+                                        'hold' => 'N',
+                                        'translate' => 'N').success
 
       @z303 = parse(document.xpath('//z303'))[0]
       @z304 = parse(document.xpath('//z304'))[0]
@@ -150,12 +148,11 @@ module Aleph
     end
 
     def aleph_lookup(z308)
-      result = @@connection.x_request('bor_by_key', {
-        'library' => @adm_library,
-        'bor_type_id' => z308['z308-key-type'],
-        'bor_id' => z308['z308-key-data'],
-      }).document
-      result.xpath('//internal-id').text if result
+      result = @@connection.x_request('bor_by_key',
+                                      'library' => @adm_library,
+                                      'bor_type_id' => z308['z308-key-type'],
+                                      'bor_id' => z308['z308-key-data']).document
+      result&.xpath('//internal-id')&.text
     end
 
     def aleph_full_lookup(z308s)
@@ -198,7 +195,7 @@ module Aleph
       end
       # We might get the master Z305 (sub-library = ALEPH) which can't be
       # updated. Create a new Z305 in that case.
-      if @z305 and @z305['z305-sub-library'] != 'ALEPH'
+      if @z305 && (@z305['z305-sub-library'] != 'ALEPH')
         if @z305['z305-registration-date'] == '00000000'
           @z305['z305-registration-date'] = nil
         end
@@ -208,15 +205,14 @@ module Aleph
         @z305['record-action'] = 'I'
         update = true
       end
-      @z308 = Array.new
+      @z308 = []
       z308.each do |z|
-        if z['empty']
-          z.delete('empty')
-          z['record-action'] = 'I'
-          fill_defaults z, config.z308_defaults
-          @z308 << z
-          update = true
-        end
+        next unless z['empty']
+        z.delete('empty')
+        z['record-action'] = 'I'
+        fill_defaults z, config.z308_defaults
+        @z308 << z
+        update = true
       end
       update
     end
@@ -244,7 +240,7 @@ module Aleph
     end
 
     def bor_update(action, z303, z304, z305, z308)
-      today = Time.new.strftime("%Y%m%d")
+      today = Time.new.strftime('%Y%m%d')
 
       z303['record-action'] ||= action
       if @aleph_pid.nil? || @aleph_pid.empty?
@@ -254,8 +250,8 @@ module Aleph
         z303['match-id-type'] = '00'
         z303['match-id'] = @aleph_pid
       end
-      %w(z303-id z303-name-key z303-open-date z303-update-date
-         z303-upd-time-stamp).each do |k|
+      %w[z303-id z303-name-key z303-open-date z303-update-date
+         z303-upd-time-stamp].each do |k|
         z303.delete(k)
       end
 
@@ -270,7 +266,7 @@ module Aleph
       unless z305.nil?
         z305['record-action'] ||= action
         z305['z305-registration-date'] ||= today
-        %w(z305-open-date z305-update-date z305-upd-time-stamp).each do |k|
+        %w[z305-open-date z305-update-date z305-upd-time-stamp].each do |k|
           z305.delete(k)
         end
       end
@@ -279,7 +275,7 @@ module Aleph
         z308 << {
           'z308-key-type'     => '00',
           'z308-key-data'     => @aleph_pid,
-          'z308-verification' => @aleph_pid,
+          'z308-verification' => @aleph_pid
         }
       end
 
@@ -300,22 +296,19 @@ module Aleph
           end
         end
       end
-      request = builder.to_xml(:indent => 0).gsub("\n", '')
+      request = builder.to_xml(indent: 0).delete("\n")
       response = @@connection.x_request('update-bor',
-        'update_flag' => 'Y',
-        'library' => @adm_library,
-        'xml_full_req' => request
-      ).success
+                                        'update_flag' => 'Y',
+                                        'library' => @adm_library,
+                                        'xml_full_req' => request).success
     end
 
     def information_from_user_object(user)
       z303 = {
         'z303-name' => "#{user.last_name}, #{user.first_name}",
-        'z303-gender' => '',
+        'z303-gender' => ''
       }
-      if user.respond_to? :gender
-        z303['z303-gender'] = user.gender
-      end
+      z303['z303-gender'] = user.gender if user.respond_to? :gender
       if user.respond_to? :aleph_home_library
         z303['z303-home-library'] = user.aleph_home_library
       end
@@ -323,15 +316,13 @@ module Aleph
         'z304-address-type' => '01',
         'z304-zip' => '',
         'z304-email-address' => user.email,
-        'z304-telephone' => '',
+        'z304-telephone' => ''
       }
-      if user.respond_to? :telephone
-        z304['z304-telephone'] = user.telephone
-      end
+      z304['z304-telephone'] = user.telephone if user.respond_to? :telephone
       n = 0
       user.address_lines.each do |a|
         if n <= 4
-          field = format("z304-address-%d", n)
+          field = format('z304-address-%d', n)
           z304[field] = a
         end
         n += 1
@@ -339,12 +330,12 @@ module Aleph
       aleph_types = user.aleph_bor_status_type
       z305 = {
         'z305-sub-library' => @adm_library,
-        'z305-bor-status' => format("%02d", aleph_types[0].to_i),
-        'z305-bor-type' => format("%02d", aleph_types[1].to_i),
-        'z305-loan-check' => 'Y',
+        'z305-bor-status' => format('%02d', aleph_types[0].to_i),
+        'z305-bor-type' => format('%02d', aleph_types[1].to_i),
+        'z305-loan-check' => 'Y'
       }
       # Create z308s
-      z308 = Array.new
+      z308 = []
       z308 << {
         'z308-key-type' => config.bor_type_id,
         'z308-key-data' => "#{config.bor_prefix}-#{user.cas_username}X"
@@ -354,7 +345,7 @@ module Aleph
           z308 << {
             'z308-key-type' => id['type'],
             'z308-key-data' => id['id'],
-            'z308-verification' => id['pin'],
+            'z308-verification' => id['pin']
           }
         end
       end
@@ -387,9 +378,7 @@ module Aleph
 
     def fill_defaults(object, defaults)
       defaults.each do |k, v|
-        if object[k] == nil
-          object[k] = v
-        end
+        object[k] = v if object[k].nil?
       end
     end
 
@@ -399,18 +388,18 @@ module Aleph
 
     def method_missing(symbol, *args)
       return super unless symbol.to_s =~ /^can_(.+)\?$/ &&
-        Aleph.services &&
-        Aleph.services['borrower'] &&
-        Aleph.services['borrower'][$1]
+                          Aleph.services &&
+                          Aleph.services['borrower'] &&
+                          Aleph.services['borrower'][Regexp.last_match(1)]
 
-      Aleph.services['borrower'][$1].include?(status + type)
+      Aleph.services['borrower'][Regexp.last_match(1)].include?(status + type)
     end
 
     def respond_to?(symbol, include_private = false)
       return super unless symbol.to_s =~ /^can_(.+)\?$/ &&
-        Aleph.services &&
-        Aleph.services['borrower'] &&
-        Aleph.services['borrower'][$1]
+                          Aleph.services &&
+                          Aleph.services['borrower'] &&
+                          Aleph.services['borrower'][Regexp.last_match(1)]
       true
     end
   end

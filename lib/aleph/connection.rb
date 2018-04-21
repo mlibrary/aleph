@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'httparty'
 require 'nokogiri'
 require 'singleton'
@@ -8,7 +10,7 @@ module Aleph
     include HTTParty
 
     # Variables
-    #attr_reader :connection
+    # attr_reader :connection
     #
     #   @@connection   HTTParty object for making requests.
 
@@ -19,27 +21,24 @@ module Aleph
         url += "&#{k}=#{URI.encode_www_form_component(v)}"
       end
 
-      if config.test_mode
-        return self
-      end
+      return self if config.test_mode
 
       response = HTTParty.get(url)
       unless response.success?
-        report "Aleph X request failed: #{func} with #{params.inspect} "+
-          response.body
-        @error = "X request failed"
+        report "Aleph X request failed: #{func} with #{params.inspect} " +
+               response.body
+        @error = 'X request failed'
       end
       @document = Nokogiri.XML(response.body, nil, 'UTF-8')
       @error    = parse_x_response_errors(@document)
       self
     end
 
-
     def success
       if @error.empty?
         @document
       else
-        report "Aleph request failed " + @error
+        report 'Aleph request failed ' + @error
         @error = nil
       end
     end
@@ -53,12 +52,12 @@ module Aleph
       @document
     end
 
-    def report(text)
+    def report(_text)
       raise Aleph::Error
     end
 
     def parse_x_response_errors(document)
-      document.xpath('//error').map{|e| e.text}.reject{|e| e.starts_with? 'Succeeded'}.join(' ')      
+      document.xpath('//error').map(&:text).reject { |e| e.starts_with? 'Succeeded' }.join(' ')
     end
   end
 end
