@@ -96,6 +96,10 @@ module Aleph
       global['z303-id']
     end
 
+    def sms
+      address['z304-sms-number']
+    end
+
     def name
       @name ||= last_name_first_name.split(/, /).reverse.join(' ')
     end
