@@ -368,6 +368,14 @@ module Aleph
       !expired?
     end
 
+    def ann_arbor?
+      ['UMAA'].include?(profile_id)
+    end
+
+    def flint?
+      ['UMFL'].include?(profile_id)
+    end
+
     def empty?
       global.nil? || address.nil? || local.nil?
     end
