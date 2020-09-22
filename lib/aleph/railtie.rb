@@ -4,7 +4,8 @@ require 'rails'
 module Aleph
   class Railtie < Rails::Railtie
     initializer 'aleph.initialize' do
-      Aleph.load_config(Rails.root.join('config', 'aleph.yml'))
+      file = Rails.root.join('config', 'aleph.yml')
+      Aleph.load_config(file) if File.exist?(file)
     end
   end
 end
