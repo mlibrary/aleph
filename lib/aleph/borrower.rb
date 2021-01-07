@@ -376,6 +376,10 @@ module Aleph
       ['UMFL'].include?(profile_id)
     end
 
+    def dearborn?
+      ['UMDB'].include?(profile_id)
+    end
+
     def empty?
       global.nil? || address.nil? || local.nil?
     end
