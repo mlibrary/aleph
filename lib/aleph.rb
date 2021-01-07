@@ -9,7 +9,7 @@ module Aleph
                   :status_intent_map
 
     def load_config(config_file)
-      yaml_config = YAML.load_file(config_file)
+      yaml_config = YAML.load(ERB.new(File.read(config_file)).result)
       self.aleph_x_url = yaml_config['aleph_x_url']
       self.bib_library = yaml_config['bib_library']
       self.adm_library = yaml_config['adm_library']
