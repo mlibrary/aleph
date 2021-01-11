@@ -369,18 +369,18 @@ module Aleph
     end
 
     def ann_arbor?
-      return [ENV['ALEPH_AFFILIATION']].include?(profile_id) if ENV['ALEPH_AFFILIATION']
+      return ['UMAA'].include?(ENV['ALEPH_AFFILIATION']) if ENV['ALEPH_AFFILIATION']
       ['UMAA'].include?(profile_id)
     end
 
     def flint?
-      return [ENV['ALEPH_AFFILIATION']].include?(profile_id) if ENV['ALEPH_AFFILIATION']
-      ENV['AFFILIATION_FLINT'] || ['UMFL'].include?(profile_id)
+      return ['UMFL'].include?(ENV['ALEPH_AFFILIATION']) if ENV['ALEPH_AFFILIATION']
+      ['UMFL'].include?(profile_id)
     end
 
     def dearborn?
-      return [ENV['ALEPH_AFFILIATION']].include?(profile_id) if ENV['ALEPH_AFFILIATION']
-      ENV['AFFILIATION_DEARBORN'] || ['UMDB'].include?(profile_id)
+      return ['UMDB'].include?(ENV['ALEPH_AFFILIATION']) if ENV['ALEPH_AFFILIATION']
+      ['UMDB'].include?(profile_id)
     end
 
     def empty?
